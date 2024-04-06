@@ -1,1 +1,0 @@
-The frontend project goes in this folder
