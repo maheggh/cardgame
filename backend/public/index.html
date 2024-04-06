@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Card game</title>
+  <style>
+    .card {
+      border: 1px solid #ccc;
+      margin: 10px;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to the card game</h1>
+  <pre>Get all cards
+    {{host}}/cards
+    
+    Get all missions
+    {{host}}/cards?type=Missions
+    
+    Get all assessment cards
+    {{host}}/cards?type=Assessment cards
+    
+    Get single card
+    {{host}}/cards/15
+    
+    Post card example:
+    {{host}}/cards/
+    
+    {
+    
+      "card-id":"15",
+    
+      "card-type":"Mission",
+    
+      "card-name":"hehe",
+    
+      "card-category":"Category of the mission",
+    
+      "card-description":"Description of the mission",
+    
+      "card-details":"Details about the mission"
+    
+    }
+    
+    
+    update card example:
+    {{host}}/cards/15
+    
+    {
+    
+      "card-id":"15",
+    
+      "card-type":"Mission",
+    
+      "card-name":"Updated Mission Name",
+    
+      "card-description":"Updated description",
+    
+      "card-details":"Updated details",
+    
+      "card-category":"Updated category"
+    
+    }
+    
+    Delete card example:
+      {{host}}/cards/11
+    </pre>
+  <div id="cards-container"></div>
+
+</body>
+</html>

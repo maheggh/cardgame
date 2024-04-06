@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans">
+    <link href="http://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
+    <title>Oblig 1 | Web components | IDG2100</title>
+    <link rel="stylesheet" href="./assets/core.css">
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+
+<body>
+    <header>
+
+        <h1>the SUPER Assessor - Idea generator</h1>
+        <p>
+        SUPER Assessor, a game designed for educators, is the result of a research project undertaken by the Department of Design in Trondheim. Its primary objective is to aid educators in the development of unique assessment methods. These methods are intended to create innovative ways to evaluate and grade students.
+        </p>
+    </header>
+    <main>
+            <h2>Mission cards (x3)</h2>
+            <SUPER-mission-card 
+            card-id="..."
+            card-type="..."
+            card-name="..."
+            card-description="..."></SUPER-mission-card>
+
+            </div>
+
+            <h2>Assessment cards (x6)</h2>
+            <SUPER-assessment-card 
+            card-id="..."
+            card-type="..."
+            card-name="..."
+            card-description="..."></SUPER-assessment-card>
+    </main>
+
+    <aside>
+        <favorite-card></favorite-card>
+        <h2>Favorite cards</h2>
+        <ul id="favourite-cards-list">
+        <div class="favorite-card"></div>
+            
+
+        </ul>
+        <h2>Control panel</h2>
+        <p>Click the following button to extract random cards and display them in the main area.</p>
+        <button type="button" id="randomise-button">Randomise</button>
+    </aside>
+    <footer>
+    </footer>
+    <script type="module" src="components/super-mission-card.js"></script>
+    <script type="module" src="components/super-assessment-card.js"></script>
+    <script type="module" src="components/favorite-card.js"></script>
+    <script type="module" src="helpers/get-card.js"></script>
+    
+    
+
+</body>
+
+</html>
