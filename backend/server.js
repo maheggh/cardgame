@@ -1,33 +1,31 @@
-//mongodb+srv://vegardstamadsen:E5rr7z1KUH9BWRdI@game.hwn65gj.mongodb.net/?retryWrites=true&w=majority&appName=game
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const usersRouter = require('./routes/users');
-const missionsRouter = require('./routes/mission');
-const assessmentRouter = require('./routes/assessment');
+const express 		= require('express');
+const app 			= express();
+const dotenv 		= require('dotenv').config();
+const port 			= process.env.PORT || 3000;
+const connectDB 	= require('./dbconnect');
 
-const app = express();
-const port = process.env.PORT || 3000;
+//connects to the local mongoDB
+connectDB();
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB Connected...'))
-    .catch(err => console.log(err));
+//calls gets routes from their files
+const cards 		= require('./routes/Cards');
+const users 		= require('./routes/Users');
+const search 		= require('./routes/Search');
+const icons 		= require('./routes/Icons');
 
 app.use(express.json());
 
-
-app.use((req, res, next) => {
-    const authKey = req.header('Authentication');
-    if (authKey !== 'authentication-key') {
-        return res.status(401).send('Access denied. Invalid authorization key.');
-    }
-    next();
+//unescessary get that just sends a 200 status and console logs 'here'. just for debugging
+app.get('/', (req, res) => {
+	console.log('here')
+	res.sendStatus(200)
 });
 
-app.use('/users', usersRouter);
-app.use('/missions', missionsRouter);
-app.use('/assessment', assessmentRouter);
+//routes
+app.use('/cards', cards);
+app.use('/users', users);
+app.use('/search', search);
+app.use('/icons', icons);
 
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
+
+app.listen(port, () => console.log(`express server listening on port ${port}...`));

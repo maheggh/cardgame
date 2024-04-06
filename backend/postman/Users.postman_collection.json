@@ -1,0 +1,122 @@
+{
+	"info": {
+		"_postman_id": "1c882b74-f5df-437a-ba92-1a36a0e2345b",
+		"name": "Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33406999"
+	},
+	"item": [
+		{
+			"name": "All users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/users",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "single user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/users/65e9c1382acecb5e7cf30bdc",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"65e9c1382acecb5e7cf30bdc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Danny\",\r\n    \"surname\": \"Devito\",\r\n    \"email\": \"dandev2@example.com\",\r\n    \"department\": \"department of design\",\r\n    \"university\": \"NTNU\",\r\n    \"position\": \"TA\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Danny\",\r\n    \"surname\": \"Devito\",\r\n    \"email\": \"dandev2@example.com\",\r\n    \"department\": \"department of design\",\r\n    \"university\": \"NMBU\",\r\n    \"position\": \"TA\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/65e9c1382acecb5e7cf30bdc",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"65e9c1382acecb5e7cf30bdc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete user",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/users/65f33f3584177d58909d7c03",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"65f33f3584177d58909d7c03"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "localhost:3000"
+		}
+	]
+}

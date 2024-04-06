@@ -1,0 +1,48 @@
+{
+	"info": {
+		"_postman_id": "4464c516-1771-4c1c-90f8-f331d23b7a53",
+		"name": "Search",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33406999"
+	},
+	"item": [
+		{
+			"name": "Search with params",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/search?card-type=Assessment&card-category=The%20assessor&random=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "card-type",
+							"value": "Assessment"
+						},
+						{
+							"key": "card-category",
+							"value": "The%20assessor"
+						},
+						{
+							"key": "random",
+							"value": "3"
+						},
+						{
+							"key": "exclude",
+							"value": "[3]",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

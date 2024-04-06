@@ -1,0 +1,137 @@
+{
+	"info": {
+		"_postman_id": "d8185d6d-509b-45f8-8264-858d7635128a",
+		"name": "Cards",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33406999"
+	},
+	"item": [
+		{
+			"name": "All cards",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/cards",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards"
+					],
+					"query": [
+						{
+							"key": "populate",
+							"value": "deep",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "specific card",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/cards/65e9c13f2acecb5e7cf30c39",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards",
+						"65e9c13f2acecb5e7cf30c39"
+					],
+					"query": [
+						{
+							"key": "populate",
+							"value": "deep",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new card",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"card-id\": 9991,\r\n    \"card-type\": \"Assessment\",\r\n    \"card-name\": \"cool new card\",\r\n    \"card-description\": \"this is a test card\",\r\n    \"card-details\": \"some details\",\r\n    \"card-category\": \"new category\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/cards/",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update card",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"card-id\": 99444,\r\n    \"card-type\": \"Assessment\",\r\n    \"card-name\": \"cool dd new card\",\r\n    \"card-description\": \"this is a test card\",\r\n    \"card-details\": \"some details\",\r\n    \"card-category\": \"new category\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/cards/65ef2f20e70d8342f6780a2e",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards",
+						"65ef2f20e70d8342f6780a2e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete card",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/cards/65f3404c864bf8a62cd05c6d",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards",
+						"65f3404c864bf8a62cd05c6d"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "localhost:3000"
+		}
+	]
+}
