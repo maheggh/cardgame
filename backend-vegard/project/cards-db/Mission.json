@@ -1,0 +1,44 @@
+[
+    {
+     "card-id": 87,
+     "card-type": "Mission",
+     "card-name": "Innovation",
+     "card-description": "Your mission is\nTo find and support new and innovative ways of assessing students."
+    },
+    {
+     "card-id": 88,
+     "card-type": "Mission",
+     "card-name": "Time management",
+     "card-description": "Your mission is\nTo reduce time used on assessment (not nescessarily thinking about costs)"
+    },
+    {
+     "card-id": 89,
+     "card-type": "Mission",
+     "card-name": "Learning",
+     "card-description": "Your mission is\nTo focus on the students learning outcomes. "
+    },
+    {
+     "card-id": 90,
+     "card-type": "Mission",
+     "card-name": "Student engagement",
+     "card-description": "Your mission is\nTo prioritize and support ideas and ways that facilitate student engagement. "
+    },
+    {
+     "card-id": 91,
+     "card-type": "Mission",
+     "card-name": "Authenticity",
+     "card-description": "Your mission is\nTo create an authentic and realistic work-life assessment."
+    },
+    {
+     "card-id": 92,
+     "card-type": "Mission",
+     "card-name": "Cost cutting",
+     "card-description": "Your mission is\nTo save resourses and reduce financial expenses."
+    },
+    {
+     "card-id": 93,
+     "card-type": "Mission",
+     "card-name": "Counteract cheating",
+     "card-description": "Your mission is\nTo design assessment that is resistant to cheating in the assessment process."
+    }
+]
