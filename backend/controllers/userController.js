@@ -1,12 +1,27 @@
 const Users = require('../schemas/userSchema');
+const bcrypt = require('bcryptjs');
+const {check,validationResult} = require('express-validator');
+const jwt = require('jsonwebtoken')
 
 //CRUD: Create
 const createUser = async (req, res) => {
 	console.log(req.body);
+
+	//check if the user already exists: code borrowed from presentation
+	const emailExist = await Users.findOne({email:req.body.email})
+	if(emailExist){
+	return res.status(400).send('email already Exists')
+	}
+
+	//encrypt password: code borrowed from presentation
+	const salt = await bcrypt.genSalt(10);
+	const hashPassword = await bcrypt.hash(req.body.password, salt)
+
 	const user = new Users({
 		'name': req.body['surname'],
 		'surname': req.body['surname'],
 		'email': req.body['email'],
+		'password': hashPassword,
 		'department': req.body['department'],
 		'university': req.body['university'],
 		'position': req.body['position']
@@ -89,4 +104,28 @@ const deleteUser = async (req, res) => {
 	}
 }
 
-module.exports = { getAllUsers, getSingleUser, createUser, updateUser, deleteUser }
+const authenticateUser = async (req, res) => {
+
+	//validate user input: code borrowed from presentation
+	const errors = validationResult(req)
+	if(!errors.isEmpty()){
+	return res.status(400).json({errors:errors.array()})
+	}
+
+	//check if email exists: code borrowed from presentation
+	const user = await Users.findOne({email:req.body.email})
+	if(!user){
+	return res.status(400).send('email does not exist')
+	}
+
+	//check if password is correct: code borrowed from presentation
+	const validPass = await bcrypt.compare(req.body.password, user.password)
+	if(!validPass){
+	return res.status(400).send('password is wrong')
+	}
+
+	const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET)
+	res.header('auth-token',token).send(token);
+}
+
+module.exports = { getAllUsers, getSingleUser, createUser, updateUser, deleteUser, authenticateUser }

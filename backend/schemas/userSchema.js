@@ -17,6 +17,11 @@ const userSchema = new Schema({
 		required: true,
 		validate:[isEmail, 'please enter your email']
 	},
+	"password":{
+		type: String,
+		required:true,
+		min:8
+	},
 	"department": {
 		type: String,
 		required: true
