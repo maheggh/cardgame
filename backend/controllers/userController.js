@@ -24,7 +24,8 @@ const createUser = async (req, res) => {
 		'password': hashPassword,
 		'department': req.body['department'],
 		'university': req.body['university'],
-		'position': req.body['position']
+		'position': req.body['position'],
+		'role': 'User'
 	})
 
 	try {
@@ -124,8 +125,21 @@ const authenticateUser = async (req, res) => {
 	return res.status(400).send('password is wrong')
 	}
 
-	const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET)
-	res.header('auth-token',token).send(token);
+	//generates token and refresh token then sends it in the response
+	const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET, { expiresIn: '15m' });
+	const refreshToken = jwt.sign({_id:user._id},process.env.REFRESH_SECRET);
+	res.json({accessToken: token, refreshToken: refreshToken});
 }
 
-module.exports = { getAllUsers, getSingleUser, createUser, updateUser, deleteUser, authenticateUser }
+const refresh = (req, res) => {
+	const refreshtoken = req.body.refreshToken;
+
+	if (refreshtoken == null) return res.sendStatus(401)
+	jwt.verify(refreshtoken, process.env.REFRESH_SECRET, (err, user) => {
+		if (err) return res.status(403);
+		const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET, { expiresIn: '15m' });
+		res.json({accessToken: token});
+	})
+}
+
+module.exports = { getAllUsers, getSingleUser, createUser, updateUser, deleteUser, authenticateUser, refresh }

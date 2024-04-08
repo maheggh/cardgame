@@ -22,6 +22,11 @@ const userSchema = new Schema({
 		required:true,
 		min:8
 	},
+	"role": {
+		type: String,
+		enum: ['Admin', 'User'],
+		required: true
+	},
 	"department": {
 		type: String,
 		required: true
