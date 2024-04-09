@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
@@ -9,9 +9,9 @@ import Login from './pages/login/';
 import Signup from './pages/signup/';
 import Welcome from './pages/welcome/';
 import Dashboard from './pages/dashboard/';
-import CardsList from "./cardList";
-import FileUpload from "./helpers/fileUpload";
-import generatePDF from "./helpers/pdfGenerator";
+//import CardsList from "./cardList";
+import FileUpload from "./pages/fileupload";
+//import generatePDF from "./helpers/pdfGenerator";
 
 const handleGeneratePDF = (selectedCards) => {
   generatePDF(selectedCards);
@@ -28,35 +28,12 @@ function App() {
     <UserContext.Provider value={{ user, setUser }}>
       <Router>
         <Header />
-        <Dashboard />
         <Routes>
-          <Route path="/" element={
-            <>
-              {user ? (
-                <h1>Hello, {user ? user.name : 'Guest'}!</h1>
-              ) : (
-                <div>
-                  <a href="https://vitejs.dev" target="_blank">
-                    <img src={viteLogo} className="logo" alt="Vite logo" />
-                  </a>
-                  <a href="https://react.dev" target="_blank">
-                    <img src={reactLogo} className="logo react" alt="React logo" />
-                  </a>
-                </div>
-              )}
-              <h1>Vite + React</h1>
-              <div className="card">
-                <button onClick={() => setCount((count) => count + 1)}>
-                  count is {count}
-                </button>
-                <p>
-                  Edit <code>src/App.jsx</code> and save to test HMR
-                </p>
-              </div>
-            </>
-          } />
+          <Route path="/" element={<Welcome />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/fileUpload" element={<FileUpload />} />
         </Routes>
       </Router>
     </UserContext.Provider>

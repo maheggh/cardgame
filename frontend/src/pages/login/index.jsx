@@ -21,7 +21,7 @@ function Login() {
         event.preventDefault();
         try {
             const data = await login(email, password);
-            localStorage.setItem('user', JSON.stringify(data));
+            localStorage.setItem('user', JSON.stringify(data.accessToken));
             navigate('/');
         } catch (error) {
             console.error('Login failed:', error);

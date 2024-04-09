@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import CardsList from "./cardList";
-import FileUpload from "./helpers/fileUpload";
-import generatePDF from "./helpers/pdfGenerator"; // Make sure this is the correct path to your PDF generation function
+import CardsList from "../../cardList";
+import FileUpload from "../../helpers/fileUpload.jsx";
+import generatePDF from "../../helpers/pdfGenerator"; // Make sure this is the correct path to your PDF generation function
 import "./style.css";
 
 const App = () => {

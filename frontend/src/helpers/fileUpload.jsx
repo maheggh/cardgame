@@ -60,6 +60,6 @@ const FileUpload = ({ setCards }) => {
       )}
     </div>
   );
-};
+}
 
 export default FileUpload;

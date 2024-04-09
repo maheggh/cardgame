@@ -33,7 +33,6 @@ export async function login(email, password) {
 }
 
 export async function authorize(token){
-    console.log(token);
     const response = await fetch(`${API_URL}/cards`, {
         method: 'GET',
         headers: {

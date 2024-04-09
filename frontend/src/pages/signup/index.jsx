@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './style.css';
 import { useNavigate } from 'react-router-dom';
+import {login, signup} from '../../api/api.js';
 
 function Signup() {
     const [email, setEmail] = useState('');
@@ -38,13 +39,14 @@ function Signup() {
         event.preventDefault();
         try {
             const response = await signup(email, password, name, surname, department, university, position);
-            console.log(response);
-            const { accessToken, refreshToken, user } = response;
-            console.log('User:', user);
-            console.log('Access Token:', accessToken);
-            console.log('Refresh Token:', refreshToken);
-            localStorage.setItem('user', JSON.stringify(user));
-            //navigate('/');
+            const loginRes = await login(email, password);
+            console.log(loginRes);
+            //const { accessToken, refreshToken, user } = response;
+            //(console.log('User:', user);
+            //console.log('Access Token:', accessToken);
+            //console.log('Refresh Token:', refreshToken);
+            localStorage.setItem('user', JSON.stringify(loginRes.accessToken));
+            navigate('/');
         } catch (error) {
             console.error('Signup failed:', error);
             alert('Signup failed. Please check your details and try again.');

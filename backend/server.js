@@ -8,7 +8,6 @@ const cardRoutes = require('./routes/BulkUpload');
 
 //connects to the local mongoDB
 connectDB();
-dotenv.config();
 
 //calls gets routes from their files
 const cards 		= require('./routes/Cards');
