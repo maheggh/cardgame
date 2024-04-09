@@ -8,10 +8,12 @@ import Header from '../components/header.jsx';
 import Login from '../pages/login.jsx';
 import Signup from '../pages/signup.jsx';
 
-
 function App() {
   const [count, setCount] = useState(0);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser && storedUser !== 'undefined' ? JSON.parse(storedUser) : null;
+  });
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
@@ -45,7 +47,6 @@ function App() {
           } />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          
         </Routes>
       </Router>
     </UserContext.Provider>

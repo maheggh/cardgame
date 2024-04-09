@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './login.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
     const [email, setEmail] = useState('');
@@ -10,41 +11,45 @@ function Signup() {
     const [position, setPosition] = useState('');
     const [password, setPassword] = useState('');
 
-const handleSignup = async (event) => {
-    event.preventDefault();
+    const navigate = useNavigate();
 
-    try {
-        const response = await fetch('/users', {
+    const signup = async (email, password, name, surname, department, university, position) => {
+        const requestBody = { email, password, name, surname, department, university, position };
+        console.log('Request body:', requestBody);
+
+        const response = await fetch('http://localhost:3000/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                email,
-                name,
-                surname,
-                department,
-                university,
-                position,
-                password,
-            }),
+            body: JSON.stringify(requestBody),
         });
 
         if (!response.ok) {
-            throw new Error('Signup failed');
+            const responseBody = await response.text();
+            console.error('Server response:', responseBody);
+            throw new Error(`Signup failed: ${response.statusText}`);
         }
 
-        const data = await response.json();
-        console.log('Signup successful:', data);
+        return response.json();
+    };
 
-        // Store the JWT in localStorage
-        localStorage.setItem('token', data.token);
-
-        // Here you might want to redirect the user to the login page or directly log them in
-    } catch (error) {
-        console.error('Signup failed:', error);
-    }
-};
+    const handleSignup = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await signup(email, password, name, surname, department, university, position);
+            console.log(response);
+            const { accessToken, refreshToken, user } = response;
+            console.log('User:', user);
+            console.log('Access Token:', accessToken);
+            console.log('Refresh Token:', refreshToken);
+            localStorage.setItem('user', JSON.stringify(user));
+            navigate('/');
+        } catch (error) {
+            console.error('Signup failed:', error);
+            alert('Signup failed. Please check your details and try again.');
+        }
+    };
 
     return (
         <main className={styles.signupscreen}>
