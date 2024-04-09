@@ -1,0 +1,57 @@
+.loginscreen, .signupscreen {
+    background-color: rgb(128, 128, 128);
+    height: 95vh;
+    display: grid;
+    place-items: center;
+}
+
+.loginscreen .loginscreen_content, .signupscreen .signupscreen_content {
+    max-width: 700px;
+    width: 500px;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 2rem;
+}
+
+.loginscreen h1, .signupscreen h1 {
+    margin-bottom: 2rem;
+}
+
+.loginscreen form, .signupscreen form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.loginscreen input, .signupscreen input{
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.loginscreen button, .signupscreen button{
+    font-size: 1.4rem;
+    padding: 0.5rem;
+    width: 50%;
+    margin: 0 auto;
+    background-color: #8cb7f0;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 100ms;
+}
+
+.signupscreen_content_already, .loginscreen_content_already {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.signupscreen_content a, .signupscreen_content label, .loginscreen_content a, .loginscreen_content label {
+    font-size: 1.3rem;
+}
+
+.signupscreen_content a, .loginscreen_content a {
+    color: rgb(1, 1, 173);
+}

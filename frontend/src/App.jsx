@@ -4,10 +4,10 @@ import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 import UserContext from './UserContext.js';
-import Header from '../components/header.jsx';
-import Login from '../pages/login.jsx';
-import Signup from '../pages/signup.jsx';
-import Welcome from '../pages/welcome/';
+import Header from './components/Header/';
+import Login from './pages/login/';
+import Signup from './pages/signup/';
+import Welcome from './pages/welcome/';
 
 
 function App() {
