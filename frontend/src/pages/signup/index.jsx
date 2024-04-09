@@ -118,7 +118,7 @@ function Signup() {
                     </label>
                     <button type="submit">Signup</button>
                 </form>
-                <a href="/login" className={styles.signupscreen_content_already}><span>Already have an account?</span></a>
+                <a href="/login" className="signupscreen_content_already"><span>Already have an account?</span></a>
             </div>
         </main>
     );
