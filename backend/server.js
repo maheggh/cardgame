@@ -4,9 +4,11 @@ const cors 			= require('cors'); // Import the cors package
 const dotenv 		= require('dotenv').config();
 const port 			= process.env.PORT || 3000;
 const connectDB 	= require('./dbconnect');
+const cardRoutes = require('./routes/BulkUpload'); 
 
 //connects to the local mongoDB
 connectDB();
+dotenv.config();
 
 //calls gets routes from their files
 const cards 		= require('./routes/Cards');
@@ -28,5 +30,6 @@ app.use('/cards', cards);
 app.use('/users', users);
 app.use('/search', search);
 app.use('/icons', icons);
+app.use('/api/cards', cardRoutes);
 
 app.listen(port, () => console.log(`express server listening on port ${port}...`));

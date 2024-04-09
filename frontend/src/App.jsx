@@ -9,7 +9,13 @@ import Login from './pages/login/';
 import Signup from './pages/signup/';
 import Welcome from './pages/welcome/';
 import Dashboard from './pages/dashboard/';
+import CardsList from "./cardList";
+import FileUpload from "./helpers/fileUpload";
+import generatePDF from "./helpers/pdfGenerator";
 
+const handleGeneratePDF = (selectedCards) => {
+  generatePDF(selectedCards);
+};
 
 function App() {
   const [count, setCount] = useState(0);
