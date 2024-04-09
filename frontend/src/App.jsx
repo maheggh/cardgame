@@ -8,6 +8,7 @@ import Header from './components/Header/';
 import Login from './pages/login/';
 import Signup from './pages/signup/';
 import Welcome from './pages/welcome/';
+import Dashboard from './pages/dashboard/';
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
     <UserContext.Provider value={{ user, setUser }}>
       <Router>
         <Header />
-        <Welcome />
+        <Dashboard />
         <Routes>
           <Route path="/" element={
             <>
