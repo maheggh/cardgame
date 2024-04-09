@@ -46,7 +46,7 @@ function Login() {
                     <br />
                     <button type="submit">Login</button>
                 </form>
-                <a href="/signup" className={styles.loginscreen_content_already}><span>New to SUPER ASSESSOR?</span></a>
+                <a href="/signup" className="loginscreen_content_already"><span>New to SUPER ASSESSOR?</span></a>
             </div>
         </main>
     );

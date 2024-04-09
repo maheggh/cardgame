@@ -52,8 +52,8 @@ function Signup() {
     };
 
     return (
-        <main className={styles.signupscreen}>
-            <div className={styles.signupscreen_content}>
+        <main className="signupscreen">
+            <div className="signupscreen_content">
                 <h1>Sign up</h1>
                 <form onSubmit={handleSignup}>
                     <label>
@@ -118,7 +118,7 @@ function Signup() {
                     </label>
                     <button type="submit">Signup</button>
                 </form>
-                <a href="/login" className={styles.signupscreen_content_already}><span>Already have an account?</span></a>
+                <a href="/login" className="signupscreen_content_already"><span>Already have an account?</span></a>
             </div>
         </main>
     );
