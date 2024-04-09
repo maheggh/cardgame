@@ -44,7 +44,7 @@ function Signup() {
             console.log('Access Token:', accessToken);
             console.log('Refresh Token:', refreshToken);
             localStorage.setItem('user', JSON.stringify(user));
-            navigate('/');
+            //navigate('/');
         } catch (error) {
             console.error('Signup failed:', error);
             alert('Signup failed. Please check your details and try again.');
