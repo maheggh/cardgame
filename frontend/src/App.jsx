@@ -7,6 +7,8 @@ import UserContext from './UserContext.js';
 import Header from '../components/header.jsx';
 import Login from '../pages/login.jsx';
 import Signup from '../pages/signup.jsx';
+import Welcome from '../pages/welcome/';
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -19,6 +21,7 @@ function App() {
     <UserContext.Provider value={{ user, setUser }}>
       <Router>
         <Header />
+        <Welcome />
         <Routes>
           <Route path="/" element={
             <>
