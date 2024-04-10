@@ -114,6 +114,7 @@ const authenticateUser = async (req, res) => {
 	}
 	//check if email exists: code borrowed from presentation
 	const user = await Users.findOne({email:req.body.email})
+	console.log(user);
 	if(!user){
 	return res.status(400).send('email does not exist')
 	}
