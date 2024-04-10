@@ -1,111 +1,136 @@
 .app-container {
-    margin: 0 auto;
-    padding: 20px;
-    max-width: 600px;
-    text-align: center;
-  }
-  
-  .app-title {
-    color: #333;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .file-upload {
-    margin: 20px 0;
-  }
-  
-  .file-upload-button-container {
-    height: 100px;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    gap: 40px; 
-    grid-template-columns: 1fr 1fr;
-  }
-  
-  .upload-status {
-    margin-top: 8px; 
-    font-size: 16px;
-    color: #4CAF50; 
-  
-  }
-  
-  .cards-list {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    height: 300px; /* Fixed height */
-    overflow-y: auto; /* Enables vertical scrolling */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds shadow for depth */
-  }
-  
-  .card-item {
-    background-color: #fff;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 600px;
+  text-align: center;
+}
 
-  .generate-pdf-button {
-    font-size: 16px; 
-    padding: 10px 20px; 
-    background-color: #000000;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    align-items: center; 
-    justify-content: center; 
-    text-decoration: none; 
-    box-sizing: border-box;
-    height: 80px; 
-    width: 150px;
-    line-height: 1.5; 
-    white-space: nowrap; 
-  }
-  
-  .file-upload-button, .upload-button {
-    font-size: 16px; 
-    padding: 10px 20px; 
-    border: 2px solid #4CAF50;
-    background-color: #4CAF50;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    align-items: center; 
-    justify-content: center; 
-    text-decoration: none; 
-    box-sizing: border-box;
-    height: 50px; 
-    width: 100px;
-    line-height: 1.5; 
-    white-space: nowrap; 
-  }
-  
-  
-  .file-upload-button:hover, .upload-button:hover {
-    background-color: #45a049;
-  }
-  
-  .file-input {
-    display: none;
-  }
-  
-  .file-input::-webkit-file-upload-button {
-    background-color: #f2f2f2;
-    color: black;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition-duration: 0.4s;
-  }
-  
-  .file-input::-webkit-file-upload-button:hover {
-    background-color: #ddd;
-  }
+.app-title {
+  color: #333;
+  font-family: 'Arial', sans-serif;
+}
 
-  .card-item.selected {
-    border: 2px solid #4caf50; 
-  }
+.file-upload {
+  display: grid;
+   grid-template-columns: 1fr;
+   grid-template-rows: 1fr 1fr;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.file-upload-button-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.upload-status {
+  margin-top: 10px; 
+  font-size: 16px;
+  color: #4CAF50; 
+}
+
+.cards-list {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-item {
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.button {
+  font-size: 16px; 
+  padding: 10px 20px; 
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none; 
+  box-sizing: border-box;
+  line-height: 1.5; 
+  white-space: nowrap;
+}
+
+.file-upload-button, .upload-button, .generate-pdf-button {
+  background-color: #4CAF50;
+  width: 50%;
+}
+
+.file-upload-button:hover, .upload-button:hover, .generate-pdf-button:hover {
+  background-color: #45a049;
+}
+
+.generate-pdf-button {
+  align-self: center;
+  width: 80%;
+  max-width: 200px;
+  margin-top: 20px;
+}
+
+.file-input {
+  display: none;
+}
+
+/* Style the artificial file upload button */
+.label-file-upload-button {
+  display: block;
+  background-color: #f2f2f2;
+  color: black;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  margin-bottom: 5px; /* Add some space between label and input */
+}
+
+.label-file-upload-button:hover {
+  background-color: #ddd;
+}
+
+/* Align delete input and button horizontally */
+.delete-card-input-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px; /* Give some space below the input and button */
+}
+
+.delete-card-input-container input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.file-upload-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.delete-card-button {
+  color: black;
+  background-color: #ccc;
+}
+
+.file-upload-button-container, .delete-card-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}

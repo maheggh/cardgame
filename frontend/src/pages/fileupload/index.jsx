@@ -13,20 +13,16 @@ const App = () => {
   };
 
   return (
-    <>
-      <div className="app-container">
-        <h1 className="app-title">Cards Upload</h1>
-
-        <FileUpload setCards={setCards} />
-        {cards.length > 0 && (
-          <CardsList cards={cards} setCards={setCards} className="cards-list" />
-        )}
-      <button
-        onClick={() => handleGeneratePDF(cards)} className="generate-pdf-button">
+    <div className="app-container">
+      <h1 className="app-title">Cards Upload</h1>
+      <FileUpload setCards={setCards} />
+      {cards.length > 0 && (
+        <CardsList cards={cards} setCards={setCards} className="cards-list" />
+      )}
+      <button onClick={() => handleGeneratePDF(cards)} className="button generate-pdf-button">
         Generate PDF
       </button>
-      </div>
-    </>
+    </div>
   );
 };
 
