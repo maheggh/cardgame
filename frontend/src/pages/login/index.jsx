@@ -23,6 +23,7 @@ function Login() {
         try {
             const data = await login(email, password); 
             loginAuth(JSON.stringify(data.accessToken));
+            console.log(data.accessToken);
             navigate('/');
         } catch (error) {
             console.error('Login failed:', error);

@@ -85,7 +85,7 @@ const deleteCard = async (req, res) => {
         console.log('Deleted card:', card);
         res.json({ message: 'Card deleted successfully', Card: card });
     } catch (err) {
-        console.error('Error deleting card:', err);
+        console.error('Errors deleting card:', err);
         res.status(500).json({ message: 'Error deleting card', error: err.message || err });
     }
 };
