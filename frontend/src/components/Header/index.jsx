@@ -8,7 +8,6 @@ const Header = () => {
     const { token, handleLogout } = useAuth();
     const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
     const decodedToken = (token!='null' && token) ? JSON.parse(atob(token.split('.')[1])) : ''// Decode JWT token payload
-    console.log(decodedToken);
     const userRole = decodedToken.role;
       const LogoutFunction = () => {
         handleLogout();

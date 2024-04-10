@@ -75,6 +75,7 @@ const updateCard = async (req, res) => {
 //CRUD: Delete
 const deleteCard = async (req, res) => {
     const _id = req.params.id;
+    console.log(_id);
     try {
         const card = await Cards.findByIdAndDelete(_id);
         if (!card) {

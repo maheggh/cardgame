@@ -39,6 +39,7 @@ const FileUpload = ({ setCards }) => {
 
   const handleDeleteClick = async () => {
     try {
+      console.log(deleteCardId);
       const response = await fetch(`http://localhost:3000/cards/${deleteCardId}`, { method: 'DELETE' });
 
       if (response.ok) {
