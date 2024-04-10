@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { usersAuthorize } from '../../api/api.js';
-import './style.css';
+import '../users/style.css';
 import EditIcon from'./editIcon.png'
 
 const User = ({ user }) => {

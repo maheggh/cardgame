@@ -5,7 +5,7 @@ import './style.css'
 
 
 function EditUserPage() {
-  const { userId } = useParams();
+  const { userId } = useParams(); 
   const [user, setUser] = useState(null);
   const token = localStorage.getItem('token');
   console.log(token);

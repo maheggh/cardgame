@@ -36,11 +36,11 @@
   }
 
   .school_info-long {
-    width: 40%;
+    width: 38%;
   }
 
   .school_info-short {
-    width: 15%;
+    width: 20%;
   }
 
   .edit_form .school_info select {
@@ -84,6 +84,7 @@
   .edit_form button[type="submit"] {
     background-color: #4CAF50;
     color: white;
+    padding: 10px 35px;
   }
   
   .edit_form .red {
