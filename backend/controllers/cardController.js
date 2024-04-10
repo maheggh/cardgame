@@ -74,19 +74,19 @@ const updateCard = async (req, res) => {
 
 //CRUD: Delete
 const deleteCard = async (req, res) => {
-	const _id = req.params.id;
-	try {
-		const card = await Cards.findByIdAndDelete(_id);
-		if (!card) {
-			//Send 404 status if the card can't be found
-			return res.status(404).json({ error: 'Could not delete card. Card not found' });
-		}
-		// if successful, prints success message, the deleted card and sends a 200 status
-		res.json({ message: 'Card deleted successfully', Card: card }).status(200);
-	} catch (err) {
-		// if unsuccessful, prints error message and sends a 500 status
-		res.status(500).send('Error: ' + err);
-	}
-}
-
+    const _id = req.params.id;
+    try {
+        const card = await Cards.findByIdAndDelete(_id);
+        if (!card) {
+            console.log(`Could not find card with ID: ${_id}`);
+            return res.status(404).json({ message: 'Card not found' });
+        }
+        
+        console.log('Deleted card:', card);
+        res.json({ message: 'Card deleted successfully', Card: card });
+    } catch (err) {
+        console.error('Error deleting card:', err);
+        res.status(500).json({ message: 'Error deleting card', error: err.message || err });
+    }
+};
 module.exports = { createCard, getAllCards, getSingleCard, updateCard, deleteCard }
