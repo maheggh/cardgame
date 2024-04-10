@@ -24,6 +24,7 @@ const Header = () => {
                     {(userRole=="User" || userRole=="Admin")  ? (
                         <>
                             <a href="/dashboard" className="link nav-button">Dashboard</a>
+                            <a href="/Game" className="link nav-button">Game</a>
                             {userRole=="Admin" ? (
                                 <>
                                 <a href="/cards" className="link nav-button">Cards</a>

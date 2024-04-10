@@ -172,7 +172,7 @@ export default class SUPERMissionCard extends HTMLElement {
 	}
 
 	checkIfFav(){
-		favList = JSON.parse(localStorage.getItem("FAVOURITE_CARDS_LIST_STORE"));
+		const favList = JSON.parse(localStorage.getItem("FAVOURITE_CARDS_LIST_STORE"));
 		if (favList.some(saved => saved['card-id'] == this.getAttribute("card-id"))) {
 			this.isFav = true;
 			this.shadow.querySelector('.fav-button').innerHTML = "★";

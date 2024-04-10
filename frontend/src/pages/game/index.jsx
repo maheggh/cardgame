@@ -28,7 +28,18 @@ function Game() {
             } catch (err) {
                 console.log(err);
             }
+        getLocalStorage();
+        }
 
+    function getLocalStorage(){
+            var x = localStorage.getItem("FAVOURITE_CARDS_LIST_STORE");
+            if (localStorage.getItem("FAVOURITE_CARDS_LIST_STORE") !== null) {
+                setFavCards(JSON.parse(x));
+            }        
+            else{
+            const stringedList = JSON.stringify(favCards);
+            var x = localStorage.setItem("FAVOURITE_CARDS_LIST_STORE", stringedList);
+            }
         }
 
 
@@ -53,6 +64,15 @@ function Game() {
             const copiedObj = JSON.parse(JSON.stringify(obj));
 
         }
+
+        document.addEventListener("favourited", (e) => {
+            const combinedArray = cardInfo;
+            console.log(favCards);
+            const foundCard = combinedArray.find(item => item['card-id'] == e.detail.cardId);
+            console.log(foundCard);
+            if(e.detail.isFav === true){addToFavouritesList(foundCard)}
+            else if(e.detail.isFav === false){removeFromFavouritesList(foundCard)}
+        });
 
         //creates each mission card as a custom component with randomly selected data from the database, then appends it to the document
         function populateMissions(count){
@@ -103,6 +123,17 @@ function Game() {
                 assessmentList.appendChild(assessmentItem);
             });
     
+        }
+
+        function addToFavouritesList(item){
+            console.log(favCards);
+            //checks if favlist contains the card we're trying to add, so as to not add duplicated
+            if (!(favCards.some(saved => saved['card-id'] === item["card-id"]))) {
+                console.log(item);
+                setFavCards(...favCards, item);
+                const stringedList = JSON.stringify(favCards);
+                var x = localStorage.setItem("FAVOURITE_CARDS_LIST_STORE", stringedList);
+            }
         }
 
     return (
