@@ -1,28 +1,36 @@
 import React, { useState } from 'react';
 import handleFileUpload from './onFileUpload';
 
-// Assuming setCards is passed to this component to update the state after upload
 const FileUpload = ({ setCards }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState('');
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-    setUploadStatus('');
+    const file = event.target.files[0]; // Access the file from the event
+    if (file) {
+      setSelectedFile(file); // Update the selectedFile state
+      // Set a message indicating that the file has been added, including the file's name
+      setUploadStatus(`${file.name} has been added.`);
+    } else {
+      // Reset states if no file is selected (e.g., the file selection was cancelled)
+      setSelectedFile(null);
+      setUploadStatus('');
+    }
   };
 
   const handleUploadClick = async () => {
     if (selectedFile && selectedFile.type === "application/json") {
-      setUploadStatus('Uploading...');
+      setUploadStatus('Uploading...'); // Update the message to indicate that upload is starting
       const reader = new FileReader();
       reader.onload = async (e) => {
         const content = e.target.result; // This is the correct content to parse and upload
         try {
-          // Call handleFileUpload with the file's content as text and the setCards function
           await handleFileUpload(content, setCards);
-          setUploadStatus('Upload successful!');
+          // Update the message to indicate a successful upload, including the file's name
+          setUploadStatus(`${selectedFile.name} has been uploaded successfully!`);
         } catch (error) {
           console.error('Upload failed:', error);
+          // Update the message to indicate a failed upload
           setUploadStatus('Upload failed.');
         }
       };
@@ -42,15 +50,8 @@ const FileUpload = ({ setCards }) => {
           onChange={handleFileChange} 
           accept=".json" 
         />
-        <label htmlFor="file" className="file-upload-button">
-          Velg fil
-        </label>
-        <button 
-          className="upload-button" 
-          onClick={handleUploadClick}
-        >
-          Upload
-        </button>
+        <label htmlFor="file" className="file-upload-button">Velg fil</label>
+        <button className="upload-button" onClick={handleUploadClick}>Upload</button>
       </div>
       {/* This div for the upload status message should be outside the button container */}
       {uploadStatus && (

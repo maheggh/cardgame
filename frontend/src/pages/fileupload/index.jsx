@@ -21,11 +21,11 @@ const App = () => {
         {cards.length > 0 && (
           <CardsList cards={cards} setCards={setCards} className="cards-list" />
         )}
-      </div>
       <button
         onClick={() => handleGeneratePDF(cards)} className="generate-pdf-button">
         Generate PDF
       </button>
+      </div>
     </>
   );
 };
