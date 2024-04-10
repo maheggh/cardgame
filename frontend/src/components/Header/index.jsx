@@ -1,10 +1,18 @@
 import logo from '../../../public/icons/Logo.svg'; 
 import './style.css';
 import { useLocation } from 'react-router-dom';
+import { useAuth } from '../../UserContext.jsx';
 
-const Header = ({ isLoggedIn }) => {
+const Header = () => {
     const location = useLocation();
+    const { token, handleLogout } = useAuth();
     const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
+    const decodedToken = (token!='null' && token) ? JSON.parse(atob(token.split('.')[1])) : ''// Decode JWT token payload
+    console.log(decodedToken);
+    const userRole = decodedToken.role;
+      const LogoutFunction = () => {
+        handleLogout();
+      };
 
     return (
         <header className="super-assessor-header">
@@ -14,12 +22,16 @@ const Header = ({ isLoggedIn }) => {
             </a>
             {!isAuthPage && (
                 <nav>
-                    {isLoggedIn ? (
+                    {(userRole=="User" || userRole=="Admin")  ? (
                         <>
                             <a href="/dashboard" className="link nav-button">Dashboard</a>
-                            <a href="/cards" className="link nav-button">Cards</a>
-                            <a href="/users" className="link nav-button">Users</a>
-                            <a href="/logout" className="link nav-button">Log out</a>
+                            {userRole=="Admin" ? (
+                                <>
+                                <a href="/cards" className="link nav-button">Cards</a>
+                                <a href="/users" className="link nav-button">Users</a>
+                                </>
+                                ) : (<></>)}
+                            <a href="" className="link nav-button" onClick={handleLogout}>Log out</a>
                         </>
                     ) : (
                         <>

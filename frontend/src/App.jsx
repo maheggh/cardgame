@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import './App.css';
-//import UserContext from './UserContext.js';
+import { AuthProvider } from './UserContext.jsx';
 import Header from './components/Header/';
 import Login from './pages/login/';
 import Signup from './pages/signup/';
@@ -17,25 +17,25 @@ const handleGeneratePDF = (selectedCards) => {
 };
 
 function App() {
-  const [count, setCount] = useState(0);
+ /* const [count, setCount] = useState(0);
   const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = localStorage.getItem('token');
     return storedUser && storedUser !== 'undefined' ? JSON.parse(storedUser) : null;
-  });
+  });*/
 
   return (
-    
+    <AuthProvider>
       <Router>
-        <Header isLoggedIn={user}/>
+        <Header/>
         <Routes>
           <Route path="/" element={<Welcome />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route element={<PrivateRoutes token={user}/>}> <Route path="/dashboard" element={<Dashboard />} /></Route>
+          <Route element={<PrivateRoutes/>}> <Route path="/dashboard" element={<Dashboard />} /></Route>
           <Route path="/fileUpload" element={<FileUpload />} />
         </Routes>
       </Router>
-    
+    </AuthProvider>
   );
 }
 

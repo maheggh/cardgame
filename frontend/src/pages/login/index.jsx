@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import './style.css';
 import { login } from '../../api/api.js';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../UserContext.jsx';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { loginAuth } = useAuth();
+    const navigate = useNavigate();
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -15,13 +18,11 @@ function Login() {
         setPassword(e.target.value);
     };
 
-    const navigate = useNavigate();
-
     const handleLogin = async (event) => {
         event.preventDefault();
         try {
-            const data = await login(email, password);
-            localStorage.setItem('user', JSON.stringify(data.accessToken));
+            const data = await login(email, password); 
+            loginAuth(JSON.stringify(data.accessToken));
             navigate('/');
         } catch (error) {
             console.error('Login failed:', error);
