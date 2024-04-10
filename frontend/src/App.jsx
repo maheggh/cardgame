@@ -11,6 +11,7 @@ import Dashboard from './pages/dashboard/';
 import FileUpload from "./pages/fileupload";
 //import generatePDF from "./helpers/pdfGenerator";
 import PrivateRoutes from './helpers/PrivateRoute.jsx';
+import UserDashboard from './pages/users/index.jsx';
 
 const handleGeneratePDF = (selectedCards) => {
   generatePDF(selectedCards);
@@ -32,6 +33,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route element={<PrivateRoutes/>}> <Route path="/dashboard" element={<Dashboard />} /></Route>
+          <Route path="/users" element={<UserDashboard />} />
           <Route path="/fileUpload" element={<FileUpload />} />
         </Routes>
       </Router>

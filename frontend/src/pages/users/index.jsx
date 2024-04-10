@@ -29,10 +29,16 @@ const UserDashboard = () => {
   useEffect(() => {
     const getAllUsers = async () => {
       try {
-        const allUsers = await usersAuthorize("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE0MWEzNTllOTgwMWNmNTc5NzAzNDciLCJpYXQiOjE3MTI2ODgxNzUsImV4cCI6MTcxMjY4OTA3NX0.QeCek5tJ50Bgze2CmJ3m626a8UrHLRvzMdOhyMlMnn4");
+        const authToken = localStorage.getItem('token');
+        if (!authToken) {
+          console.error('No auth token found');
+          return;
+        }
+        const allUsers = await usersAuthorize(authToken);
         setUsers(allUsers);
       } catch (error) {
         console.error('Error:', error);
+        console.log(authToken);
       }
     };
 
@@ -43,7 +49,6 @@ const UserDashboard = () => {
     <div className='users_screen'>
       <h1>Users</h1>
       <div className='users_screen_list'>
-      
         {users.map((user, index) => (
           <User key={index} user={user} />
         ))}

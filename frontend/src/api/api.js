@@ -48,10 +48,11 @@ export async function authorize(token){
 
 
 export async function usersAuthorize(token){
-    const response = await fetch(`http://localhost:3000/users`, {
+    token = token.replace(/"/g, ''); // Remove extra quotation marks
+    const response = await fetch(`${API_URL}/users`, {
         method: 'GET',
         headers: {
-            'auth-token': token
+            'auth-token': `Bearer ${token}`
         }
     });
     if (!response.ok) {
