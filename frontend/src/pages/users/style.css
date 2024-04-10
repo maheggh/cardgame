@@ -17,6 +17,18 @@
     flex-wrap: wrap;
 }
 
+@media (max-width: 900px) {
+    .users_screen_list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 650px) {
+    .users_screen_list {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
 .users_screen_list_item{
     border: 1px solid #000000;
     padding: 10px;

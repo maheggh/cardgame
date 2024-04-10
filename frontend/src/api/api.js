@@ -48,7 +48,7 @@ export async function authorize(token){
 
 
 export async function usersAuthorize(token){
-    token = token.replace(/"/g, ''); // Remove extra quotation marks
+    token = token.replace(/"/g, ''); 
     const response = await fetch(`${API_URL}/users`, {
         method: 'GET',
         headers: {
