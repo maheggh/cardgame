@@ -3,6 +3,8 @@ import './style.css';
 import { login, authorize } from '../../api/api.js';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../UserContext.jsx';
+import SUPERMissionCard from './../../components/CardHTMLComponent/SUPER-mission-card.js';
+import SUPERAssessmentCard from './../../components/CardHTMLComponent/SUPER-assessment-card.js';
 
 function Game() {
     const { loginAuth, token } = useAuth();
@@ -10,29 +12,46 @@ function Game() {
     const navigate = useNavigate();
     const [cardInfo, setCardInfo] = useState([]);
     const [favCards, setFavCards] = useState([]);
+    const [loading, setLoading] = useState(false);
     const missionCount = 3;
     const assessmentCount = 6;
 
-    useEffect(() => {
         const getAllCards = async () => {
             try {
               const allCards = await authorize(token);
-                setCardInfo(allCards)
+                setCardInfo(allCards);
+                setLoading(true);
+            if (cardInfo.length > 0) {
+                    populateAssessments(assessmentCount);
+                    populateMissions(missionCount);
+            }
             } catch (err) {
                 console.log(err);
             }
 
         }
+
+
+    useEffect(() => {
         getAllCards()
         const copiedObj = JSON.parse(JSON.stringify(cardInfo));
-        //populateAssessments(assessmentCount);
-        //populateMissions(missionCount);
-    }, [])
+
+
+    }, [loading])
+
+        function getRandomItem(list){
+            if ( list == undefined || list == null) return null;
+            var randomIndex = Math.floor(Math.random() * list.length);
+            const object = list[randomIndex];
+            // remove card
+            list.splice(randomIndex, 1);
+            //console.log(list);
+            return object;
+        }
 
         function randomizeCards(){
             const copiedObj = JSON.parse(JSON.stringify(obj));
-            populateAssessments(assessmentCount);
-            populateMissions(missionCount);
+
         }
 
         //creates each mission card as a custom component with randomly selected data from the database, then appends it to the document
@@ -41,12 +60,12 @@ function Game() {
             missionList.innerHTML = '';
             for (let i = 0; i < count; i++) {
                 var missionItem;
-                const missionObj = getRandomItem(copiedObj.missions);
+                const missionObj = (cardInfo.length > 0) ? (getRandomItem(cardInfo.filter(card => card["card-type"] === "Mission"))) : ('') ;
                 missionItem = document.createElement('super-mission-card');
-                
                 //sets each pair from the JSON as an attribute in the HTML
                 var x;
                 for (x in missionObj) {
+
                     missionItem.setAttribute(x, missionObj[x]);
                 }
 
@@ -65,8 +84,7 @@ function Game() {
             cardOrder.forEach(category => {
                 //finds matching cards in the specific category
 
-                const matchingCards = cardInfo.assessments.filter((card) => card['card-category'] == category);
-
+                const matchingCards = (cardInfo.length > 0) ? cardInfo.filter(card => card["card-type"] === "Assessment").filter((card) => card['card-category'] == category) : ('');
                 //gives random number for card within the ammount of cards in that category
                 const randomIndex = Math.floor(Math.random() * matchingCards.length);
                 selectedCards[category] = matchingCards[randomIndex];                
@@ -74,7 +92,7 @@ function Game() {
             Object.values(selectedCards).forEach((element) => {
                 var assessmentItem;
                 assessmentItem = document.createElement('super-assessment-card');
-                assessmentItem.id = 'card_'+element['card-id'];
+                assessmentItem.id = (element != undefined) ? 'card_'+element['card-id'] : ('');
                 //sets each pair from the JSON as an attribute in the HTML
                 var x;
                 for (x in element) {
@@ -88,7 +106,7 @@ function Game() {
         }
 
     return (
-        <div className="content-wrapper">
+        <div className="game-wrapper">
         <h1>the SUPER Assessor - Idea generator</h1>
         <p>SUPER Assessor, a game designed for educators, is the result of a research project undertaken by the Department of Design in Trondheim. Its primary objective is to aid educators in the development of unique assessment methods. These methods are intended to create innovative ways to evaluate and grade students.</p>
     <main>

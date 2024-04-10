@@ -62,6 +62,8 @@ export default class SUPERAssessmentCard extends HTMLElement {
                 #cardComponent {
 				    min-width: 220px;
 				    min-height: 300px;
+				    max-width: 300px;
+				    max-height: 400px;
 				    line-height: 0;
 				    user-select: none;
 				    user-drag: none;
@@ -158,9 +160,9 @@ export default class SUPERAssessmentCard extends HTMLElement {
 		const cardId = parseInt(this.getAttribute("card-id"));
 		const imageFront = this.shadow.getElementById("card_front_image");
 		//ternary operator used for when the card lands on card 1, as there is no suffix on those
-		imageFront.src = ("assets/cards-png/SUPER cards poker size 061123" + (cardId==1 ? "" : ( (cardId*2)-1)) + ".png");
+		imageFront.src = ("../../../public/cards-png/SUPER cards poker size 061123" + (cardId==1 ? "" : ( (cardId*2)-1)) + ".png");
 		const imageBack = this.shadow.getElementById("card_back_image");
-		imageBack.src = ("assets/cards-png/SUPER cards poker size 061123" + (cardId*2) + ".png");
+		imageBack.src = ("../../../public//cards-png/SUPER cards poker size 061123" + (cardId*2) + ".png");
 	}
 
 	flipCard(){
