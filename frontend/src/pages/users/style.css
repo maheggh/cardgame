@@ -1,0 +1,47 @@
+.users_screen {
+    display: flex;
+    flex-direction: column;
+    margin: 30px auto;
+    max-width: 1200px;
+    background-color: white;
+    padding: 2rem;
+}
+
+.users_screen_list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-items: left;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.users_screen_list_item{
+    border: 1px solid #000000;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.users_screen .bold {
+    font-weight: bold;
+}
+
+.users_screen button {
+    border: none;
+    height: 40px;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.users_screen button img {
+    width: 40px;
+    height: 40px;
+}

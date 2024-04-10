@@ -45,3 +45,18 @@ export async function authorize(token){
 
     return response.json();
 }
+
+
+export async function usersAuthorize(token){
+    const response = await fetch(`http://localhost:3000/users`, {
+        method: 'GET',
+        headers: {
+            'auth-token': token
+        }
+    });
+    if (!response.ok) {
+        throw new Error('Login failed');
+    }
+
+    return response.json();
+}
