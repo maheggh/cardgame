@@ -1,45 +1,47 @@
+import React, { useState, useEffect } from 'react';
 import StatCounter from '../../components/StatCounter/';
-import { useEffect, useState } from 'react';
-import { authorize } from '../../api/api.js';
+import { authorize, usersAuthorize } from '../../api/api.js';
 import { useAuth } from '../../UserContext.jsx';
 import './style.css'
+
 function Dashboard() {
-  const [data, setData] = useState('');
-  const [infocards, setInfocards] = useState([]);
+  const [data, setData] = useState([]);
+  const [userCount, setUserCount] = useState(0);
   const { token } = useAuth();
+  const [cardCategoryCount, setCardCategoryCount] = useState(0);
 
-    useEffect(() => {
-        const getAllCards = async () => {
-            try {
-              const allCards = await authorize(token);
-                setData(allCards)
-            } catch (err) {
-                console.log(err);
-            }
+  useEffect(() => {
+    const getAllData = async () => {
+      try {
+        const allCards = await authorize(token);
+        setData(allCards);
+        const uniqueCardCategories = new Set(allCards.map(card => card['card-category']));
+        setCardCategoryCount(uniqueCardCategories.size);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-        }
+    const getUserCount = async () => {
+      try {
+        const allUsers = await usersAuthorize(token);
+        setUserCount(allUsers.length); // set the count of users
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
 
-        const countUniquePositions = (items) => {
-          const uniquePositions = {};
-
-          items.forEach(item => {
-              uniquePositions[item['card-type']] = true;
-          });
-
-          return Object.keys(uniquePositions).length;
-      };
-        getAllCards()
-        
-    }, [])
+    getAllData();
+    getUserCount();
+  }, [token]);
 
   return (
-        <div className="content-wrapper">
-            <h1 className="title">Dashboard</h1>
-            <StatCounter title={"Total cards available"} number={Object.keys(data).length}/>
-            <StatCounter title={"Card types available"} number={93}/>
-            <StatCounter title={"Total cards available"} number={93}/>
-            <StatCounter title={"Total cards available"} number={93}/>
-        </div>
+    <div className="content-wrapper">
+      <h1 className="title">Dashboard</h1>
+      <StatCounter title={"Total cards available"} number={data.length}/>
+      <StatCounter title={"Card types available"} number={cardCategoryCount}/>
+      <StatCounter title={"Total users"} number={userCount}/>
+    </div>
   );
 }
 
