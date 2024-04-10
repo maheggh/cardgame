@@ -62,6 +62,16 @@ const FileUpload = ({ setCards }) => {
       setUploadStatus(`Deletion failed: ${error.message}`);
     }
   };
+
+  const handleToggleFavorite = (cardId) => {
+    setFavoriteCardIds(prev => {
+      if (prev.includes(cardId)) {
+        return prev.filter(id => id !== cardId); 
+      } else {
+        return [...prev, cardId]; 
+      }
+    });
+  };
   
   
   
