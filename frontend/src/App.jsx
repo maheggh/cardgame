@@ -18,11 +18,6 @@ const handleGeneratePDF = (selectedCards) => {
 };
 
 function App() {
- /* const [count, setCount] = useState(0);
-  const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem('token');
-    return storedUser && storedUser !== 'undefined' ? JSON.parse(storedUser) : null;
-  });*/
 
   return (
     <AuthProvider>

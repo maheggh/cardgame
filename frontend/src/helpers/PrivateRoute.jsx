@@ -1,3 +1,5 @@
+//unused component. from earlier testing
+
 import { Outlet, Navigate } from 'react-router-dom'
 
 const PrivateRoutes = (token) => {

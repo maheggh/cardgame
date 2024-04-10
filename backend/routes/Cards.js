@@ -2,6 +2,7 @@
 const express 		= require('express');
 const router 		= express.Router();
 const {createCard, getAllCards, getSingleCard, deleteCard, updateCard} = require('../controllers/cardController');
+const {auth, authRole} = require('../helpers/verifyToken');
 
 //GET: Read all cards
 router.get('/', getAllCards);
@@ -10,12 +11,12 @@ router.get('/', getAllCards);
 router.get('/:id', getSingleCard);
 
 //POST: Create card
-router.post('/', createCard);
+router.post('/', auth, createCard);
 
 //PATCH: Update single card
-router.patch('/:id', updateCard);
+router.patch('/:id', auth, updateCard);
 
 //DELETE: Delete single card
-router.delete('/:id', deleteCard);
+router.delete('/:id', auth, deleteCard);
 
 module.exports = router;
