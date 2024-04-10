@@ -25,6 +25,21 @@ app.get('/', (req, res) => {
   res.sendStatus(200);
 });
 
+// Your DELETE route
+app.delete('/cards/:id', async (req, res) => {
+  const _id = req.params.id;
+  try {
+    const result = await Cards.findByIdAndDelete(_id);
+    if (!result) {
+      return res.status(404).json({ message: 'Card not found' });
+    }
+    res.json({ message: 'Card deleted successfully', card: result });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting card', error: error });
+  }
+});
+
+
 // API routes
 app.use('/cards', cardsRoutes);
 app.use('/users', usersRoutes);
