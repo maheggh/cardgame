@@ -1,15 +1,17 @@
 import StatCounter from '../../components/StatCounter/';
 import { useEffect, useState } from 'react';
 import { authorize } from '../../api/api.js';
+import { useAuth } from '../../UserContext.jsx';
 import './style.css'
 function Dashboard() {
   const [data, setData] = useState('');
   const [infocards, setInfocards] = useState([]);
+  const { token } = useAuth();
 
     useEffect(() => {
         const getAllCards = async () => {
             try {
-              const allCards = await authorize("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE0MWEzNTllOTgwMWNmNTc5NzAzNDciLCJpYXQiOjE3MTI2ODgxNzUsImV4cCI6MTcxMjY4OTA3NX0.QeCek5tJ50Bgze2CmJ3m626a8UrHLRvzMdOhyMlMnn4");
+              const allCards = await authorize(token);
                 setData(allCards)
             } catch (err) {
                 console.log(err);
