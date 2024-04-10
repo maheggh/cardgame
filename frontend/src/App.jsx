@@ -10,6 +10,7 @@ import Dashboard from './pages/dashboard/';
 import FileUpload from "./pages/fileupload";
 import PrivateRoutes from './helpers/PrivateRoute.jsx';
 import UserDashboard from './pages/users/index.jsx';
+import Game from './pages/game/';
 
 const handleGeneratePDF = (selectedCards) => {
   generatePDF(selectedCards);
@@ -28,6 +29,7 @@ function App() {
           <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/dashboard" element={<Dashboard />} /></Route>
           <Route element={<PrivateRoutes requiredRoles={["Admin"]}/>}> <Route path="/cards" element={<Dashboard />} /></Route>
           <Route element={<PrivateRoutes requiredRoles={["Admin"]}/>}> <Route path="/users" element={<UserDashboard />} /></Route>
+          <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/game" element={<Game />} /></Route>
           <Route path="/fileUpload" element={<FileUpload />} />
         </Routes>
       </Router>

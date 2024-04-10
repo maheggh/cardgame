@@ -1,0 +1,75 @@
+/* Your styles go here */
+
+:root{
+    --card-type-Assessment: #082FEF;
+    --card-type-Mission: #EF0844;
+    
+}
+.cardNumber{
+    padding: 0;
+    margin: 0;
+}
+
+ul#favourite-cards-list li{
+    list-style: none;
+}
+ul#favourite-cards-list li:last-of-type{
+    justify-self: flex-start;
+}
+
+button{
+  background-color: #363537;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 10px 16px;
+  text-align: center;
+  cursor: pointer;
+}
+
+button:hover{
+    background-color: #F17299;
+}
+
+header,
+main,
+aside,
+footer {
+    background: #fefefe;
+    border-radius: 15px;
+    border: #3331;
+}
+
+main{
+    justify-content: unset;
+}
+
+aside{
+    justify-content: flex-start;
+    align-items: baseline;
+    background-color: #CCF5DF;
+}
+
+h1, h2, h3{
+    margin-top: 0;
+}
+
+ul#favourite-cards-list{
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+
+header>* {
+    max-width: 142ch;
+}
