@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Card = require('../models/Card'); // Adjust path as necessary
+const Card = require('../models/Card'); // Make sure this path is correct
 
 // Route to fetch all cards
 router.get('/', async (req, res) => {
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 });
 
 // Route for bulk upload to update existing cards or insert new ones
-router.post('/bulk', async (req, res) => {
+router.post('/bulk', async (req, res) => { 
   try {
     // Check if req.body.cards exists and is an array
     if (!Array.isArray(req.body.cards)) {
@@ -40,7 +40,7 @@ router.post('/bulk', async (req, res) => {
     // Execute bulk operations
     const result = await Card.bulkWrite(bulkOps, { ordered: false });
 
-    // confirm success
+    // Confirm success
     const cardIds = filteredCards.map(card => card['card-id']);
     const updatedCards = await Card.find({ 'card-id': { $in: cardIds } });
 

@@ -1,34 +1,36 @@
-const express 		= require('express');
-const app 			= express();
-const cors 			= require('cors'); // Import the cors package
-const dotenv 		= require('dotenv').config();
-const port 			= process.env.PORT || 3000;
-const connectDB 	= require('./dbconnect');
-const cardRoutes = require('./routes/BulkUpload'); 
+const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv').config();
+const connectDB = require('./dbconnect');
+const app = express();
+const port = process.env.PORT || 3000;
 
-//connects to the local mongoDB
+// Connects to the MongoDB
 connectDB();
 
-//calls gets routes from their files
-const cards 		= require('./routes/Cards');
-const users 		= require('./routes/Users');
-const search 		= require('./routes/Search');
-const icons 		= require('./routes/Icons');
+// Routes
+const cardsRoutes = require('./routes/Cards'); // Adjust path as necessary
+const usersRoutes = require('./routes/Users'); // Adjust path as necessary
+const searchRoutes = require('./routes/Search'); // Adjust path as necessary
+const iconsRoutes = require('./routes/Icons'); // Adjust path as necessary
+const bulkUploadRoutes = require('./routes/Bulk'); // Adjust path as necessary
 
-app.use(cors()); // Use cors as middleware
+// Middlewares
+app.use(cors());
 app.use(express.json());
 
-//unescessary get that just sends a 200 status and console logs 'here'. just for debugging
+// Debugging route
 app.get('/', (req, res) => {
-	console.log('here')
-	res.sendStatus(200)
+  console.log('Server is up and running');
+  res.sendStatus(200);
 });
 
-//routes
-app.use('/cards', cards);
-app.use('/users', users);
-app.use('/search', search);
-app.use('/icons', icons);
-app.use('/api/cards', cardRoutes);
+// API routes
+app.use('/cards', cardsRoutes);
+app.use('/users', usersRoutes);
+app.use('/search', searchRoutes);
+app.use('/icons', iconsRoutes);
+app.use('/api/cards', bulkUploadRoutes); // Mounting the bulk upload operations route
 
-app.listen(port, () => console.log(`express server listening on port ${port}...`));
+// Start the server
+app.listen(port, () => console.log(`Express server listening on port ${port}...`));

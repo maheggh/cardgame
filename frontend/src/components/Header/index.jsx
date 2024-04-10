@@ -1,4 +1,3 @@
-import React from 'react';
 import logo from '../../../public/icons/Logo.svg'; 
 import './style.css';
 import { useLocation } from 'react-router-dom';
@@ -8,7 +7,7 @@ const Header = ({ isLoggedIn }) => {
     const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
 
     return (
-        <div class="super-assessor-header-container">
+        <div className="super-assessor-header-container">
             <header className="super-assessor-header">
                 <a href='/' className="logo">
                     <img src={logo} alt="Logo"/>

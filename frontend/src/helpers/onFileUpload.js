@@ -1,7 +1,7 @@
 const handleFileUpload = async (content, setCards) => {
   try {
     const cards = JSON.parse(content); // Assuming this is an array of cards
-    const response = await fetch('/api/cards/bulk', { // Make sure this matches your actual endpoint
+    const response = await fetch('http://localhost:3000/api/cards/bulk', { // Make sure this matches your actual endpoint
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
