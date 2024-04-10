@@ -1,5 +1,14 @@
-import { createContext } from 'react';
+import { createContext, useContext, useState } from 'react';
 
-const UserContext = createContext(null);
+const UserContext = createContext();
+export const authData = () =>  useContext(UserContext);
 
-export default UserContext;
+export const AuthWrapper = () => {
+
+	const [user, setUser] = useState({name: "", isAuth: false})
+
+	
+
+}
+
+export default {UserContext, AuthWrapper};

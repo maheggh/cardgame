@@ -115,6 +115,7 @@ const authenticateUser = async (req, res) => {
 
 	//check if email exists: code borrowed from presentation
 	const user = await Users.findOne({email:req.body.email})
+	console.log(user);
 	if(!user){
 	return res.status(400).send('email does not exist')
 	}
@@ -126,7 +127,7 @@ const authenticateUser = async (req, res) => {
 	}
 
 	//generates token and refresh token then sends it in the response
-	const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET, { expiresIn: '15m' });
+	const token = jwt.sign({_id:user._id, role: user.role},process.env.TOKEN_SECRET, { expiresIn: '15m' });
 	const refreshToken = jwt.sign({_id:user._id},process.env.REFRESH_SECRET);
 	res.json({accessToken: token, refreshToken: refreshToken});
 }

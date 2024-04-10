@@ -23,11 +23,16 @@
     gap: 1rem;
 }
 
-.loginscreen input, .signupscreen input{
+.loginscreen input, .signupscreen input, .loginscreen select, .signupscreen select {
     font-size: 1.2rem;
     padding: 0.5rem;
     width: 100%;
+    border: 1px solid #B6B6B6;
+    border-radius: 8px;
+    height: 36px;
+    background-color: #fff;
 }
+
 
 .loginscreen button, .signupscreen button{
     font-size: 1.4rem;

@@ -4,11 +4,6 @@
 }
 
 .super-assessor-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1000px;
-    margin: 0 auto;
     padding: 20px 0;
 }
 
@@ -39,4 +34,12 @@
 
 .super-assessor-header .nav-button:hover {
     background-color: #e0e0e0;
+}
+.header-wrapper{
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
 }
