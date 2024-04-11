@@ -5,9 +5,11 @@
     gap: 12px;
     margin: auto;
     justify-content: space-between;
+    margin-top: 100px;
 }
 
 .title{
     display: block;
     width: 100%;
+    margin-top: 50px;
 }
