@@ -46,3 +46,6 @@ const cards = [
 ];
 
 generatePDF(cards);
+
+export default generatePDF;
+

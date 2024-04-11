@@ -7,7 +7,7 @@ const {auth, authRole} = require('../helpers/verifyToken');
 
 
 //GET: Read all users
-router.get('/', auth, getAllUsers);
+router.get('/', getAllUsers);
 
 //GET: Read single user
 router.get('/:id', auth, authRole('Admin'), getSingleUser);

@@ -10,6 +10,11 @@ function Dashboard() {
   const { token } = useAuth();
   const [cardCategoryCount, setCardCategoryCount] = useState(0);
 
+  const exportToPdf = () => {
+    const element = document.getElementById('content-to-pdf');
+    html2pdf().from(element).save();
+  };
+
   useEffect(() => {
     const getAllData = async () => {
       try {

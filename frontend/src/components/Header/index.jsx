@@ -29,6 +29,7 @@ const Header = () => {
                                 <>
                                 <a href="/cards" className="link nav-button">Cards</a>
                                 <a href="/users" className="link nav-button">Users</a>
+                                <a href="/fileupload" className="link nav-button">Upload</a>
                                 </>
                                 ) : (<></>)}
                             <a href="" className="link nav-button" onClick={handleLogout}>Log out</a>
