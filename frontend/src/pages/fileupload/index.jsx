@@ -1,36 +1,34 @@
 import React, { useState, useEffect } from "react";
 import CardsList from "../../cardList";
 import FileUpload from "../../helpers/fileUpload.jsx";
-import generatePDF from "../../helpers/pdfGenerator"; // Ensure this is the correct path
+import generatePDF from "../../helpers/pdfGenerator";
 import "./style.css";
 
 const App = () => {
   const [cards, setCards] = useState([]);
   const [favoriteCards, setFavoriteCards] = useState([]);
 
-  // Function that handles the PDF generation
+  // Function that handles the PDF generation for selected cards
   const handleGeneratePDF = (selectedCards) => {
     generatePDF(selectedCards);
   };
 
+  // Function to handle card click (future use for generating images)
+  const handleCardClick = (card) => {
+    console.log("Clicked card:", card);
+    // You can set up logic here to generate or display the card's image
+  };
+
   useEffect(() => {
-    // Assume favorite card IDs are stored in local storage
-    const updateFavorites = () => {
+    // Load favorite cards from local storage
+    const loadFavoriteCards = () => {
       const storedFavorites = localStorage.getItem('FAVOURITE_CARDS_LIST_STORE');
       if (storedFavorites) {
         setFavoriteCards(JSON.parse(storedFavorites));
       }
     };
 
-    // Call updateFavorites to initialize favorite cards list
-    updateFavorites();
-
-    // Optional: Listen for changes in favorites and update accordingly
-    window.addEventListener('favoriteChanged', updateFavorites);
-
-    return () => {
-      window.removeEventListener('favoriteChanged', updateFavorites);
-    };
+    loadFavoriteCards();
   }, []);
 
   return (
@@ -45,9 +43,13 @@ const App = () => {
       {/* Display favorite cards */}
       <div className="favorite-cards-container">
         <h2>Favorite Cards</h2>
-        {favoriteCards.map(cardId => (
-          <favourite-card key={cardId} card-id={cardId}></favourite-card>
-        ))}
+        <ul>
+          {favoriteCards.map((card) => (
+            <li key={card['_id']} onClick={() => handleCardClick(card)} style={{cursor: 'pointer'}}>
+              {card['card-type']} - {card['card-category']}: {card['card-name']}
+            </li>
+          ))}
+        </ul>
       </div>
 
       <button onClick={() => handleGeneratePDF(cards)} className="button generate-pdf-button">
