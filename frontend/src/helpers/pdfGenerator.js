@@ -51,4 +51,11 @@ const generatePDF = async (favoriteCardsData) => {
     document.body.removeChild(cardsContainer);
 };
 
+<<<<<<< HEAD
+generatePDF(cards);
+
+export default generatePDF;
+
+=======
 export { generatePDF };
+>>>>>>> 6902485a9e0d5776603972da1370a41ffd3da920

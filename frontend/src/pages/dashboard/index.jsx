@@ -10,6 +10,7 @@ function Dashboard() {
   const [userCount, setUserCount] = useState(0);
   const [cardCategoryCount, setCardCategoryCount] = useState(0);
 
+
   // Get token from context
   const { token } = useAuth();
 
