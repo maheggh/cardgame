@@ -7,8 +7,7 @@ import { generatePDF } from './pdf-file/pdf-logic.jsx';
 const App = () => {
   const [cards, setCards] = useState([]);
   const [favoriteCards, setFavoriteCards] = useState([]);
-
-
+  const [selectedCardsForPDF, setSelectedCardsForPDF] = useState([]); // Define selectedCardsForPDF
 
   useEffect(() => {
     // Load favorite cards from local storage
@@ -21,6 +20,17 @@ const App = () => {
 
     loadFavoriteCards();
   }, []);
+
+  // Define handleCardClick
+  const handleCardClick = (card) => {
+    setSelectedCardsForPDF(prevCards => {
+      if (prevCards.some(selectedCard => selectedCard['_id'] === card['_id'])) {
+        return prevCards.filter(selectedCard => selectedCard['_id'] !== card['_id']);
+      } else {
+        return [...prevCards, card];
+      }
+    });
+  };
 
   return (
     <div className="app-container">
@@ -47,7 +57,7 @@ const App = () => {
         </ul>
       </div>
 
-        <button onClick={generatePDF} className="button generate-pdf-button">
+        <button onClick={() => generatePDF(selectedCardsForPDF)} className="button generate-pdf-button">
           Generate PDF
         </button>
       </div>
