@@ -35,18 +35,6 @@ function Game() {
                setFavCards(JSON.parse(x));
         }
 
- /*   function getLocalStorage(){
-            var x = localStorage.getItem("FAVOURITE_CARDS_LIST_STORE");
-            if (x.length !== 0) {
-                setFavCards(JSON.parse(x));
-
-            }       
-            else{
-            const stringedList = JSON.stringify(favCards);
-            localStorage.setItem("FAVOURITE_CARDS_LIST_STORE", stringedList);
-            setLoading(true);
-            }
-        }*/
 
 useEffect(() => {
     var x = localStorage.getItem("FAVOURITE_CARDS_LIST_STORE");

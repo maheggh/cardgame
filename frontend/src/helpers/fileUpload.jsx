@@ -2,12 +2,18 @@ import React, { useState } from 'react';
 import handleFileUpload from './onFileUpload';
 import { useAuth } from '../UserContext';
 
+
+
 const FileUpload = ({ setCards }) => {
+
   let { token } = useAuth(); 
+
+  // State for selected file, upload status, and card ID to delete
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState('');
   const [deleteCardId, setDeleteCardId] = useState('');
 
+  // Handle file selection
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -19,6 +25,7 @@ const FileUpload = ({ setCards }) => {
     }
   };
 
+  // Handle file upload
   const handleUploadClick = async () => {
     if (selectedFile && selectedFile.type === "application/json") {
       setUploadStatus('Uploading...');
@@ -40,7 +47,7 @@ const FileUpload = ({ setCards }) => {
   };
 
 
-
+  // Handle card deletion
   const handleDeleteClick = async () => {
     
     try {
@@ -74,7 +81,7 @@ const FileUpload = ({ setCards }) => {
   };
   
   
-  
+  // Render file upload form
   return (
     <div className="file-upload">
       <div className="file-upload-button-container">
