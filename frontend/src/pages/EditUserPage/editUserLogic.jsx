@@ -1,15 +1,18 @@
 const URL = 'http://localhost:3000/users/';
 
+
+// Fetch user data
 export const fetchUser = (userId, token2) => {
   return fetch(`${URL}${userId}`, {
     headers: {
-      'auth-token': `Bearer ${token2}`, 
+      'auth-token': `Bearer ${token2}`,
     },
   })
   .then(response => response.json())
   .catch(error => console.error('Error:', error));
 };
 
+// Update user data
 export const updateUser = (userId, user, token2) => {
   return fetch(`${URL}${userId}`, {
     method: 'PATCH',
@@ -28,6 +31,7 @@ export const updateUser = (userId, user, token2) => {
   .catch(error => console.error('Error:', error));
 };
 
+// Delete user
 export const deleteUser = (userId, token2) => {
   return fetch(`${URL}${userId}`, {
     method: 'DELETE',

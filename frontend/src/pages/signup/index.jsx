@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {login, signup} from '../../api/api.js';
 
 function Signup() {
+    // State for form inputs
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
@@ -13,10 +14,11 @@ function Signup() {
 
     const navigate = useNavigate();
 
+    // Signup function
     const signup = async (email, password, name, surname, department, university, position) => {
         const requestBody = { email, password, name, surname, department, university, position };
-        console.log('Request body:', requestBody);
 
+        // Send signup request
         const response = await fetch('http://localhost:3000/users', {
             method: 'POST',
             headers: {
@@ -25,6 +27,7 @@ function Signup() {
             body: JSON.stringify(requestBody),
         });
 
+        // Throw error if signup fails
         if (!response.ok) {
             const responseBody = await response.text();
             console.error('Server response:', responseBody);
@@ -34,16 +37,13 @@ function Signup() {
         return response.json();
     };
 
+
+    // Handle signup form
     const handleSignup = async (event) => {
         event.preventDefault();
         try {
             const response = await signup(email, password, name, surname, department, university, position);
             const loginRes = await login(email, password);
-            console.log(loginRes);
-            //const { accessToken, refreshToken, user } = response;
-            //(console.log('User:', user);
-            //console.log('Access Token:', accessToken);
-            //console.log('Refresh Token:', refreshToken);
             localStorage.setItem('user', JSON.stringify(loginRes.accessToken));
             navigate('/');
         } catch (error) {

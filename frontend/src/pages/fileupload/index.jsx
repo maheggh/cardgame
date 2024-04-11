@@ -1,23 +1,13 @@
 import React, { useState, useEffect } from "react";
 import CardsList from "../../cardList";
 import FileUpload from "../../helpers/fileUpload.jsx";
-import generatePDF from "../../helpers/pdfGenerator";
 import "./style.css";
+import { generatePDF } from './pdf-file/pdf-logic.jsx';
 
 const App = () => {
   const [cards, setCards] = useState([]);
   const [favoriteCards, setFavoriteCards] = useState([]);
-
-  // Function that handles the PDF generation for selected cards
-  const handleGeneratePDF = (selectedCards) => {
-    generatePDF(selectedCards);
-  };
-
-  // Function to handle card click (future use for generating images)
-  const handleCardClick = (card) => {
-    console.log("Clicked card:", card);
-    // You can set up logic here to generate or display the card's image
-  };
+  const [selectedCardsForPDF, setSelectedCardsForPDF] = useState([]); // Define selectedCardsForPDF
 
   useEffect(() => {
     // Load favorite cards from local storage
@@ -30,6 +20,17 @@ const App = () => {
 
     loadFavoriteCards();
   }, []);
+
+  // Define handleCardClick
+  const handleCardClick = (card) => {
+    setSelectedCardsForPDF(prevCards => {
+      if (prevCards.some(selectedCard => selectedCard['_id'] === card['_id'])) {
+        return prevCards.filter(selectedCard => selectedCard['_id'] !== card['_id']);
+      } else {
+        return [...prevCards, card];
+      }
+    });
+  };
 
   return (
     <div className="app-container">
@@ -45,17 +46,21 @@ const App = () => {
         <h2>Favorite Cards</h2>
         <ul>
           {favoriteCards.map((card) => (
-            <li key={card['_id']} onClick={() => handleCardClick(card)} style={{cursor: 'pointer'}}>
-              {card['card-type']} - {card['card-category']}: {card['card-name']}
+            <li 
+              key={card['_id']} 
+              onClick={() => handleCardClick(card)} 
+              style={{cursor: 'pointer', backgroundColor: selectedCardsForPDF.some(selectedCard => selectedCard['_id'] === card['_id']) ? '#DDD' : 'transparent'}}
+            >
+              {card['card-id']}: {card['card-type']}: {card['card-category']}: {card['card-name']}
             </li>
           ))}
         </ul>
       </div>
 
-      <button onClick={() => handleGeneratePDF(cards)} className="button generate-pdf-button">
-        Generate PDF
-      </button>
-    </div>
+        <button onClick={() => generatePDF(selectedCardsForPDF)} className="button generate-pdf-button">
+          Generate PDF
+        </button>
+      </div>
   );
 };
 

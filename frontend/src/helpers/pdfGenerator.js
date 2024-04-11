@@ -1,51 +1,61 @@
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 
-// Mock function to render a card element, replace with your actual rendering logic
-const renderCardElementAsync = async (cardData) => {
-  const cardElement = document.createElement('div');
-  // Simulate asynchronous rendering, e.g., fetching images or data
-  await new Promise(resolve => setTimeout(resolve, 100)); // Mock async delay
-  cardElement.innerHTML = `<h4>${cardData.cardType}: ${cardData.cardName}</h4>
-                           <img src="${cardData.imageUrl}" style="width:100px;height:150px;">`;
-  return cardElement;
+// Function to dynamically create a card element based on card data
+const createCardElementForPDF = (cardData) => {
+    const cardElement = document.createElement('div');
+    cardElement.style.cssText = `width: 210mm; min-height: 297mm; border: 1px solid #000; margin: 10px; padding: 10px; page-break-after: always;`;
+    cardElement.innerHTML = `
+        <h4>${cardData['card-type']}: ${cardData['card-name']}</h4>
+        <p>${cardData['card-description']}</p>
+        <p>Color: ${cardData['card-color']}</p>
+    `;
+    // More styling or elements can be added here as needed
+    return cardElement;
 };
 
-const generatePDF = async (cards) => {
-  const doc = new jsPDF();
-  let promises = [];
-
-  cards.forEach(card => {
-    promises.push(new Promise(async (resolve) => {
-      const cardElement = await renderCardElementAsync(card);
-      document.body.appendChild(cardElement); // Add to DOM to capture
-      await new Promise(resolve => setTimeout(resolve, 50)); // Give time for images to load
-
-      html2canvas(cardElement).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        document.body.removeChild(cardElement); // Clean-up
-        resolve({imgData, card});
-      });
-    }));
-  });
-
-  Promise.all(promises).then(results => {
-    results.forEach((result, index) => {
-      if (index > 0) doc.addPage();
-      doc.addImage(result.imgData, 'PNG', 10, 10, 180, 260); // Adjust as needed
+// Main function to generate a PDF document from the favorite cards
+const generatePDF = async (favoriteCardsData) => {
+    const doc = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4"
     });
-    doc.save('cards.pdf');
-  });
+
+    // Temporary container for rendering card elements off-screen
+    const cardsContainer = document.createElement('div');
+    cardsContainer.style.visibility = 'hidden';
+    document.body.appendChild(cardsContainer);
+
+    for (const cardData of favoriteCardsData) {
+        const cardElement = createCardElementForPDF(cardData);
+        cardsContainer.appendChild(cardElement);
+
+        // Ensure the card element is rendered in the DOM before capturing
+        await html2canvas(cardElement, { scale: 1 }).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            doc.addImage(imgData, 'PNG', 0, 0, 210, 297); // Adjust dimensions as needed
+            if (favoriteCardsData.indexOf(cardData) < favoriteCardsData.length - 1) {
+                doc.addPage(); // Add a new page if there are more cards to process
+            }
+        });
+
+        // Cleanup: remove the card element after capturing
+        cardsContainer.removeChild(cardElement);
+    }
+
+    // Save the generated PDF
+    doc.save('favorite-cards.pdf');
+
+    // Remove the temporary container from the document
+    document.body.removeChild(cardsContainer);
 };
 
-// Example usage
-const cards = [
-  {cardType: 'Mission', cardName: 'Learn', imageUrl: 'path/to/image1.png'},
-  {cardType: 'Assessment', cardName: 'Quiz', imageUrl: 'path/to/image2.png'},
-  // Add more card objects
-];
-
+<<<<<<< HEAD
 generatePDF(cards);
 
 export default generatePDF;
 
+=======
+export { generatePDF };
+>>>>>>> 6902485a9e0d5776603972da1370a41ffd3da920

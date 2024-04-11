@@ -13,9 +13,6 @@ import UserDashboard from './pages/users/index.jsx';
 import Game from './pages/game/';
 import EditUserPage from './pages/EditUserPage/index.jsx';
 
-const handleGeneratePDF = (selectedCards) => {
-  generatePDF(selectedCards);
-};
 
 function App() {
 
