@@ -7,6 +7,7 @@ import { useAuth } from '../UserContext';
 const FileUpload = ({ setCards }) => {
 
   let { token } = useAuth(); 
+  
 
   // State for selected file, upload status, and card ID to delete
   const [selectedFile, setSelectedFile] = useState(null);
@@ -47,28 +48,26 @@ const FileUpload = ({ setCards }) => {
   };
 
 
-  // Handle card deletion
-  const handleDeleteClick = async () => {
-    
-    try {
-      console.log(deleteCardId);
-      const response = await fetch(`http://localhost:3000/cards/${deleteCardId}`, { method: 'DELETE' });
-
-      if (response.ok) {
-        const result = await response.json();
-        setUploadStatus(`Card with ID ${deleteCardId} has been deleted successfully.`);
-        // Optionally refresh the list of cards here if needed
-      } else {
-        throw new Error('Failed to delete the card.');
-      }
-  
-      // If response is OK, update the status accordingly
+// Handle card deletion
+const handleDeleteClick = async () => {
+  token = token.replace(/"/g, ''); 
+  try {
+    const response = await fetch(`http://localhost:3000/cards/${deleteCardId}`, { 
+      method: 'DELETE',
+      headers: {
+        'auth-token': `Bearer ${token}`, // Add this line
+      },
+    });
+    if (response.ok) {
       setUploadStatus(`Card with ID ${deleteCardId} has been deleted successfully.`);
-    } catch (error) {
-      console.error('Deletion failed:', error);
-      setUploadStatus(`Deletion failed: ${error.message}`);
+    } else {
+      throw new Error('Failed to delete the card.');
     }
-  };
+  } catch (error) {
+    console.error('Deletion failed:', error);
+    setUploadStatus(`Deletion failed: ${error.message}`);
+  }
+};
 
   const handleToggleFavorite = (cardId) => {
     setFavoriteCardIds(prev => {
