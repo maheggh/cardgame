@@ -5,12 +5,17 @@ import { useAuth } from '../../UserContext.jsx';
 import './style.css'
 
 function Dashboard() {
+  // State for data, user count, and card category count
   const [data, setData] = useState([]);
   const [userCount, setUserCount] = useState(0);
-  const { token } = useAuth();
   const [cardCategoryCount, setCardCategoryCount] = useState(0);
 
+  // Get token from context
+  const { token } = useAuth();
+
+  // Fetch data on component mount
   useEffect(() => {
+    // Fetch all cards and count unique categories
     const getAllData = async () => {
       try {
         const allCards = await authorize(token);
@@ -22,19 +27,22 @@ function Dashboard() {
       }
     };
 
+    // Fetch all users and count them
     const getUserCount = async () => {
       try {
         const allUsers = await usersAuthorize(token);
-        setUserCount(allUsers.length); // set the count of users
+        setUserCount(allUsers.length);
       } catch (error) {
         console.error('Error:', error);
       }
     };
 
+    // Execute fetch functions
     getAllData();
     getUserCount();
   }, [token]);
 
+  // Render dashboard with stat counters
   return (
     <div className="content-wrapper">
       <h1 className="title">Dashboard</h1>

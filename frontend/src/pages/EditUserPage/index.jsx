@@ -12,7 +12,7 @@ function EditUserPage() {
   const token2 = token.replace(/"/g, ''); 
   const navigate = useNavigate();
 
-
+  // Fetch user data on component mount
   useEffect(() => {
     fetchUser(userId, token2)
       .then(data => {
@@ -21,6 +21,7 @@ function EditUserPage() {
       });
   }, [userId]);
 
+  // Handle form submission
   const handleSubmit = event => {
     event.preventDefault();
     updateUser(userId, user, token2)
@@ -31,6 +32,7 @@ function EditUserPage() {
       });
   };
 
+  // Handle delete button click
   const handleDelete = () => {
     deleteUser(userId, token2)
       .then(() => {
@@ -39,11 +41,11 @@ function EditUserPage() {
       });
   };
 
-  // If the user's information hasn't loaded yet, show a loading message
+  // show a loading message
   if (!user) {
     return <div>Loading...</div>;
   }
-
+  // User edit form
   return (
   <form onSubmit={handleSubmit} className='edit_form'>
     <div className='names'>
