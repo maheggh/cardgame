@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import CardsList from "../../cardList";
 import FileUpload from "../../helpers/fileUpload.jsx";
-import generatePDF from "../../helpers/pdfGenerator"; // Ensure this is the correct path
 import "./style.css";
+import { generatePDF } from './pdf-file/pdf-logic.jsx';
 
 const App = () => {
   const [cards, setCards] = useState([]);
   const [favoriteCards, setFavoriteCards] = useState([]);
 
-  // Function that handles the PDF generation
-  const handleGeneratePDF = (selectedCards) => {
-    generatePDF(selectedCards);
-  };
+
 
   useEffect(() => {
     // Assume favorite card IDs are stored in local storage
@@ -50,10 +47,10 @@ const App = () => {
         ))}
       </div>
 
-      <button onClick={() => handleGeneratePDF(cards)} className="button generate-pdf-button">
-        Generate PDF
-      </button>
-    </div>
+        <button onClick={generatePDF} className="button generate-pdf-button">
+          Generate PDF
+        </button>
+      </div>
   );
 };
 
