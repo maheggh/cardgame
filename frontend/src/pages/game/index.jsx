@@ -28,27 +28,37 @@ function Game() {
             } catch (err) {
                 console.log(err);
             }
-        getLocalStorage();
         }
 
-    function getLocalStorage(){
+        function getLocalStorage(){
             var x = localStorage.getItem("FAVOURITE_CARDS_LIST_STORE");
-            if (localStorage.getItem("FAVOURITE_CARDS_LIST_STORE") !== null) {
+               setFavCards(JSON.parse(x));
+        }
+
+ /*   function getLocalStorage(){
+            var x = localStorage.getItem("FAVOURITE_CARDS_LIST_STORE");
+            if (x.length !== 0) {
                 setFavCards(JSON.parse(x));
-            }        
+
+            }       
             else{
             const stringedList = JSON.stringify(favCards);
-            var x = localStorage.setItem("FAVOURITE_CARDS_LIST_STORE", stringedList);
+            localStorage.setItem("FAVOURITE_CARDS_LIST_STORE", stringedList);
+            setLoading(true);
             }
-        }
+        }*/
 
+useEffect(() => {
+    var x = localStorage.getItem("FAVOURITE_CARDS_LIST_STORE");
+    
+}, [favCards]);
 
     useEffect(() => {
         getAllCards()
         const copiedObj = JSON.parse(JSON.stringify(cardInfo));
-
-
+        getLocalStorage();
     }, [loading])
+
 
         function getRandomItem(list){
             if ( list == undefined || list == null) return null;
@@ -67,7 +77,6 @@ function Game() {
 
         document.addEventListener("favourited", (e) => {
             const combinedArray = cardInfo;
-            console.log(favCards);
             const foundCard = combinedArray.find(item => item['card-id'] == e.detail.cardId);
             console.log(foundCard);
             if(e.detail.isFav === true){addToFavouritesList(foundCard)}
@@ -126,15 +135,25 @@ function Game() {
         }
 
         function addToFavouritesList(item){
-            console.log(favCards);
             //checks if favlist contains the card we're trying to add, so as to not add duplicated
             if (!(favCards.some(saved => saved['card-id'] === item["card-id"]))) {
+                
                 console.log(item);
-                setFavCards(...favCards, item);
+                setFavCards([...favCards, item]);
                 const stringedList = JSON.stringify(favCards);
                 var x = localStorage.setItem("FAVOURITE_CARDS_LIST_STORE", stringedList);
+                setLoading(true);
             }
         }
+
+        function removeFromFavouritesList(item){
+            const found = favCards.findIndex((element) => element["card-id"] === item["card-id"]);
+            setFavCards([...favCards.splice(found, 1), item]);
+            const stringedList = JSON.stringify(favCards);
+            var x = localStorage.setItem("FAVOURITE_CARDS_LIST_STORE", stringedList);
+            setLoading(true);
+        }
+
 
     return (
         <div className="game-wrapper">
