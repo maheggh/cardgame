@@ -11,23 +11,15 @@ const App = () => {
 
 
   useEffect(() => {
-    // Assume favorite card IDs are stored in local storage
-    const updateFavorites = () => {
+    // Load favorite cards from local storage
+    const loadFavoriteCards = () => {
       const storedFavorites = localStorage.getItem('FAVOURITE_CARDS_LIST_STORE');
       if (storedFavorites) {
         setFavoriteCards(JSON.parse(storedFavorites));
       }
     };
 
-    // Call updateFavorites to initialize favorite cards list
-    updateFavorites();
-
-    // Optional: Listen for changes in favorites and update accordingly
-    window.addEventListener('favoriteChanged', updateFavorites);
-
-    return () => {
-      window.removeEventListener('favoriteChanged', updateFavorites);
-    };
+    loadFavoriteCards();
   }, []);
 
   return (
@@ -42,9 +34,17 @@ const App = () => {
       {/* Display favorite cards */}
       <div className="favorite-cards-container">
         <h2>Favorite Cards</h2>
-        {favoriteCards.map(cardId => (
-          <favourite-card key={cardId} card-id={cardId}></favourite-card>
-        ))}
+        <ul>
+          {favoriteCards.map((card) => (
+            <li 
+              key={card['_id']} 
+              onClick={() => handleCardClick(card)} 
+              style={{cursor: 'pointer', backgroundColor: selectedCardsForPDF.some(selectedCard => selectedCard['_id'] === card['_id']) ? '#DDD' : 'transparent'}}
+            >
+              {card['card-id']}: {card['card-type']}: {card['card-category']}: {card['card-name']}
+            </li>
+          ))}
+        </ul>
       </div>
 
         <button onClick={generatePDF} className="button generate-pdf-button">
