@@ -1,13 +1,16 @@
 //User routes go here
 const express 		= require('express');
 const router 		= express.Router();
-const {getAllUsers, getSingleUser, updateUser, deleteUser, createUser, authenticateUser, refresh} = require('../controllers/userController');
+const {getAllUsers, getTotalUsers, getSingleUser, updateUser, deleteUser, createUser, authenticateUser, refresh} = require('../controllers/userController');
 const {check,validationResult} = require('express-validator');
 const {auth, authRole} = require('../helpers/verifyToken');
 
 
 //GET: Read all users
 router.get('/', getAllUsers);
+
+//GET: Read total all users
+router.get('/total', getTotalUsers);
 
 //GET: Read single user
 router.get('/:id', auth, authRole('Admin'), getSingleUser);

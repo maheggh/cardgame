@@ -10,7 +10,7 @@ connectDB();
 
 // Routes
 const cardsRoutes = require('./routes/Cards'); // Adjust path as necessary
-const usersRoutes = require('./routes/Users'); // Adjust path as necessary
+const usersRoutes = require('./routes/users'); // Adjust path as necessary
 const searchRoutes = require('./routes/Search'); // Adjust path as necessary
 const iconsRoutes = require('./routes/Icons'); // Adjust path as necessary
 const bulkUploadRoutes = require('./routes/Bulk'); // Adjust path as necessary

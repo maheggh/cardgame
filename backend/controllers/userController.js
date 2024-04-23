@@ -49,6 +49,17 @@ const getAllUsers = async (req, res) => {
 		res.status(500).send('Error: ' + err);
 	}
 }
+//CRUD: Read
+const getTotalUsers = async (req, res) => {
+    try {
+        const count = await Users.countDocuments();
+        // if successful, prints total number of users
+        res.status(200).json(count);
+    } catch (err) {
+        // if unsuccessful, prints error message and sends a 500 status
+        res.status(500).send('Error: ' + err);
+    }
+}
 
 //CRUD: Read
 const getSingleUser = async (req, res) => {
@@ -142,4 +153,4 @@ const refresh = (req, res) => {
 	})
 }
 
-module.exports = { getAllUsers, getSingleUser, createUser, updateUser, deleteUser, authenticateUser, refresh }
+module.exports = { getAllUsers, getTotalUsers, getSingleUser, createUser, updateUser, deleteUser, authenticateUser, refresh }
