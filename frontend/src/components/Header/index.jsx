@@ -32,7 +32,7 @@ const Header = () => {
                                 <a href="/fileupload" className="link nav-button">Upload</a>
                                 </>
                                 ) : (<></>)}
-                            <a href="" className="link nav-button" onClick={handleLogout}>Log out</a>
+                            <a href="/" className="link nav-button" onClick={handleLogout}>Log out</a>
                         </>
                     ) : (
                         <>

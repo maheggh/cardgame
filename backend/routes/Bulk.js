@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Card = require('../models/Card'); // Make sure this path is correct
+const Card = require('../schemas/cardSchema'); // Make sure this path is correct
 
 // Route to fetch all cards
 router.get('/', async (req, res) => {

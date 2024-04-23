@@ -19,7 +19,7 @@ function Signup() {
         const requestBody = { email, password, name, surname, department, university, position };
 
         // Send signup request
-        const response = await fetch('http://localhost:3000/users', {
+        const response = await fetch('http://localhost:3000/api/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -61,6 +61,7 @@ function Signup() {
                         Email:
                         <input
                             type="email"
+                            autocomplete="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -70,6 +71,7 @@ function Signup() {
                         <input
                             type="text"
                             value={name}
+                            autocomplete="given-name"
                             onChange={(e) => setName(e.target.value)}
                         />
                     </label>
@@ -78,6 +80,7 @@ function Signup() {
                         <input
                             type="text"
                             value={surname}
+                            autocomplete="family-name"
                             onChange={(e) => setSurname(e.target.value)}
                         />
                     </label>
@@ -94,6 +97,7 @@ function Signup() {
                         <input
                             type="text"
                             value={university}
+                            autocomplete="off"
                             onChange={(e) => setUniversity(e.target.value)}
                         />
                     </label>
@@ -101,6 +105,7 @@ function Signup() {
                         Position:
                         <select
                             value={position}
+                            autocomplete="off"
                             onChange={(e) => setPosition(e.target.value)}
                         >
                             <option value="">Select...</option>
@@ -114,6 +119,7 @@ function Signup() {
                         <input
                             type="password"
                             value={password}
+                            autocomplete="new-password"
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </label>

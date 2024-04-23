@@ -26,10 +26,10 @@ app.get('/', (req, res) => {
 });
 
 // API routes
-app.use('/cards', cardsRoutes);
-app.use('/users', usersRoutes);
-app.use('/search', searchRoutes);
-app.use('/icons', iconsRoutes);
+app.use('/api/cards', cardsRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/search', searchRoutes);
+app.use('/api/icons', iconsRoutes);
 app.use('/api/cards', bulkUploadRoutes); // Mounting the bulk upload operations route
 
 // Start the server

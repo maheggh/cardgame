@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken')
 
 //CRUD: Create
 const createUser = async (req, res) => {
-	console.log(req.body);
 
 	//check if the user already exists: code borrowed from presentation
 	const emailExist = await Users.findOne({email:req.body.email})
@@ -18,7 +17,7 @@ const createUser = async (req, res) => {
 	const hashPassword = await bcrypt.hash(req.body.password, salt)
 
 	const user = new Users({
-		'name': req.body['surname'],
+		'name': req.body['name'],
 		'surname': req.body['surname'],
 		'email': req.body['email'],
 		'password': hashPassword,
