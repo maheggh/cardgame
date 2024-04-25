@@ -61,3 +61,16 @@ export async function usersAuthorize(token){
 
     return response.json();
 }
+
+
+export async function getTotalTeachers() {
+    const response = await fetch(`${API_URL}/users/total`, {
+        method: 'GET'
+    });
+    if (!response.ok) {
+        throw new Error('Failed to get total users');
+    }
+
+    const totalTeachers = await response.json();
+    return totalTeachers.toString();
+}
