@@ -1,12 +1,9 @@
-* {
+.favorite-cards-container li {
   list-style: none;
 }
 
-.app-container {
-  margin: 0 auto;
-  padding: 20px;
-  max-width: 600px;
-  text-align: center;
+.uploadWrapper {
+  flex-direction: column;
 }
 
 .app-title {
@@ -16,12 +13,12 @@
 
 .file-upload {
   display: grid;
-   grid-template-columns: 1fr;
-   grid-template-rows: 1fr 1fr;
-  margin: 20px 0;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  margin-bottom: 20px;
   padding: 20px;
   border-radius: 10px;
-  background-color: #f5f5f5;
+  background-color: #fff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
@@ -56,25 +53,28 @@
 }
 
 .button {
-  font-size: 16px; 
-  padding: 10px 20px; 
+  font-size: 16px;
+  padding: 10px 15px;
   border: none;
   color: white;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  text-decoration: none; 
+  text-decoration: none;
   box-sizing: border-box;
-  line-height: 1.5; 
+  line-height: 1.5;
   white-space: nowrap;
 }
 
-.file-upload-button, .upload-button, .generate-pdf-button {
-  background-color: #4CAF50;
+.upload-button, .generate-pdf-button {
+  background-color: #056A92;
   width: 50%;
+  text-align: center;
 }
-
-.file-upload-button:hover, .upload-button:hover, .generate-pdf-button:hover {
-  background-color: #45a049;
+.upload-button i{
+  margin-right: 6px;
+}
+.upload-button:hover, .generate-pdf-button:hover {
+  background-color: #000;
 }
 
 .generate-pdf-button {
@@ -129,8 +129,18 @@
 }
 
 .delete-card-button {
-  color: black;
-  background-color: #ccc;
+  font-weight: 400;
+  color: #fff;
+  background-color: #D11F44;
+}
+
+.delete-card-button i{
+  margin-right: 6px;
+}
+
+.delete-card-button:hover {
+  color: #fff;
+  background-color: #000;
 }
 
 .file-upload-button-container, .delete-card-section {

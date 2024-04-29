@@ -1,7 +1,7 @@
-import logo from '../../../public/icons/Logo.svg'; 
+import logo from '../../../icons/Logo.svg'; 
 import './style.css';
 import { useLocation } from 'react-router-dom';
-import { useAuth } from '../../UserContext.jsx';
+import { useAuth } from '../PrivateRoute/UserContext';
 
 const Header = () => {
     const location = useLocation();
@@ -23,7 +23,6 @@ const Header = () => {
                 <nav>
                     {(userRole=="User" || userRole=="Admin")  ? (
                         <>
-                            <a href="/dashboard" className="link nav-button">Dashboard</a>
                             <a href="/Game" className="link nav-button">Game</a>
                             {userRole=="Admin" ? (
                                 <>

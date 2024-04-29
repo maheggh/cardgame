@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {login, signup} from '../../api/api.js';
+import {login, signup} from '../../helpers/api.js';
 
 function Signup() {
     // State for form inputs

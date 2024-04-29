@@ -21,3 +21,7 @@
     gap: .5em;
     justify-content: center;
 }
+
+.gameBoard{
+    padding: 40px;
+}

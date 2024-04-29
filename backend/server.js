@@ -13,6 +13,7 @@ const cardsRoutes = require('./routes/Cards'); // Adjust path as necessary
 const usersRoutes = require('./routes/users'); // Adjust path as necessary
 const searchRoutes = require('./routes/Search'); // Adjust path as necessary
 const iconsRoutes = require('./routes/Icons'); // Adjust path as necessary
+const AssSchemeRoutes = require('./routes/AssessmentScheme'); // Adjust path as necessary
 const bulkUploadRoutes = require('./routes/Bulk'); // Adjust path as necessary
 
 // Middlewares
@@ -30,6 +31,7 @@ app.use('/api/cards', cardsRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/search', searchRoutes);
 app.use('/api/icons', iconsRoutes);
+app.use('/api/assschema', AssSchemeRoutes);
 app.use('/api/cards', bulkUploadRoutes); // Mounting the bulk upload operations route
 
 // Start the server

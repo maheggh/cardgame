@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import StatCounter from '../../components/StatCounter/';
-import { authorize, usersAuthorize } from '../../api/api.js';
-import { useAuth } from '../../UserContext.jsx';
-import './style.css'
+import { authorize, usersAuthorize } from '../../helpers/api.js';
+import { useAuth } from '../../components/PrivateRoute/UserContext.jsx';
 
 function Dashboard() {
   // State for data, user count, and card category count

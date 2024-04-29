@@ -1,15 +1,12 @@
-.content-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 930px;
-    gap: 12px;
-    margin: auto;
-    justify-content: space-between;
-    margin-top: 100px;
+ul li{
+	margin-bottom: 12px;
+	list-style: none;
 }
 
-.title{
-    display: block;
-    width: 100%;
-    margin-top: 50px;
+.cardWrapper{
+	display: grid;
+	width: 100%;
+	grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
 }

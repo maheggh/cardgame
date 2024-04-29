@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CardsList from "../../cardList";
-import FileUpload from "../../helpers/fileUpload.jsx";
+import FileUpload from "./fileUpload.jsx";
 import "./style.css";
 import { generatePDF } from './pdf-file/pdf-logic.jsx';
 
@@ -33,7 +33,7 @@ const App = () => {
   };
 
   return (
-    <div className="app-container">
+    <div className="content-wrapper uploadWrapper">
       <h1 className="app-title">Cards Upload</h1>
       <FileUpload setCards={setCards} />
       
@@ -58,7 +58,7 @@ const App = () => {
       </div>
 
         <button onClick={() => generatePDF(selectedCardsForPDF)} className="button generate-pdf-button">
-          Generate PDF
+          <i className="fa-solid fa-file-pdf"/> Generate PDF
         </button>
       </div>
   );

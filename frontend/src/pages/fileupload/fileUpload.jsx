@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import handleFileUpload from './onFileUpload';
-import { useAuth } from '../UserContext';
+import { useAuth } from '../../components/PrivateRoute/UserContext.jsx';
 
 
 
@@ -85,8 +85,8 @@ const handleDeleteClick = async () => {
     <div className="file-upload">
       <div className="file-upload-button-container">
         <input type="file" id="file" className="file-input" onChange={handleFileChange} accept=".json" />
-        <label htmlFor="file" className="button file-upload-button">Velg fil</label>
-        <button className="button upload-button" onClick={handleUploadClick}>Upload</button>
+        <label htmlFor="file" className="button upload-button"><i className="fa-solid fa-file-import"/>Velg fil</label>
+        <button className="button upload-button" onClick={handleUploadClick}><i className="fa-solid fa-arrow-up-from-bracket"/>Upload</button>
       </div>
       <div className="delete-card-input-container">
         <input 
@@ -97,7 +97,8 @@ const handleDeleteClick = async () => {
           onChange={(e) => setDeleteCardId(e.target.value)}
         />
         <button className="button delete-card-button" onClick={handleDeleteClick}>
-          Delete Card
+          <i className="fa-solid fa-trash"/>
+          Delete Card 
         </button>
       </div>
       {uploadStatus && <div className="upload-status"><p>{uploadStatus}</p></div>}

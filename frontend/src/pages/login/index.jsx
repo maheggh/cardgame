@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './style.css';
-import { login } from '../../api/api.js';
+import { login } from '../../helpers/api.js';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../UserContext.jsx';
+import { useAuth } from '../../components/PrivateRoute/UserContext.jsx';
 
 function Login() {
     // State for email and password
