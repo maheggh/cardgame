@@ -1,29 +1,36 @@
 class SuperMissionCard extends HTMLElement {
     constructor() {
-        super();
-        this.attachShadow({mode: 'open'});
-        this.shadowRoot.innerHTML = `
-            <div>Loading mission cards...</div>
-        `;
+      super();
+      this.attachShadow({ mode: "open" });
+      this.shadowRoot.innerHTML = `<div>Loading mission cards...</div>`;
+      this.loadAndRenderCards();
+    }
+  
+    connectedCallback() {
+      document.addEventListener('refreshCards', () => {
+        console.log('Refresh event heard by SuperMissionCard');
         this.loadAndRenderCards();
+      });
     }
-
+  
     loadAndRenderCards() {
-        fetch('http://localhost:3000/api/cards')
-            .then(response => response.json())
-            .then(data => this.renderCards(data))
-            .catch(error => console.error('Error:', error));
+      fetch("http://localhost:3000/api/cards")
+        .then((response) => response.json())
+        .then((data) => {
+          const missionCardData = data.filter(card => card['card-type'] === 'Mission');
+          console.log("Filtered mission card data:", missionCardData);
+          this.renderRandomCard(missionCardData);
+        })
+        .catch((error) => {
+          console.error("Error fetching mission cards:", error);
+        });
     }
-
-    renderCards(missionCardData) {
-        // get the card name from the HTML attribute
-        let cardName = this.getAttribute('card-name').replace(/-/g, ' ').toLowerCase();
-        let selectedCard = missionCardData.find(card => card['card-name'].toLowerCase() === cardName);
-
-        if (!selectedCard) {
-            console.error(`Card with name "${cardName}" not found.`);
-            return;
-        }
+  
+    renderRandomCard(missionCardData) {
+      if (missionCardData.length > 0) {
+        const selectedCard = missionCardData[Math.floor(Math.random() * missionCardData.length)];
+        console.log("Selected random mission card:", selectedCard);
+  
         let missionCardHTML = `
             <style>
                 .card {
@@ -39,7 +46,6 @@ class SuperMissionCard extends HTMLElement {
                     border-radius: 14px;
                     background-color: white;
                 }
-
                 .card-header {
                     font-size: 18px;
                     font-weight: bold;
@@ -52,53 +58,43 @@ class SuperMissionCard extends HTMLElement {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
-                    display: block; 
+                    display: none; 
                 }
                 .card:hover {
                     border-bottom-right-radius: 50px;
                     box-shadow: 80px 90px 28px -90px rgba(0,0,0,0.45);
                 }
             </style>
-            <div class="card-container">
-            
-                <div class="card" data-card-image="${selectedCard["card-image"]}">
-                    <div class="card-content">
-                        <div class="card-header">${selectedCard["card-name"]}</div>
-                        <div class="card-body">${selectedCard["card-description"].replace(/\n/g, '<br>')}</div>
-                    </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-header">${selectedCard["card-name"]}</div>
+                    <div class="card-body">${selectedCard["card-description"].replace(/\n/g, "<br>")}</div>
                 </div>
+                <img src="./assets/cards-png/SUPER cards poker size 061123186.png" alt="Card Image">
             </div>
         `;
         this.shadowRoot.innerHTML = missionCardHTML;
-        this.addClickEventToCards();
+        this.addClickEventToCard();
+      } else {
+        console.error('No mission cards available to display.');
+      }
     }
-
-    addClickEventToCards() {
-        const cards = this.shadowRoot.querySelectorAll('.card');
-        cards.forEach(card => {
-            card.addEventListener('click', () => {
-                const content = card.querySelector('.card-content');
-                const imageUrl = './assets/cards-png/SUPER cards poker size 061123178.png'; 
-                // Check if the card is currently displaying the image or the text
-                if (content) {
-                    // Card is currently showing text, switch to image
-                    const imageHtml = `<img src="${imageUrl}" alt="Card Image">`;
-                    card.innerHTML = imageHtml;
-                } else {
-                    // Card is currently showing image, revert back to original text content
-                    const originalContent = `
-                        <div class="card-content">
-                            <div class="card-header">${card.dataset.cardName}</div>
-                            <div class="card-body">${card.dataset.cardDescription}</div>
-                        </div>`;
-                    card.innerHTML = originalContent;
-                }
-            });
-            // Store the card's original content in dataset for easy revert
-            card.dataset.cardName = card.querySelector('.card-header').innerText;
-            card.dataset.cardDescription = card.querySelector('.card-body').innerHTML;
-        });
+  
+    addClickEventToCard() {
+      const card = this.shadowRoot.querySelector(".card");
+      const imageElement = card.querySelector("img");
+      const contentElement = card.querySelector(".card-content");
+      card.addEventListener("click", () => {
+        if (imageElement.style.display === 'block') {
+          imageElement.style.display = 'none';
+          contentElement.style.display = 'block';
+        } else {
+          imageElement.style.display = 'block';
+          contentElement.style.display = 'none';
+        }
+      });
     }
-}
-
-customElements.define('super-mission-card', SuperMissionCard);
+  }
+  
+  customElements.define("super-mission-card", SuperMissionCard);
+  

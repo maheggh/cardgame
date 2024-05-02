@@ -17,35 +17,67 @@
 }
 
 .card-container {
-    max-width: 700px;
+    max-width: 100%; 
     display: flex;
     flex-wrap: wrap;
-    gap: .5em;
+    gap: 10px; /* Adjust gap for visual spacing */
     justify-content: center;
 }
+
 
 .gameBoard{
     padding: 40px;
-    background-color: #FEF286;
 }
 
 .game-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; 
+    background-color: #FEF286;
+    flex-grow: 0;
+}
+
+.gameBoard, .draw-container {
+    flex: 1 1 50%; 
+    padding: 40px;
 }
 
 .draw-container {
-    padding: 40px;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     background-color: #D9D9D9;
+    flex-grow: 1; 
+}
+
+.draw-pile-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center; 
+    gap: 20px;
+}
+
+.mission-large {
+    display: flex;
+    justify-content: flex-end; 
+    width: 100%;
+}
+
+.draw-pile-right {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
 }
 
 .playbutton-container {
     display: flex;
-    justify-content: end;
-    align-items: end;
+    justify-content: flex-end; 
+    align-items: center;
+    width: 100%;
     padding: 20px;
+    margin-top: auto; 
 }
 
 .randomize-button, .endgame-button {
@@ -66,4 +98,29 @@
 
 .endgame-button {
     background-color: var(--endgame-button-color);
+}
+
+.card-container .super-assessment-card {
+    flex: 1 1 33%; /* Grow to fill space, but don't exceed one-third */
+    max-width: calc(33.333% - 10px); /* Subtract gap from the max width */
+    box-sizing: border-box; /* Include padding and borders in width calculations */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .game-container {
+        flex-direction: column; 
+    }
+
+    .gameBoard, .draw-container {
+        flex: 1 1 100%; 
+    }
+
+    .draw-pile-container {
+        grid-template-columns: 1fr; 
+    }
+
+    .mission-large {
+        justify-content: center; 
+    }
 }
