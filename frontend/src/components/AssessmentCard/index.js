@@ -58,13 +58,6 @@ class SuperAssessmentCard extends HTMLElement {
 
         let missionCardHTML = `
             <style>
-                .card-container {
-                    max-width: 700px;
-                    display: flex;
-                    flex-wrap: wrap;
-                    gap: .5em;
-                    justify-content: center;
-                }
                 .card {
                     width: 220px;
                     cursor: pointer;
@@ -76,6 +69,7 @@ class SuperAssessmentCard extends HTMLElement {
                     box-sizing: border-box;
                     border: 11px solid;
                     border-radius: 14px;
+                    background-color: white;
                 }
 
                 .who-is-assessed .cardCategory{

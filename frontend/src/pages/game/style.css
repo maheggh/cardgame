@@ -12,6 +12,8 @@
     --assessment-format-border-color: #91CD90;
     --context-border-color: #F17299;
     --assessment-timing-border-color: #D1762C;
+    --randomize-button-color: #056A92;
+    --endgame-button-color: #D11F44;
 }
 
 .card-container {
@@ -24,4 +26,44 @@
 
 .gameBoard{
     padding: 40px;
+    background-color: #FEF286;
+}
+
+.game-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.draw-container {
+    padding: 40px;
+    justify-content: center;
+    align-items: center;
+    background-color: #D9D9D9;
+}
+
+.playbutton-container {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    padding: 20px;
+}
+
+.randomize-button, .endgame-button {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.randomize-button {
+    background-color: var(--randomize-button-color);
+}
+
+.endgame-button {
+    background-color: var(--endgame-button-color);
 }

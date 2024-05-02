@@ -9,6 +9,7 @@ function Game() {
 
     return (
         <>
+        <div className="game-container">
             <main className="gameBoard">
                 <h1>Mission cards (x3)</h1>
                 <div className="card-container">
@@ -26,6 +27,14 @@ function Game() {
                     <super-assessment-card card-category="timing"></super-assessment-card>
                 </div>
             </main>
+            <aside className="draw-container">
+                    <h1> Draw Pile:</h1>
+                    <div className="playbutton-container">
+                        <button className="randomize-button">RANDOMIZE</button>
+                        <button className="endgame-button">END GAME</button>
+                    </div>
+                </aside>
+            </div>
         </>
     );
 }

@@ -26,13 +26,6 @@ class SuperMissionCard extends HTMLElement {
         }
         let missionCardHTML = `
             <style>
-                .card-container {
-                    max-width: 700px;
-                    display: flex;
-                    flex-wrap: wrap;
-                    gap: .5em;
-                    justify-content: center;
-                }
                 .card {
                     width: 220px;
                     aspect-ratio: 5 / 7;
@@ -44,6 +37,7 @@ class SuperMissionCard extends HTMLElement {
                     user-select: none;
                     box-sizing: border-box;
                     border-radius: 14px;
+                    background-color: white;
                 }
 
                 .card-header {
