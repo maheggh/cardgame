@@ -74,7 +74,6 @@ class DrawPile extends HTMLElement {
     updateCardDetails() {
         const category = this.getAttribute('category');
         const categoryInfo = {
-            "mission": { img: "./assets/cards-png/SUPER cards poker size 061123186.png", title: "Mission" },
             "assessed": { img: "./assets/cards-png/SUPER cards poker size 0611232.png", title: "Who is Assessed" },
             "assessor": { img: "./assets/cards-png/SUPER cards poker size 06112328.png", title: "The Assessor" },
             "artefact": { img: "./assets/cards-png/SUPER cards poker size 06112394.png", title: "Assessment Artefact" },

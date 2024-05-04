@@ -42,9 +42,6 @@ function Game() {
         <aside className="draw-container">
         <h1 className="draw-pile-text">Draw Pile:</h1>
           <div className="draw-pile-container">
-            <div className="mission-large">
-              <draw-pile category="mission"></draw-pile>
-            </div>
             <div className="draw-pile-right">
               <draw-pile category="assessed"></draw-pile>
               <draw-pile category="assessor"></draw-pile>
