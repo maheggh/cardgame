@@ -101,10 +101,15 @@
 }
 
 .card-container .super-assessment-card {
-    flex: 1 1 33%; /* Grow to fill space, but don't exceed one-third */
-    max-width: calc(33.333% - 10px); /* Subtract gap from the max width */
-    box-sizing: border-box; /* Include padding and borders in width calculations */
+    flex: 1 1 33%; 
+    max-width: calc(33.333% - 10px); 
+    box-sizing: border-box; 
 }
+
+.draw-pile-text {
+    text-align: left;
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

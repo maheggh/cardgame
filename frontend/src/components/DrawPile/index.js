@@ -4,6 +4,21 @@ class DrawPile extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <style>
+                button {
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    background-color: #4CAF50;
+                    color: white;
+                    cursor: pointer;
+                    font-size: 16px;
+                    margin-top: 10px;
+                    transition: background-color 0.3s;
+                }
+                button:disabled {
+                    background-color: #ccc;
+                    cursor: not-allowed;
+                }
                 .card {
                     display: flex;
                     flex-direction: column;
@@ -12,7 +27,6 @@ class DrawPile extends HTMLElement {
                     cursor: pointer;
                     transition: transform 0.2s;
                     aspect-ratio: 5 / 7;
-                    drop-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
                 }
                 .card img {
                     width: 200px; 
@@ -25,11 +39,41 @@ class DrawPile extends HTMLElement {
             </style>
             <div class="card">
                 <img id="card-image" src="" alt="Card Image">
+                <button id="draw-button" disabled>Draw New Card</button>
             </div>
         `;
 
-        // Define category-specific images and titles
-        this.categories = {
+        this.button = this.shadowRoot.querySelector('#draw-button');
+        this.img = this.shadowRoot.querySelector('#card-image');
+    }
+
+    connectedCallback() {
+        document.addEventListener('cardFlipped', (event) => {
+            if (event.detail.category === this.getAttribute('category') && event.detail.enableDraw) {
+                this.button.disabled = false;
+            }
+        });
+        this.button.addEventListener('click', () => {
+            console.log("Attempting to dispatch drawNewCard event for category:", this.getAttribute('category'));
+            if (!this.button.disabled) {
+                // Dispatch the drawNewCard event with the necessary details
+                document.dispatchEvent(new CustomEvent('drawNewCard', {
+                    bubbles: true, // Ensure the event bubbles up through the DOM
+                    detail: {
+                        category: this.getAttribute('category'),
+                        refresh: true // Added refresh flag for clarity
+                    }
+                }));
+                this.button.disabled = true; // Disable button to prevent multiple draws
+            }
+        });
+
+        this.updateCardDetails();
+    }
+    
+    updateCardDetails() {
+        const category = this.getAttribute('category');
+        const categoryInfo = {
             "mission": { img: "./assets/cards-png/SUPER cards poker size 061123186.png", title: "Mission" },
             "assessed": { img: "./assets/cards-png/SUPER cards poker size 0611232.png", title: "Who is Assessed" },
             "assessor": { img: "./assets/cards-png/SUPER cards poker size 06112328.png", title: "The Assessor" },
@@ -37,15 +81,11 @@ class DrawPile extends HTMLElement {
             "format": { img: "./assets/cards-png/SUPER cards poker size 061123116.png", title: "Assessment Format" },
             "context": { img: "./assets/cards-png/SUPER cards poker size 061123146.png", title: "Context" },
             "timing": { img: "./assets/cards-png/SUPER cards poker size 061123170.png", title: "Assessment Timing" }
-        };
-    }
+        }[category];
 
-    connectedCallback() {
-        const category = this.getAttribute('category');
-        const categoryInfo = this.categories[category];
         if (categoryInfo) {
-            this.shadowRoot.getElementById('card-image').src = categoryInfo.img;
-            this.shadowRoot.getElementById('card-image').alt = `${categoryInfo.title} Card`;
+            this.img.src = categoryInfo.img;
+            this.img.alt = `${categoryInfo.title} Card`;
         }
     }
 }
