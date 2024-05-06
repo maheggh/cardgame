@@ -29,7 +29,7 @@ function App() {
           <Route element={<PrivateRoutes requiredRoles={["Admin"]}/>}> <Route path="/users" element={<UserDashboard />} /></Route>
           <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/users/:userId/edit" element={<EditUserPage />} /></Route>
           <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/game" element={<Game />} /></Route>
-          <Route path="/fileUpload" element={<FileUpload />} />
+          <Route element={<PrivateRoutes requiredRoles={["Admin"]}/>}> <Route path="/fileUpload" element={<FileUpload />} /></Route>
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </Router>

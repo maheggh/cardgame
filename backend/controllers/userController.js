@@ -1,7 +1,7 @@
 const Users = require('../schemas/userSchema');
 const bcrypt = require('bcryptjs');
 const {check,validationResult} = require('express-validator');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 //CRUD: Create
 const createUser = async (req, res) => {
@@ -135,10 +135,15 @@ const authenticateUser = async (req, res) => {
 	return res.status(400).send('password is wrong')
 	}
 
-	//generates token and refresh token then sends it in the response
+	//generates token and refresh token then sets token in cookies
 	const token = jwt.sign({_id:user._id, role: user.role},process.env.TOKEN_SECRET, { expiresIn: '15m' });
 	const refreshToken = jwt.sign({_id:user._id},process.env.REFRESH_SECRET);
-	res.json({accessToken: token, refreshToken: refreshToken});
+	res.cookie('jwt',token,{httpOnly:true}).json({message:"Logged in successfully"});
+}
+
+//code borrowed from lefteris
+const logoutUser = async (req, res) =>{
+	res.clearCookie('jwt').json({message:'Logged out succesfully'}).status(200)
 }
 
 const refresh = (req, res) => {
@@ -148,8 +153,13 @@ const refresh = (req, res) => {
 	jwt.verify(refreshtoken, process.env.REFRESH_SECRET, (err, user) => {
 		if (err) return res.status(403);
 		const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET, { expiresIn: '15m' });
-		res.json({accessToken: token});
+		res.cookie('jwt',token,{httpOnly:true}).sendStatus(200);
 	})
 }
 
-module.exports = { getAllUsers, getTotalUsers, getSingleUser, createUser, updateUser, deleteUser, authenticateUser, refresh }
+const status = (req, res) => {
+	res.json({ isAuthenticated: true, userRole: req.userRole });
+
+}
+
+module.exports = { getAllUsers, getTotalUsers, getSingleUser, createUser, updateUser, deleteUser, authenticateUser, refresh, logoutUser, status }

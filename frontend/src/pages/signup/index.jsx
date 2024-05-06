@@ -61,7 +61,7 @@ function Signup() {
                         Email:
                         <input
                             type="email"
-                            autocomplete="email"
+                            autoComplete="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -71,7 +71,7 @@ function Signup() {
                         <input
                             type="text"
                             value={name}
-                            autocomplete="given-name"
+                            autoComplete="given-name"
                             onChange={(e) => setName(e.target.value)}
                         />
                     </label>
@@ -80,7 +80,7 @@ function Signup() {
                         <input
                             type="text"
                             value={surname}
-                            autocomplete="family-name"
+                            autoComplete="family-name"
                             onChange={(e) => setSurname(e.target.value)}
                         />
                     </label>
@@ -97,7 +97,7 @@ function Signup() {
                         <input
                             type="text"
                             value={university}
-                            autocomplete="off"
+                            autoComplete="off"
                             onChange={(e) => setUniversity(e.target.value)}
                         />
                     </label>
@@ -105,7 +105,7 @@ function Signup() {
                         Position:
                         <select
                             value={position}
-                            autocomplete="off"
+                            autoComplete="off"
                             onChange={(e) => setPosition(e.target.value)}
                         >
                             <option value="">Select...</option>
@@ -119,7 +119,7 @@ function Signup() {
                         <input
                             type="password"
                             value={password}
-                            autocomplete="new-password"
+                            autoComplete="new-password"
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </label>

@@ -4,7 +4,7 @@ const dotenv = require('dotenv').config();
 const connectDB = require('./dbconnect');
 const app = express();
 const port = process.env.PORT || 3000;
-
+const cookieParser = require('cookie-parser'); 
 // Connects to the MongoDB
 connectDB();
 
@@ -17,8 +17,16 @@ const AssSchemeRoutes = require('./routes/AssessmentScheme'); // Adjust path as 
 const bulkUploadRoutes = require('./routes/Bulk'); // Adjust path as necessary
 
 // Middlewares
-app.use(cors());
+app.use(cookieParser());
+const corsConfig = {
+    credentials: true,
+    origin: 'http://localhost:5173',
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
+};
+
+app.use(cors(corsConfig));
 app.use(express.json());
+
 
 // Debugging route
 app.get('/', (req, res) => {
