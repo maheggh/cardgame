@@ -13,8 +13,14 @@ class SuperAssessmentCard extends HTMLElement {
 
     connectedCallback() {
         document.addEventListener('refreshCards', () => {
-            // Refresh the cards when the event is heard
-            this.loadAndRenderCards();
+            this.loadAndRenderCards(); // This refreshes all cards
+        });
+    
+        document.addEventListener('drawNewCard', (e) => {
+            console.log("drawNewCard event received for category:", e.detail.category);
+            if (e.detail.category === this.getAttribute('card-category') && e.detail.refresh) {
+                this.loadAndRenderCards(); // This should reload the card
+            }
         });
     }
 
@@ -24,7 +30,6 @@ class SuperAssessmentCard extends HTMLElement {
             .then(data => this.renderCards(data))
             .catch(error => console.error('Error:', error));
     }
-
 
     renderCards(assessmentCardData) {
         // group the cards by category
@@ -36,7 +41,7 @@ class SuperAssessmentCard extends HTMLElement {
             cardsByCategory[card["card-category"]].push(card);
         }
 
-        // had to have different html tag than the card-category in JSON so i mapped them like this so that i could connect them
+        // Map the card-category attribute to readable format if needed
         let categoryMap = {
             "assessed": "Who is assessed",
             "assessor": "The assessor",
@@ -46,157 +51,156 @@ class SuperAssessmentCard extends HTMLElement {
             "timing": "Assessment timing"
         };
 
-        // get the category from the HTML tag
         let category = categoryMap[this.getAttribute('card-category')];
-
-        // check if the category exists in the data
         if (!cardsByCategory[category]) {
             console.error(`Category ${category} not found in the data`);
             return;
         }
 
-        // select a card from the category defined in html atribute randomly
+        // Randomly select a card
         let selectedCard = cardsByCategory[category][Math.floor(Math.random() * cardsByCategory[category].length)];
+        this.displayCard(selectedCard);
+    }
 
+    displayCard(card) {
+        let cardHTML = `
+        <style>
+        .card {
+            width: 220px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+            overflow: hidden;
+            user-select: none;
+            aspect-ratio: 5 / 7;
+            box-sizing: border-box;
+            border: 11px solid;
+            border-radius: 14px;
+            background-color: white;
+        }
 
-        let missionCardHTML = `
-            <style>
-                .card {
-                    width: 220px;
-                    cursor: pointer;
-                    position: relative;
-                    transition: all 0.2s;
-                    overflow: hidden;
-                    user-select: none;
-                    aspect-ratio: 5 / 7;
-                    box-sizing: border-box;
-                    border: 11px solid;
-                    border-radius: 14px;
-                    background-color: white;
-                }
+        .who-is-assessed .cardCategory{
+            background-color: var(--who-is-assessed-color);
+        }
 
-                .who-is-assessed .cardCategory{
-                    background-color: var(--who-is-assessed-color);
-                }
+        .the-assessor .cardCategory{
+            background-color: var(--the-assessor-color);
+        }
 
-                .the-assessor .cardCategory{
-                    background-color: var(--the-assessor-color);
-                }
+        .assessment-artefact .cardCategory{
+            background-color: var(--assessment-artefact-color);
+        }
 
-                .assessment-artefact .cardCategory{
-                    background-color: var(--assessment-artefact-color);
-                }
+        .assessment-format .cardCategory{
+            background-color: var(--assessment-format-color);
+        }
 
-                .assessment-format .cardCategory{
-                    background-color: var(--assessment-format-color);
-                }
+        .context .cardCategory{
+            background-color: var(--context-color);
+        }
+        
+        .assessment-timing .cardCategory{
+            background-color: var(--assessment-timing-color);
+        }
 
-                .context .cardCategory{
-                    background-color: var(--context-color);
-                }
-                
-                .assessment-timing .cardCategory{
-                    background-color: var(--assessment-timing-color);
-                }
+        .cardCategory{
+            color: white;
+            font-size:18px;
+            font-weight:bold;
+            padding: 6px;
+            height: 38px;
+            line-height: 20px;
+            text-transform: uppercase;
+            align-content: center;
+            margin-bottom:4px;
+        }
 
-                .cardCategory{
-                    color: white;
-                    font-size:18px;
-                    font-weight:bold;
-                    padding: 6px;
-                    height: 38px;
-                    line-height: 20px;
-                    text-transform: uppercase;
-                    align-content: center;
-                    margin-bottom:4px;
-                }
+        .card.who-is-assessed {
+            border-color: var(--who-is-assessed-border-color);
+        }
 
-                .card.who-is-assessed {
-                    border-color: var(--who-is-assessed-border-color);
-                }
+        .card.the-assessor {
+            border-color: var(--the-assessor-border-color);
+        }
 
-                .card.the-assessor {
-                    border-color: var(--the-assessor-border-color);
-                }
+        .card.assessment-artefact {
+            border-color: var(--assessment-artefact-border-color);
+        }
 
-                .card.assessment-artefact {
-                    border-color: var(--assessment-artefact-border-color);
-                }
+        .card.assessment-format {
+            border-color: var(--assessment-format-border-color);
+        }
 
-                .card.assessment-format {
-                    border-color: var(--assessment-format-border-color);
-                }
+        .card.context {
+            border-color: var(--context-border-color);
+        }
 
-                .card.context {
-                    border-color: var(--context-border-color);
-                }
+        .card.assessment-timing {
+            border-color: var(--assessment-timing-border-color);
+        }
 
-                .card.assessment-timing {
-                    border-color: var(--assessment-timing-border-color);
-                }
+        .cardText{
+            padding: 6px;
+        }
 
-                .cardText{
-                    padding: 6px;
-                }
+        .card:hover {
+            border-bottom-right-radius: 50px;
+            box-shadow: 80px 90px 28px -90px rgba(0,0,0,0.65);
+        }
 
-                .card:hover {
-                    border-bottom-right-radius: 50px;
-                    box-shadow: 80px 90px 28px -90px rgba(0,0,0,0.65);
-                }
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
 
-                .card img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    display: block;
-                }
+        h2{
+            font-size: 16px;
+            margin: 0;
+        }
 
-                h2{
-                    font-size: 16px;
-                    margin: 0;
-                }
+        p {
+            font-size: 12px;
+        }
 
-                p {
-                    font-size: 12px;
-                }
+        .card-number {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
 
-                .card-number {
-                    position: absolute;
-                    bottom: 5px;
-                    right: 10px;
-                    font-size: 20px;
-                    font-weight: bold;
-                    transition: all 0.2s;
-                }
+        /* make the card number skew to create illusion of 3D effect bending */
+        .card:hover .card-number { 
+            transform: skewX(-30deg);
+        }
 
-                /* make the card number skew to create illusion of 3D effect bending */
-                .card:hover .card-number { 
-                    transform: skewX(-30deg);
-                }
+        .star {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 50px;
+            z-index: 999;
+            font-size: 40px;
+            visibility: hidden;
+        }
 
-                .star {
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    width: 40px;
-                    height: 50px;
-                    z-index: 999;
-                    font-size: 40px;
-                    visibility: hidden;
-                }
-
-                .star::before {
-                    position: absolute;
-                    top: 1px;
-                    right: 5px;
-                    width: 40px;
-                    height: 40px;
-                    z-index: 999;
-                    font-size: 40px;
-                    content: '★';
-                    color: gray;
-                    visibility: visible;
-                }
+        .star::before {
+            position: absolute;
+            top: 1px;
+            right: 5px;
+            width: 40px;
+            height: 40px;
+            z-index: 999;
+            font-size: 40px;
+            content: '★';
+            color: gray;
+            visibility: visible;
+        }
 
                 .star.active::before {
                     color: gold;
@@ -348,16 +352,13 @@ class SuperAssessmentCard extends HTMLElement {
                         <p class="howortips">${["Who is assessed", "The assessor", "Assessment format"].includes(card['card-category']) ? 'HOW' : 'TIPS'}</p>
                         <p class="card-details">${card['card-details']}</p>
                     </div>
-                    <div class="card-number">${cardId}</div>
+                    <div class="card-number">${card['card-id']}</div>
                 </div>
             </div>
         `;
+        this.shadowRoot.innerHTML = cardHTML;
+        this.addClickEventToCards();
     }
-
-
-    
-
-    
 
     addClickEventToCards() {
         const cards = this.shadowRoot.querySelectorAll('.card');
@@ -400,24 +401,19 @@ class SuperAssessmentCard extends HTMLElement {
                         cardName: starButton.getAttribute('data-card-name')
                     };
                 } else {
-                    // Remove active class when clicked again
-                    customEventName = 'unclickStar';
-                    customEventDetail = { 
-                        cardName: starButton.getAttribute('data-card-name')
-                    };
+                    cardContent.style.display = 'none';
+                    cardImage.style.display = 'block';
+    
+                    // Dispatch event only if flipping to show the image (back of the card)
+                    document.dispatchEvent(new CustomEvent('cardFlipped', {
+                        detail: {
+                            category: this.getAttribute('card-category'),
+                            enableDraw: true
+                        }
+                    }));
                 }
-
-                const customEvent = new CustomEvent(customEventName, {
-                    bubbles: true,
-                    composed: true,
-                    detail: customEventDetail
-                });
-
-                this.dispatchEvent(customEvent);
-                console.log(customEvent);
             });
         });
-        
     }
     
 }

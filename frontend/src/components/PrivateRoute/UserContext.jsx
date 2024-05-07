@@ -1,4 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { usersAuthorize, getStatus, logout } from '../../helpers/api.js';
+import { useLocation } from 'react-router-dom'
 
 const AuthContext = createContext();
 
@@ -6,28 +8,29 @@ export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-//handles changes to localstorage
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem('token') || null);
+  const [isAuth, setIsAuth] = useState(null);
 
-  useEffect(() => {
-    localStorage.setItem('token', token);
-  }, [token]);
-
-//saves token to localstorage
-  const loginAuth = (newToken) => {
-  	console.log(newToken);
-    setToken(newToken);
+//updates and saves token to cookies
+  const loginAuth = () => {
+    getStatus(setIsAuth);
   };
 
-//deletes token from localstorage
   const handleLogout = () => {
-    setToken(null);
-    localStorage.removeItem('token');
-  };
+    logout();
+    getStatus(setIsAuth);
+  }
+
+  const getLocation = () =>{
+    console.log(location.pathname)
+  }
+
+useEffect(() => {
+  getStatus(setIsAuth);
+},[]);
 
   return (
-    <AuthContext.Provider value={{ token, loginAuth, handleLogout }}>
+    <AuthContext.Provider value={{ isAuth, loginAuth, handleLogout, getLocation }}>
       {children}
     </AuthContext.Provider>
   );

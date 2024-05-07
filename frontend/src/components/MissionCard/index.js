@@ -1,15 +1,29 @@
 class SuperMissionCard extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({mode: 'open'});
-        this.shadowRoot.innerHTML = `
-            <div>Loading mission cards...</div>
-        `;
+        this.attachShadow({ mode: "open" });
+        this.shadowRoot.innerHTML = `<div>Loading mission cards...</div>`;
+        this.cardId = this.getAttribute('card-id');  // Unique identifier for each card
         this.loadAndRenderCards();
     }
 
+    connectedCallback() {
+        document.addEventListener('refreshCards', () => {
+            console.log('Refreshing all mission cards');
+            this.loadAndRenderCards();
+        });
+
+        document.addEventListener('drawNewCard', (event) => {
+            console.log(`Received drawNewCard event for cardId: ${event.detail.cardId}, this cardId: ${this.cardId}`);
+            if (event.detail.cardId === this.cardId) {
+                console.log('Loading new card for this mission card');
+                this.loadAndRenderCards();
+            }
+        });
+    }
+
     loadAndRenderCards() {
-        fetch('http://localhost:3000/api/cards')
+        fetch("http://localhost:3000/api/cards")
             .then(response => response.json())
             .then(data => this.renderCards(data))
             .catch(error => console.error('Error:', error));
@@ -112,8 +126,8 @@ class SuperMissionCard extends HTMLElement {
                 </div>
             </div>
         `;
-        this.shadowRoot.innerHTML = missionCardHTML;
-        this.addClickEventToCards();
+        this.shadowRoot.innerHTML = cardHTML;
+        this.addClickEventToCard();
     }
 
     addClickEventToCards() {
@@ -155,4 +169,4 @@ class SuperMissionCard extends HTMLElement {
     }
 }
 
-customElements.define('super-mission-card', SuperMissionCard);
+customElements.define("super-mission-card", SuperMissionCard);

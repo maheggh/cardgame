@@ -29,8 +29,7 @@ function Login() {
         event.preventDefault();
         try {
             const data = await login(email, password); 
-            loginAuth(JSON.stringify(data.accessToken));
-            console.log(data.accessToken);
+            loginAuth();
             navigate('/');
         } catch (error) {
             console.error('Login failed:', error);
