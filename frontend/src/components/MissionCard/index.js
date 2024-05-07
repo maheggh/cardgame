@@ -58,6 +58,49 @@ class SuperMissionCard extends HTMLElement {
                     border-bottom-right-radius: 50px;
                     box-shadow: 80px 90px 28px -90px rgba(0,0,0,0.45);
                 }
+                .card-background {
+                    height: 100%;
+                    position: relative;
+                }
+                .card-background_topsection {
+                    height: 55%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .card-background_topsection .card-category-text {
+                    font-size: 165%;
+                    font-weight: bold;
+                    margin-top: 5px;
+                    margin: 0 30px;
+                    text-align: center;
+                    color: #3f90ce;
+                }
+                .card-background_bottomsection {
+                    background-color: #ffe784;
+                    height: 45%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;
+                }
+
+                .card-background_bottomsection img {
+                    width: 40px;
+                    height: 40px;
+                }
+                .card-background .card-gamename {
+                    background: linear-gradient(90deg, #3d4ca0, #47a0d9);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    font-size: 100%;
+                }
+                .card-background .card-gamename span {
+                    font-weight: bold;
+                    font-size: 160%;
+                }
             </style>
             <div class="card-container">
             
@@ -78,11 +121,22 @@ class SuperMissionCard extends HTMLElement {
         cards.forEach(card => {
             card.addEventListener('click', () => {
                 const content = card.querySelector('.card-content');
-                const imageUrl = './assets/cards-png/SUPER cards poker size 061123178.png'; 
+                const assessmentLogoSrc =  './assets/icons/Super_assessed.png';
                 // Check if the card is currently displaying the image or the text
                 if (content) {
                     // Card is currently showing text, switch to image
-                    const imageHtml = `<img src="${imageUrl}" alt="Card Image">`;
+                    const imageHtml = `
+                        <div class="card-background" >
+                            <div class="card-background_topsection ">
+
+                                <div class="card-category-text">Mission</div>
+                            </div>
+                            <div class="card-background_bottomsection">
+                                <img src="${assessmentLogoSrc}" alt="Assessment card"></img>
+                                <div class="card-gamename"><span>SUPER</span><br>ASSESSOR</div>
+                            </div>
+                        </div>
+                    `;
                     card.innerHTML = imageHtml;
                 } else {
                     // Card is currently showing image, revert back to original text content

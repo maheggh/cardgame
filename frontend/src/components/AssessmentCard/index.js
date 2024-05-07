@@ -1,3 +1,6 @@
+
+
+
 class SuperAssessmentCard extends HTMLElement {
     constructor() {
         super();
@@ -198,6 +201,86 @@ class SuperAssessmentCard extends HTMLElement {
                 .star.active::before {
                     color: gold;
                 }
+
+                .card-background {
+                    height: 100%;
+                    position: relative;
+                }
+
+                .card-background_topsection {
+                    height: 55%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .card-background_topsection .card-category-text {
+                    font-size: 140%;
+                    font-weight: bold;
+                    margin-top: 5px;
+                    margin: 0 30px;
+                    text-align: center;
+                }
+
+                .card-background_topsection.who-is-assessed .card-category-text, .card-background_topsection.the-assessor .card-category-text, .card-background_topsection.assessment-artefact .card-category-text {
+                    color: white;
+                }
+
+                .card-background_topsection img {
+                    width: 60px;
+                    height: 60px;
+                }
+
+                .card-background .who-is-assessed {
+                    background-color: var(--who-is-assessed-color);
+                }
+
+                .card-background .the-assessor {
+                    background-color: var(--the-assessor-color);
+                }
+
+                .card-background .assessment-artefact {
+                    background-color: var(--assessment-artefact-color);
+                }
+
+                .card-background .assessment-format {
+                    background-color: var(--assessment-format-color);
+                }
+
+                .card-background .context {
+                    background-color: var(--context-color);
+                }
+                
+                .card-background .assessment-timing {
+                    background-color: var(--assessment-timing-color);
+                }
+
+                .card-background_bottomsection {
+                    background-color: #ffe784;
+                    height: 45%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;
+                }
+
+                .card-background_bottomsection img {
+                    width: 40px;
+                    height: 40px;
+                }
+
+                .card-background .card-gamename {
+                    background: linear-gradient(90deg, #3d4ca0, #47a0d9);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    font-size: 100%;
+                }
+                .card-background .card-gamename span {
+                    font-weight: bold;
+                    font-size: 160%;
+                }
             </style>
 
                 ${this.renderCard(selectedCard)}
@@ -211,10 +294,52 @@ class SuperAssessmentCard extends HTMLElement {
         let cardId = Number(card["card-id"]);
         let cardCategory = card["card-category"].replace(/\s+/g, '-').toLowerCase();
 
+
+        // logo src
+        const assessmentLogoSrc =  './assets/icons/Super_assessed.png';
+
+        // card icon src
+        const whoAssessed = './assets/icons/Assessed.svg';
+        const assessor = './assets/icons/assessor.png';
+        const context = './assets/icons/Context.png';
+        const format = './assets/icons/Assessment_format.png';
+        const timing = './assets/icons/Assessment_timing.png';
+        const artefact = './assets/icons/Assessment_artefact.png';
+
+        function getImageSrc(category) {
+            switch(category) {
+                case 'who-is-assessed':
+                    return whoAssessed;
+                case 'the-assessor':
+                    return assessor;
+                case 'assessment-artefact':
+                    return artefact;
+                case 'assessment-format':
+                    return format;
+                case 'context':
+                    return context;
+                case 'assessment-timing':
+                    return timing;
+                default:
+                    return '';
+            }
+        }
+
+        // ${getImageSrc(card['card-category'])}
+
         return `
             <div class="card ${cardCategory}" >
                 <button class="star" data-card-id="${card['card-id']}" data-card-name="${card['card-name']}"></button>
-                <img class="card-image" style="display: none;" data-card-id="${card['card-id']}">
+                <div class="card-background" style="display: none;" data-card-category="${card['card-category']}">
+                    <div class="card-background_topsection ${cardCategory}">
+                        <img src="${getImageSrc(cardCategory)}" class="card-background_card-logo" alt="${card["card-category"]}"></img>
+                        <div class="card-category-text">${card['card-category']}</div>
+                    </div>
+                    <div class="card-background_bottomsection">
+                        <img src="${assessmentLogoSrc}" alt="Assessment card"></img>
+                        <div class="card-gamename"><span>SUPER</span><br>ASSESSOR</div>
+                    </div>
+                </div>
                 <div class="card-content">
                     <div class="cardCategory">${card["card-category"]}</div>
                     <div class="cardText">
@@ -239,7 +364,7 @@ class SuperAssessmentCard extends HTMLElement {
         cards.forEach(card => {
             card.addEventListener('click', () => {
                 const cardContentElement = card.querySelector('.card-content');
-                const imageElement = card.querySelector('.card-image');
+                const imageElement = card.querySelector('.card-background');
                 const cardId = imageElement.getAttribute('data-card-id');
 
 
