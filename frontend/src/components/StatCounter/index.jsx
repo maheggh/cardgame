@@ -5,7 +5,7 @@ const StatCounter = (props) => {
 
     return (
         <div className="info-card">
-            <p className="number">{props.number}</p>
+            <p className="number">{props.number ? props.number : ("??") }</p>
             <p className="subtitle">{props.title}</p>
         </div>
     );

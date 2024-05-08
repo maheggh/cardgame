@@ -1,6 +1,6 @@
 import logo from '../../../icons/Logo.svg'; 
 import './style.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../PrivateRoute/UserContext';
 
 const Header = () => {
@@ -20,19 +20,19 @@ if (isAuth){
     return(
         <header className="super-assessor-header">
             <div className="header-wrapper">
-                <a href='/' className="logo">
+                <Link  to='/' className="logo">
                     <img src={logo} alt="Logo"/>
-                </a>
+                </Link >
                 <nav>
-                    <a href="/Game" className="link nav-button">Game</a>
+                    <Link  to="/Game" className="link nav-button">Game</Link>
                     {userRole=="Admin" ? (
                     <>
-                    <a href="/cards" className="link nav-button">Cards</a>
-                    <a href="/users" className="link nav-button">Users</a>
-                    <a href="/fileupload" className="link nav-button">Upload</a>
+                    <Link  to="/cards" className="link nav-button">Cards</Link >
+                    <Link  to="/users" className="link nav-button">Users</Link >
+                    <Link  to="/fileupload" className="link nav-button">Upload</Link >
                     </>
                     ) : (<></>)}
-                    <a href="/" className="link nav-button" onClick={handleLogout}>Log out</a>
+                    <a  href="/" className="link nav-button" onClick={handleLogout}>Log out</a>
                 </nav>
             </div>
         </header>
@@ -43,13 +43,13 @@ else{
     return (
     <header className="super-assessor-header">
         <div className="header-wrapper">
-            <a href='/' className="logo">
+            <Link to='/' className="logo">
                 <img src={logo} alt="Logo"/>
-            </a>
+            </Link>
 
             <nav>
-            <a href="/login" className="link nav-button">Login</a>
-            <a href="/signup" className="link nav-button">Sign up</a>
+            <Link to="/login" className="link nav-button">Login</Link>
+            <Link to="/signup" className="link nav-button">Sign up</Link>
             </nav>
         </div>
     </header>   

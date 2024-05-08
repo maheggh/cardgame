@@ -48,14 +48,10 @@ export async function authorize(token){
 }
 
 
-export async function usersAuthorize(token){
-    token = token.replace(/"/g, ''); 
+export async function usersAuthorize(){
     const response = await fetch(`${API_URL}/users`, {
         method: 'GET',
-        credentials: 'include',
-        headers: {
-            'auth-token': `Bearer ${token}`
-        }
+        credentials: 'include'
     });
     if (!response.ok) {
         throw new Error('Login failed');

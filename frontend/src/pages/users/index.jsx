@@ -10,12 +10,7 @@ const UserDashboard = () => {
   useEffect(() => {
     const getAllUsers = async () => {
       try {
-        const authToken = localStorage.getItem('token');
-        if (!authToken) {
-          console.error('No auth token found');
-          return;
-        }
-        const allUsers = await usersAuthorize(authToken);
+        const allUsers = await usersAuthorize();
         setUsers(allUsers);
       } catch (error) {
         console.error('Error:', error);

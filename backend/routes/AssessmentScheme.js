@@ -5,13 +5,13 @@ const {createScheme, getAllSchemes, getSingleScheme, updateScheme, deleteScheme}
 const {auth, authRole} = require('../helpers/verifyToken');
 
 //GET: Read all schemes
-router.get('/', getAllSchemes);
+router.get('/', auth, getAllSchemes);
 
 //GET: Read single scheme
-router.get('/:id', getSingleScheme);
+router.get('/:id', auth, getSingleScheme);
 
 //POST: Create scheme
-router.post('/', createScheme);
+router.post('/', auth, createScheme);
 
 //PATCH: Update single scheme
 router.patch('/:id', auth, updateScheme);

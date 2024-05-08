@@ -7,14 +7,11 @@ import './style.css'
 function EditUserPage() {
   const { userId } = useParams(); 
   const [user, setUser] = useState(null);
-  const token = localStorage.getItem('token');
-  console.log(token);
-  const token2 = token.replace(/"/g, ''); 
   const navigate = useNavigate();
 
   // Fetch user data on component mount
   useEffect(() => {
-    fetchUser(userId, token2)
+    fetchUser(userId)
       .then(data => {
         console.log(data);
         setUser(data); 
