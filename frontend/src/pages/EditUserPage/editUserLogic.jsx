@@ -1,26 +1,23 @@
-const URL = 'http://localhost:3000/users/';
+const URL = 'http://localhost:3000/api/users/';
 
 
 // Fetch user data
-export const fetchUser = (userId, token2) => {
-  return fetch(`${URL}${userId}`, {
-    headers: {
-      'auth-token': `Bearer ${token2}`,
-    },
-  })
-  .then(response => response.json())
-  .catch(error => console.error('Error:', error));
+export const fetchUser = (userId) => {
+  return fetch(`${URL}${userId}`, { credentials: 'include' })
+    .then(response => response.json())
+    .catch(error => console.error('Error:', error));
 };
 
+
 // Update user data
-export const updateUser = (userId, user, token2) => {
+export const updateUser = (userId, user) => {
   return fetch(`${URL}${userId}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      'auth-token': `Bearer ${token2}`,
     },
     body: JSON.stringify(user),
+    credentials: 'include' 
   })
   .then(response => {
     if (!response.ok) {
@@ -32,12 +29,10 @@ export const updateUser = (userId, user, token2) => {
 };
 
 // Delete user
-export const deleteUser = (userId, token2) => {
+export const deleteUser = (userId) => {
   return fetch(`${URL}${userId}`, {
     method: 'DELETE',
-    headers: {
-      'auth-token': `Bearer ${token2}`,
-    },
+    credentials: 'include' 
   })
   .then(response => {
     if (!response.ok) {

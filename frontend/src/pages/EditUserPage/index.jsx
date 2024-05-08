@@ -24,7 +24,7 @@ function EditUserPage() {
   // Handle form submission
   const handleSubmit = event => {
     event.preventDefault();
-    updateUser(userId, user, token2)
+    updateUser(userId, user)
       .then(data => {
         console.log(data);
 
@@ -34,7 +34,7 @@ function EditUserPage() {
 
   // Handle delete button click
   const handleDelete = () => {
-    deleteUser(userId, token2)
+    deleteUser(userId)
       .then(() => {
 
         navigate('/users');

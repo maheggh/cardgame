@@ -34,7 +34,7 @@ check('password').isLength({min:8})], createUser);
 router.patch('/:id', auth, authRole('Admin'), updateUser);
 
 //DELETE: Delete single user
-router.delete('/:id', auth, authRole, deleteUser);
+router.delete('/:id', auth, authRole('Admin'), deleteUser);
 
 
 
