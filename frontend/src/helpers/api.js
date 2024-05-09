@@ -48,7 +48,7 @@ export async function authorize(token){
 }
 
 
-export async function usersAuthorize(){
+export async function getAllUsers(){
     const response = await fetch(`${API_URL}/users`, {
         method: 'GET',
         credentials: 'include'

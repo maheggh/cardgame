@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { usersAuthorize, getStatus, logout } from '../../helpers/api.js';
+import { getStatus, logout } from '../../helpers/api.js';
 import { useLocation } from 'react-router-dom'
 
 const AuthContext = createContext();
@@ -10,6 +10,7 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(null);
+  const [role, setRole] = useState('');
 
 //updates and saves token to cookies
   const loginAuth = () => {
@@ -26,7 +27,10 @@ export const AuthProvider = ({ children }) => {
   }
 
 useEffect(() => {
-  getStatus(setIsAuth);
+  getStatus(setIsAuth)
+  .then(responseData =>{
+    setRole(responseData.userRole);
+  })
 },[]);
 
   return (

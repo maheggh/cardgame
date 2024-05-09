@@ -5,13 +5,13 @@ import { useAuth } from '../PrivateRoute/UserContext';
 
 const Header = () => {
     const location = useLocation();
-    const { isAuth, handleLogout } = useAuth();
+    const { isAuth, handleLogout, role } = useAuth();
     const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
     //console.log(token);
     /*const decodedToken = (token!='null' && token) ? JSON.parse(atob(token.split('.')[1])) : ''// Decode JWT token payload
     
     console.log(userRole);*/
-    const userRole = "Admin";
+    const userRole = role;
       const LogoutFunction = () => {
         handleLogout();
       };

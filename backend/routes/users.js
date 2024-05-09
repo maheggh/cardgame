@@ -18,7 +18,7 @@ router.post('/token', refresh);
 router.get('/status', auth, status);
 
 //GET: Read all users
-router.get('/', auth, getAllUsers);
+router.get('/', auth, authRole('Admin'), getAllUsers);
 
 //GET: Read total all users
 router.get('/total', getTotalUsers);
