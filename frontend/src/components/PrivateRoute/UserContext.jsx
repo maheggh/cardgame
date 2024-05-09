@@ -10,7 +10,7 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(null);
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState("");
 
 //updates and saves token to cookies
   const loginAuth = () => {
@@ -34,7 +34,7 @@ useEffect(() => {
 },[]);
 
   return (
-    <AuthContext.Provider value={{ isAuth, loginAuth, handleLogout, getLocation }}>
+    <AuthContext.Provider value={{ isAuth, loginAuth, handleLogout, getLocation, role }}>
       {children}
     </AuthContext.Provider>
   );
