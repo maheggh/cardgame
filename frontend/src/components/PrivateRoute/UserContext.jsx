@@ -31,7 +31,7 @@ useEffect(() => {
   .then(responseData =>{
     setRole(responseData.userRole);
   })
-},[]);
+},[isAuth]);
 
   return (
     <AuthContext.Provider value={{ isAuth, loginAuth, handleLogout, getLocation, role }}>

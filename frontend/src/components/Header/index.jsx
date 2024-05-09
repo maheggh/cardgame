@@ -11,7 +11,7 @@ const Header = () => {
     /*const decodedToken = (token!='null' && token) ? JSON.parse(atob(token.split('.')[1])) : ''// Decode JWT token payload
     
     */
-    const userRole = "Admin";
+    const userRole = role;
       const LogoutFunction = () => {
         handleLogout();
       };
