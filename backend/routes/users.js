@@ -13,8 +13,9 @@ router.post('/login', [check('email').isEmail(),check('password').isLength({min:
 router.get('/logout', logoutUser);
 
 //refresh token
-router.post('/token', refresh);
+router.get('/token', refresh);
 
+//status check. checks if users are still auth
 router.get('/status', auth, status);
 
 //GET: Read all users

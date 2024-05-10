@@ -13,7 +13,7 @@ const createScheme = async (req, res) => {
 		'card-mission-one': req.body['card-mission-one'],
 		'card-mission-two': req.body['card-mission-two'],
 		'card-mission-three': req.body['card-mission-three'],
-		'scheme-creator': req.body['scheme-creator']
+		'creator': req.body['scheme-creator']
 	})
 
 	try {
@@ -79,7 +79,6 @@ const updateScheme = async (req, res) => {
 //CRUD: Delete
 const deleteScheme = async (req, res) => {
     const _id = req.params.id;
-    console.log(_id);
     try {
         const card = await AssessmentSchemes.findByIdAndDelete(_id);
         if (!card) {

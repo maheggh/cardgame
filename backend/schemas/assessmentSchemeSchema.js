@@ -42,7 +42,12 @@ const AssessmentSchemeSchema = new Schema({
 	"card-mission-three":{
 		type: mongoose.Schema.Types.ObjectId,
 		required: true
-	}
+	},
+	"creator": {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		required: true
+	} 
 });
 
 

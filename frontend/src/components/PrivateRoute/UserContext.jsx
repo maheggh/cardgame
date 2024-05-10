@@ -22,10 +22,6 @@ export const AuthProvider = ({ children }) => {
     getStatus(setIsAuth);
   }
 
-  const getLocation = () =>{
-    console.log(location.pathname)
-  }
-
 useEffect(() => {
   getStatus(setIsAuth)
   .then(responseData =>{
@@ -34,7 +30,7 @@ useEffect(() => {
 },[isAuth]);
 
   return (
-    <AuthContext.Provider value={{ isAuth, loginAuth, handleLogout, getLocation, role }}>
+    <AuthContext.Provider value={{ isAuth, loginAuth, handleLogout, role }}>
       {children}
     </AuthContext.Provider>
   );

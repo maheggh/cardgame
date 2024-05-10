@@ -36,6 +36,30 @@ const getAllCards = async (req, res) => {
 }
 
 //CRUD: Read
+const getTotalCards = async (req, res) => {
+    try {
+        const count = await Cards.countDocuments();
+        // if successful, prints total number of users
+        res.status(200).json(count);
+    } catch (err) {
+        // if unsuccessful, prints error message and sends a 500 status
+        res.status(500).send('Error: ' + err);
+    }
+}
+
+//CRUD: Read
+const getTotalCardTypes = async (req, res) => {
+    try {
+        const count = await Cards.distinct('card-category');
+        // if successful, prints total number of users
+        res.status(200).json(count.length);
+    } catch (err) {
+        // if unsuccessful, prints error message and sends a 500 status
+        res.status(500).send('Error: ' + err);
+    }
+}
+
+//CRUD: Read
 const getSingleCard = async (req, res) => {
 	const _id = req.params.id;
 	try {
@@ -90,4 +114,4 @@ const deleteCard = async (req, res) => {
         res.status(500).json({ message: 'Error deleting card', error: err.message || err });
     }
 };
-module.exports = { createCard, getAllCards, getSingleCard, updateCard, deleteCard }
+module.exports = { createCard, getAllCards, getSingleCard, updateCard, deleteCard, getTotalCards, getTotalCardTypes }

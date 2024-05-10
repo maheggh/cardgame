@@ -137,18 +137,18 @@ const authenticateUser = async (req, res) => {
 	//generates token and refresh token then sets token in cookies
 	const token = jwt.sign({_id:user._id, role: user.role},process.env.TOKEN_SECRET, { expiresIn: '15m' });
 	const refreshToken = jwt.sign({_id:user._id},process.env.REFRESH_SECRET);
-	res.cookie('jwt',token,{httpOnly:true}).json({message:"Logged in successfully"});
+	res.cookie('jwt',token,{httpOnly:true}).cookie('refresh',refreshToken,{httpOnly:true}).json({message:"Logged in successfully"});
 }
 
 //code borrowed from lefteris
 const logoutUser = async (req, res) =>{
-	res.clearCookie('jwt').json({message:'Logged out succesfully'}).status(200)
+	res.clearCookie('jwt').clearCookie('refresh').json({message:'Logged out succesfully'}).status(200)
 }
 
 const refresh = (req, res) => {
-	const refreshtoken = req.body.refreshToken;
-
-	if (refreshtoken == null) return res.sendStatus(401)
+	console.log("token refresh");
+	const refreshtoken = req.cookies.refresh;
+	if (refreshtoken == null) return res.sendStatus(401);
 	jwt.verify(refreshtoken, process.env.REFRESH_SECRET, (err, user) => {
 		if (err) return res.status(403);
 		const token = jwt.sign({_id:user._id, role: user.role},process.env.TOKEN_SECRET, { expiresIn: '15m' });

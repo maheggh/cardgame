@@ -1,6 +1,7 @@
 //code mostly copied from presentation from lefteris
 const jwt = require('jsonwebtoken');
 const Users = require('../schemas/userSchema');
+const AssessmentSchemes = require('../schemas/assessmentSchemeSchema');
 
 const auth = async (req, res, next) => {
 	const authtoken = req.cookies.jwt;
@@ -34,4 +35,21 @@ function authRole(role) {
 	}
 }
 
-module.exports = {auth, authRole}
+//code copied from presentation from lefteris
+const authCanUpdate = async (req,res,next)=>{
+	const _id = req.params.id;
+	try{
+		const scheme = await AssessmentSchemes.findById(_id);
+		console.log(typeof(req.user.id));
+
+			if(scheme.creator != req.user.id || req.user.role != 'Admin'){
+				res.status(401)
+				return res.send('you have no permision to update a the movie')
+			}
+			next()
+	}catch(error){
+		res.json({message:error})
+	}
+}
+
+module.exports = {auth, authRole, authCanUpdate}

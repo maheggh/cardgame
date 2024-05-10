@@ -7,10 +7,6 @@ const Header = () => {
     const location = useLocation();
     const { isAuth, role, handleLogout } = useAuth();
     const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
-    //console.log(token);
-    /*const decodedToken = (token!='null' && token) ? JSON.parse(atob(token.split('.')[1])) : ''// Decode JWT token payload
-    
-    */
     const userRole = role;
       const LogoutFunction = () => {
         handleLogout();
