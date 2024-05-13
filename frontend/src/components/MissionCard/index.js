@@ -6,13 +6,13 @@ class SuperMissionCard extends HTMLElement {
         this.cardId = this.getAttribute('card-id');  // Unique identifier for each card
         this.loadAndRenderCards();
     }
-
+ 
     connectedCallback() {
         document.addEventListener('refreshCards', () => {
             console.log('Refreshing all mission cards');
             this.loadAndRenderCards();
         });
-
+ 
         document.addEventListener('drawNewCard', (event) => {
             console.log(`Received drawNewCard event for cardId: ${event.detail.cardId}, this cardId: ${this.cardId}`);
             if (event.detail.cardId === this.cardId) {
@@ -21,7 +21,7 @@ class SuperMissionCard extends HTMLElement {
             }
         });
     }
-
+ 
     loadAndRenderCards() {
         fetch("http://localhost:3000/api/cards")
             .then(response => response.json())
@@ -38,13 +38,13 @@ class SuperMissionCard extends HTMLElement {
                 console.error("Error fetching mission cards:", error);
             });
     }
-
+ 
     renderRandomCard(missionCardData) {
         const selectedCard = missionCardData[Math.floor(Math.random() * missionCardData.length)];
         console.log(`Rendering card: ${selectedCard['card-name']}`);
         this.renderCard(selectedCard);
     }
-
+ 
     renderCard(card) {
         let cardHTML = `
         <style>
@@ -83,7 +83,7 @@ class SuperMissionCard extends HTMLElement {
                 box-shadow: 80px 90px 28px -90px rgba(0,0,0,0.45);
             }
             button.replace-button {
-                width: calc(100% - 22px);
+                margin-top: 10px;
                 padding: 5px 10px;
                 font-size: 16px;
                 background-color: #4CAF50;
@@ -91,8 +91,49 @@ class SuperMissionCard extends HTMLElement {
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
-                margin: 10px auto;
+            }
+            .card-background {
+                height: 100%;
+                position: relative;
+            }
+            .card-background_topsection {
+                height: 55%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            .card-background_topsection .card-category-text {
+                font-size: 165%;
+                font-weight: bold;
+                margin-top: 5px;
+                margin: 0 30px;
+                text-align: center;
+                color: #3f90ce;
+            }
+            .card-background_bottomsection {
+                background-color: #ffe784;
+                height: 45%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+            }
+            .card-background_bottomsection img {
+                width: 40px;
+                height: 40px;
                 display: block;
+            }
+            .card-background .card-gamename {
+                background: linear-gradient(90deg, #3d4ca0, #47a0d9);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-size: 100%;
+            }
+            .card-background .card-gamename span {
+                font-weight: bold;
+                font-size: 160%;
             }
         </style>
         <div class="card">
@@ -100,22 +141,45 @@ class SuperMissionCard extends HTMLElement {
                 <div class="card-header">${card["card-name"]}</div>
                 <div class="card-body">${card["card-description"].replace(/\n/g, "<br>")}</div>
             </div>
+            <div class="card-background" style="display: none;">
+                <div class="card-background_topsection">
+                    <div class="card-category-text">Mission</div>
+                </div>
+                <div class="card-background_bottomsection">
+                    <img src="../../assets/icons/Super_assessed.png" alt="Assessment card"></img>
+                    <div class="card-gamename"><span>SUPER</span><br>ASSESSOR</div>
+                </div>
+            </div>
+            <button class="replace-button">Replace</button>
         </div>
-        <button class="replace-button">Replace</button>
+        
         `;
         this.shadowRoot.innerHTML = cardHTML;
         this.addClickEventToCard();
+        import("../../assets/icons/Super_assessed.png");
     }
-
+ 
     addClickEventToCard() {
         const card = this.shadowRoot.querySelector(".card");
-        const replaceButton = this.shadowRoot.querySelector(".replace-button");
-
+        const imageElement = card.querySelector(".card-background");
+        const contentElement = card.querySelector(".card-content");
+        const replaceButton = card.querySelector(".replace-button");
+   
+        card.addEventListener("click", () => {
+            if (imageElement.style.display === 'block') {
+                imageElement.style.display = 'none';
+                contentElement.style.display = 'block';
+            } else {
+                imageElement.style.display = 'block';
+                contentElement.style.display = 'none';
+            }
+        });
+   
         replaceButton.addEventListener("click", (e) => {
             e.stopPropagation();  // Prevent the card click event from firing
             this.loadAndRenderCards();  // Reload a new mission card
         });
     }
 }
-
+ 
 customElements.define("super-mission-card", SuperMissionCard);
