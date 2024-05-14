@@ -91,6 +91,7 @@ class SuperMissionCard extends HTMLElement {
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
+                margin-left: 75px;
             }
             .card-background {
                 height: 100%;
