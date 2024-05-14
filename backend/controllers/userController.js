@@ -145,15 +145,17 @@ const logoutUser = async (req, res) =>{
 	res.clearCookie('jwt').clearCookie('refresh').json({message:'Logged out succesfully'}).status(200)
 }
 
-const refresh = (req, res) => {
+const refresh = async (req, res) => {
 	console.log("token refresh");
-	const refreshtoken = req.cookies.refresh;
-	if (refreshtoken == null) return res.sendStatus(401);
-	jwt.verify(refreshtoken, process.env.REFRESH_SECRET, (err, user) => {
-		if (err) return res.status(403);
-		const token = jwt.sign({_id:user._id, role: user.role},process.env.TOKEN_SECRET, { expiresIn: '15m' });
-		res.cookie('jwt',token,{httpOnly:true}).sendStatus(200);
-	})
+	const refreshToken = req.cookies.refresh;
+	if (refreshToken == null) return res.sendStatus(401);
+	const verified = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
+	const user = await Users.findById(verified._id).select('-password');
+	if (!user) {
+		return res.status(401).send('Access denied');
+	}
+	const token = jwt.sign({_id:user._id, role: user.role},process.env.TOKEN_SECRET, { expiresIn: '15m' });
+	res.cookie('jwt',token,{httpOnly:true}).json({message:"Logged in successfully"});
 }
 
 const status = (req, res) => {
