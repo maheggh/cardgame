@@ -43,17 +43,15 @@
     width: 20%;
   }
 
-  .edit_form .school_info select {
-    margin: auto 0;
-  }
-
   .edit_form label input[type="text"],
   .edit_form label input[type="email"] {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 8px;
+    height: 36px;
+    color: black;
   }
   
   .edit_form label input[type="text"]:focus,
@@ -68,29 +66,57 @@
   .edit_form button {
     padding: 10px 15px;
     margin-top: 20px;
-    margin-right: 10px;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
+    width: 90px;
   }
 
   .buttons {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    gap: 10px;
   }
   
   .edit_form button[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 35px;
-  }
-  
-  .edit_form .red {
-    background-color: #f44336;
+    background-color: #056A92;
     color: white;
   }
   
 
+  .edit_form .red {
+    background-color: #f44336;
+    color: white;
+  }
+
+  .edit_form .white {
+    background-color: #fff;
+    color: #575757;
+    border: 1px solid #575757;
+  }
+
+  .edit_form .white:hover {
+    text-decoration: underline;
+    background-color: white;
+    color: #575757;
+  }
+
+  .edit_form button:hover {
+    background-color: #000;
+    color: white;
+  }
+  
+
+.school_info-short select {
+    padding: 0.5rem;
+    width: 100%;
+    border: 1px solid #B6B6B6;
+    border-radius: 8px;
+    height: 36px;
+    background-color: #fff;
+    margin-top: 5px;
+    color: black;
+}
   

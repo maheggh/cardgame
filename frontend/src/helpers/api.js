@@ -54,7 +54,7 @@ export async function getAllUsers(){
         credentials: 'include'
     });
     if (!response.ok) {
-        throw new Error('Login failed');
+        throw new Error('Failed to get all users');
     }
 
     return response.json();
@@ -129,10 +129,8 @@ export async function refreshToken() {
     });
 
     if (!response.ok) {
-        setIsAuth(false);
         throw new Error('Status failed');
     }
-    setIsAuth(true);
     return response.json();
 }
 

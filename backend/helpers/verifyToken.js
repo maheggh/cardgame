@@ -27,6 +27,9 @@ function authRole(role) {
 		const token = req.cookies.jwt
 		const tokenRole = JSON.parse(atob(token.split('.')[1])).role
 		if (tokenRole !== role){
+			console.log("tokenRole: "+tokenRole);
+			console.log("role: "+role);
+			console.log("token: "+token);
 			console.log("no permision");
 			res.status(401)
 			return res.send('you have no permision')
@@ -44,7 +47,7 @@ const authCanUpdate = async (req,res,next)=>{
 
 			if(scheme.creator != req.user.id || req.user.role != 'Admin'){
 				res.status(401)
-				return res.send('you have no permision to update a the movie')
+				return res.send('you have no permision to update a the scheme')
 			}
 			next()
 	}catch(error){
