@@ -2,30 +2,30 @@
 import React, { useState } from 'react';
 import './style.css';  // Ensure your CSS supports this setup
 
-const StartScreen = ({ onGameStart }) => {
+const StartScreen = ({ onStartGame }) => {
     const [players, setPlayers] = useState([]);
     const [newPlayerName, setNewPlayerName] = useState('');
     const [selectedAvatar, setSelectedAvatar] = useState(null);
-      const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
   
     const addPlayer = () => {
-        // Reset error message at the start of the function
         setErrorMessage('');
-    
         if (!newPlayerName) {
             setErrorMessage('Please enter a name for the player.');
-        } else if (!selectedAvatar) {
+            return;
+        } 
+        if (!selectedAvatar) {
             setErrorMessage('Please select an avatar.');
-        } else {
-            setPlayers([...players, { name: newPlayerName, avatar: selectedAvatar }]);
-            setNewPlayerName('');
-            setSelectedAvatar(null);
+            return;
         }
+        setPlayers([...players, { name: newPlayerName, avatar: selectedAvatar }]);
+        setNewPlayerName('');
+        setSelectedAvatar(null);
     };
   
     const removePlayer = index => {
-      const updatedPlayers = players.filter((_, i) => i !== index);
-      setPlayers(updatedPlayers);
+        const updatedPlayers = players.filter((_, i) => i !== index);
+        setPlayers(updatedPlayers);
     };
   
     const handleAvatarSelect = (avatar) => {
@@ -67,7 +67,7 @@ const StartScreen = ({ onGameStart }) => {
               </div>
               <div className="selection-button-container">
               <button onClick={addPlayer} className="confirm-button">Add Player</button>
-              <button onClick={onGameStart} className="start-game-button" disabled={players.length === 0}>Start Game</button>
+                <button onClick={() => onStartGame(players)} className="start-game-button" disabled={players.length === 0}>Start Game</button>
               </div>
               <div className="error-message">{errorMessage}</div>
             </>
