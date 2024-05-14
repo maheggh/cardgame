@@ -1,22 +1,23 @@
 class SuperMissionCard extends HTMLElement {
+    static displayedCardIds = new Set();
+
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
         this.shadowRoot.innerHTML = `<div>Loading mission cards...</div>`;
-        this.cardId = this.getAttribute('card-id');  // Unique identifier for each card
+        this.cardId = this.getAttribute('card-id');
+        this.currentCardId = null;
         this.loadAndRenderCards();
     }
- 
+
     connectedCallback() {
         document.addEventListener('refreshCards', () => {
             console.log('Refreshing all mission cards');
             this.loadAndRenderCards();
         });
- 
+
         document.addEventListener('drawNewCard', (event) => {
-            console.log(`Received drawNewCard event for cardId: ${event.detail.cardId}, this cardId: ${this.cardId}`);
             if (event.detail.cardId === this.cardId) {
-                console.log('Loading new card for this mission card');
                 this.loadAndRenderCards();
             }
         });
@@ -27,11 +28,12 @@ class SuperMissionCard extends HTMLElement {
             .then(response => response.json())
             .then(data => {
                 const missionCardData = data.filter(card => card['card-type'] === 'Mission');
-                console.log(`Mission cards fetched: ${missionCardData.length}`);
-                if (missionCardData.length > 0) {
-                    this.renderRandomCard(missionCardData);
+                // Filter out cards already displayed
+                const availableCards = missionCardData.filter(card => !SuperMissionCard.displayedCardIds.has(card['card-id']));
+                if (availableCards.length > 0) {
+                    this.renderRandomCard(availableCards);
                 } else {
-                    console.log('No mission cards available to display.');
+                    console.error('Temporarily no unique mission cards available to display.');
                 }
             })
             .catch(error => {
@@ -39,9 +41,15 @@ class SuperMissionCard extends HTMLElement {
             });
     }
  
-    renderRandomCard(missionCardData) {
-        const selectedCard = missionCardData[Math.floor(Math.random() * missionCardData.length)];
-        console.log(`Rendering card: ${selectedCard['card-name']}`);
+    renderRandomCard(availableCards) {
+        const selectedCard = availableCards[Math.floor(Math.random() * availableCards.length)];
+        // Remove the current card ID from the set if it exists
+        if (this.currentCardId) {
+            SuperMissionCard.displayedCardIds.delete(this.currentCardId);
+        }
+        // Update the current card ID and add the new one to the set
+        this.currentCardId = selectedCard['card-id'];
+        SuperMissionCard.displayedCardIds.add(this.currentCardId);
         this.renderCard(selectedCard);
     }
  
@@ -161,23 +169,19 @@ class SuperMissionCard extends HTMLElement {
  
     addClickEventToCard() {
         const card = this.shadowRoot.querySelector(".card");
-        const imageElement = card.querySelector(".card-background");
-        const contentElement = card.querySelector(".card-content");
         const replaceButton = this.shadowRoot.querySelector(".replace-button");
-   
+
         card.addEventListener("click", () => {
-            if (imageElement.style.display === 'block') {
-                imageElement.style.display = 'none';
-                contentElement.style.display = 'block';
-            } else {
-                imageElement.style.display = 'block';
-                contentElement.style.display = 'none';
-            }
+            const contentElement = card.querySelector(".card-content");
+            const imageElement = card.querySelector(".card-background");
+            imageElement.style.display = imageElement.style.display === 'none' ? 'block' : 'none';
+            contentElement.style.display = imageElement.style.display === 'none' ? 'block' : 'none';
         });
-   
+
         replaceButton.addEventListener("click", (e) => {
-            e.stopPropagation();  
-            this.loadAndRenderCards();  
+            e.stopPropagation();
+            SuperMissionCard.displayedCardIds.delete(this.currentCardId);  // Remove this card from the set
+            this.loadAndRenderCards();  // Refresh to potentially get a new card
         });
     }
 }
