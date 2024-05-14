@@ -226,21 +226,39 @@ class SuperAssessmentCard extends HTMLElement {
         const cards = this.shadowRoot.querySelectorAll('.card');
         cards.forEach(card => {
             card.addEventListener('click', () => {
+                // Check if an action is allowed before proceeding
+                const canPerformAction = new CustomEvent('requestAction', {
+                    bubbles: true,
+                    composed: true,
+                    detail: {
+                        actionType: 'flipCard'
+                    }
+                });
+    
+                // Dispatch the event and let the game logic decide if the action can proceed
+                this.dispatchEvent(canPerformAction);
+                
+                // Assuming your game logic sets an attribute on the element or responds with another event indicating permission
+                if (canPerformAction.defaultPrevented) {
+                    console.log("Action prevented: another action has already been taken.");
+                    return; // Exit if not allowed to perform the action
+                }
+    
                 const cardContent = card.querySelector('.card-content');
                 const cardImage = card.querySelector('.card-image');
                 const cardId = card.getAttribute('data-card-id');
-    
+        
                 // Compute image source based on cardId
                 if (cardId && !isNaN(cardId)) {
                     const imageBackSrc = `./assets/cards-png/SUPER cards poker size 061123${cardId * 2}.png`;
                     cardImage.src = imageBackSrc;
                 }
-    
+        
                 // Only toggle display if the card content is currently visible
                 if (cardContent.style.display !== 'none') {
                     cardContent.style.display = 'none';
                     cardImage.style.display = 'block';
-    
+        
                     // Dispatch event only if flipping to show the image (back of the card)
                     document.dispatchEvent(new CustomEvent('cardFlipped', {
                         detail: {
@@ -248,7 +266,16 @@ class SuperAssessmentCard extends HTMLElement {
                             enableDraw: true
                         }
                     }));
-    
+        
+                    // Notify the game that an action has been taken
+                    document.dispatchEvent(new CustomEvent('actionTaken', {
+                        bubbles: true,
+                        composed: true,
+                        detail: {
+                            actionType: 'flipCard'
+                        }
+                    }));
+        
                     // Remove event listener to prevent flipping back
                     card.removeEventListener('click', arguments.callee);
                 }
