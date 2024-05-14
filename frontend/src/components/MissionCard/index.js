@@ -150,9 +150,8 @@ class SuperMissionCard extends HTMLElement {
                     <div class="card-gamename"><span>SUPER</span><br>ASSESSOR</div>
                 </div>
             </div>
-            <button class="replace-button">Replace</button>
         </div>
-        
+        <button class="replace-button">Replace</button>
         `;
         this.shadowRoot.innerHTML = cardHTML;
         this.addClickEventToCard();
@@ -163,7 +162,7 @@ class SuperMissionCard extends HTMLElement {
         const card = this.shadowRoot.querySelector(".card");
         const imageElement = card.querySelector(".card-background");
         const contentElement = card.querySelector(".card-content");
-        const replaceButton = card.querySelector(".replace-button");
+        const replaceButton = this.shadowRoot.querySelector(".replace-button");
    
         card.addEventListener("click", () => {
             if (imageElement.style.display === 'block') {
@@ -176,8 +175,8 @@ class SuperMissionCard extends HTMLElement {
         });
    
         replaceButton.addEventListener("click", (e) => {
-            e.stopPropagation();  // Prevent the card click event from firing
-            this.loadAndRenderCards();  // Reload a new mission card
+            e.stopPropagation();  
+            this.loadAndRenderCards();  
         });
     }
 }
