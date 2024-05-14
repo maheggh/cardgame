@@ -1,22 +1,31 @@
-import { useEffect } from "react";
-import "./style.css";
+import React, { useState, useEffect } from 'react';
+import StartScreen from '../../components/GameComponents/StartScreen';  
+import './style.css';
 
 function Game() {
+  const [gameStarted, setGameStarted] = useState(false);
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+  const [players, setPlayers] = useState([]);
+
+  const startGame = (players) => {
+    setPlayers(players);
+    setGameStarted(true);
+  };
+
   useEffect(() => {
     import("./../../components/MissionCard");
     import("./../../components/AssessmentCard");
     import("./../../components/DrawPile");
   }, []);
 
+  if (!gameStarted) {
+    return <StartScreen onStartGame={startGame} />;
+  }
   
   const refreshAllCards = () => {
-    const event = new CustomEvent('refreshCards', {
-        bubbles: true, 
-        composed: true 
-    });
+    const event = new CustomEvent('refreshCards', { bubbles: true, composed: true });
     document.querySelector('.gameBoard').dispatchEvent(event);
-};
-
+  };
 
   return (
     <>
