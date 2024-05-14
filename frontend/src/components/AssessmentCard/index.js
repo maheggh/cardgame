@@ -229,21 +229,18 @@ class SuperAssessmentCard extends HTMLElement {
                 const cardContent = card.querySelector('.card-content');
                 const cardImage = card.querySelector('.card-image');
                 const cardId = card.getAttribute('data-card-id');
-   
+    
                 // Compute image source based on cardId
                 if (cardId && !isNaN(cardId)) {
                     const imageBackSrc = `./assets/cards-png/SUPER cards poker size 061123${cardId * 2}.png`;
                     cardImage.src = imageBackSrc;
                 }
-   
-                // Toggle display of card content and image
-                if (cardContent.style.display === 'none') {
-                    cardContent.style.display = 'block';
-                    cardImage.style.display = 'none';
-                } else {
+    
+                // Only toggle display if the card content is currently visible
+                if (cardContent.style.display !== 'none') {
                     cardContent.style.display = 'none';
                     cardImage.style.display = 'block';
-   
+    
                     // Dispatch event only if flipping to show the image (back of the card)
                     document.dispatchEvent(new CustomEvent('cardFlipped', {
                         detail: {
@@ -251,6 +248,9 @@ class SuperAssessmentCard extends HTMLElement {
                             enableDraw: true
                         }
                     }));
+    
+                    // Remove event listener to prevent flipping back
+                    card.removeEventListener('click', arguments.callee);
                 }
             });
         });
