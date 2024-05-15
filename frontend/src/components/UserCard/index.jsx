@@ -2,10 +2,10 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const UserCard = ({ user }) => {
-  const navigate = useNavigate(); // Get the navigate function
+  const navigate = useNavigate(); 
 
   const navigateToEditPage = () => {
-    // Use user._id instead of user.id
+    
     navigate(`/users/${user._id}/edit`);
   };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import { getAllUsers } from '../../helpers/api.js';
 import '../users/style.css';
 import UserCard from '../../components/UserCard/';
