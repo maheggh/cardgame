@@ -38,13 +38,17 @@ const StartScreen = ({ onStartGame }) => {
         <div className="modal">
         <h2>Game Setup</h2>
           <ul>
+            
             {players.map((player, index) => (
               <li key={index}>
+                <div className='playerbox'>
                 <img src={`../../../assets/avatars/${player.avatar}.png`} alt="Avatar" className="avatar-small" />
                 {player.name}
                 <button onClick={() => removePlayer(index)} className="close-button">X</button>
+                </div>
               </li>
             ))}
+            
           </ul>
           {players.length < 20 && ( // Assuming max 20 players
             <>

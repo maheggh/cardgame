@@ -174,37 +174,8 @@ class SuperAssessmentCard extends HTMLElement {
         .card:hover .card-number {
             transform: skewX(-30deg);
         }
- 
-        .star {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 40px;
-            height: 50px;
-            z-index: 999;
-            font-size: 40px;
-            visibility: hidden;
-        }
- 
-        .star::before {
-            position: absolute;
-            top: 1px;
-            right: 5px;
-            width: 40px;
-            height: 40px;
-            z-index: 999;
-            font-size: 40px;
-            content: '★';
-            color: gray;
-            visibility: visible;
-        }
- 
-        .star.active::before {
-            color: gold;
-        }
     </style>
             <div class="card ${card["card-category"].replace(/\s+/g, '-').toLowerCase()}" >
-                <button class="star" data-card-id="${card['card-id']}" data-card-name="${card['card-name']}"></button>
                 <img class="card-image" style="display: none;" src="./assets/cards-png/SUPER cards poker size ${"061123" + (card['card-id'] * 2)}.png">
                 <div class="card-content">
                     <div class="cardCategory">${card["card-category"]}</div>
