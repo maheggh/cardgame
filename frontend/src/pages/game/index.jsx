@@ -42,8 +42,9 @@ function Game() {
 
   const handleAction = () => {
     setActionTaken(true);
-    setTimeout(nextPlayer, 1000); // Automatically go to next player after 1 second
+    setTimeout(nextPlayer, 1000); 
   };
+
 return (
   <>
     <div className="game-container">

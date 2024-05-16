@@ -107,6 +107,8 @@
     list-style: none;
     padding: 0;
     font-size: 2rem; /* responsive font size */
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .start-screen li {
