@@ -20,7 +20,8 @@ if (isAuth){
                     <img src={logo} alt="Logo"/>
                 </Link >
                 <nav>
-                    <Link  to="/Game" className="link nav-button">Game</Link>
+                    <Link  to="/game" className="link nav-button">Game</Link>
+                    <Link  to="/schemes" className="link nav-button">Schemes</Link>
                     {userRole=="Admin" ? (
                     <>
                     <Link  to="/cards" className="link nav-button">Cards</Link >

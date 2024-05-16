@@ -63,7 +63,6 @@ const updateScheme = async (req, res) => {
 	try {
 		const scheme = await AssessmentSchemes.findByIdAndUpdate(_id, req.body); //updates scheme
 		const updatedScheme = await AssessmentSchemes.findById(_id); //returns updated scheme
-
 		if (!scheme) {
 			//Send 404 status if the updated scheme can't be found
 			return res.status(404).json({ error: 'Could not update scheme. Scheme not found' });

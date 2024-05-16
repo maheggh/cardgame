@@ -1,0 +1,18 @@
+.edit_form textarea{
+	border-radius: 8px;
+    padding: 8px;
+    background-color: white;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    color: black;
+    width: 100%;
+    max-width: 100%;
+}
+
+.edit_form .red{
+	 margin-right: auto;
+}
+
+.edit_form{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

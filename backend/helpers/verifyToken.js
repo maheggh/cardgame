@@ -1,7 +1,7 @@
 //code mostly copied from presentation from lefteris
 const jwt = require('jsonwebtoken');
 const Users = require('../schemas/userSchema');
-const AssessmentSchemes = require('../schemas/assessmentSchemeSchema');
+
 
 const auth = async (req, res, next) => {
 	const authtoken = req.cookies.jwt;
@@ -38,12 +38,16 @@ function authRole(role) {
 	}
 }
 
-//code copied from presentation from lefteris
-const authCanUpdate = async (req,res,next)=>{
-	const _id = req.params.id;
+//code copied and modified from presentation from lefteris 
+function authCanUpdate(Model) {
+	return async (req,res,next) =>{
+		const _id = req.params.id;
 	try{
-		const scheme = await AssessmentSchemes.findById(_id);
-		console.log(typeof(req.user.id));
+		const scheme = await Model.findById(_id);
+            
+            if (!scheme) {
+                return res.status(404).send('Resource not found');
+            }
 
 			if(scheme.creator != req.user.id || req.user.role != 'Admin'){
 				res.status(401)
@@ -53,6 +57,8 @@ const authCanUpdate = async (req,res,next)=>{
 	}catch(error){
 		res.json({message:error})
 	}
+	}
 }
+
 
 module.exports = {auth, authRole, authCanUpdate}

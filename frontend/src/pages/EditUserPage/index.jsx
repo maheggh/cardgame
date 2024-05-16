@@ -79,9 +79,9 @@ function EditUserPage() {
       </label>
     </div>
     <div className="buttons">
-      <button className='red' type="button" onClick={handleDelete}>Delete</button>
+      <button className='red' type="button" onClick={handleDelete}><i className="fa-solid fa-trash"/> Delete</button>
       <button className='white' type="button" onClick={() => navigate('/users')}>Cancel</button>
-      <button type="submit">Save</button>
+      <button type="submit"><i className="fa-solid fa-floppy-disk"/> Save</button>
     </div>
     
 

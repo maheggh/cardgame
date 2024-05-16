@@ -6,7 +6,7 @@ import Header from './components/Header/';
 import Login from './pages/login/';
 import Signup from './pages/signup/';
 import Welcome from './pages/welcome/';
-//import Dashboard from './pages/dashboard/';
+import SchemesPage from './pages/Schemes/';
 import FileUpload from "./pages/fileupload";
 import NoMatch from "./pages/NoMatch";
 import UserDashboard from './pages/users/';
@@ -34,6 +34,7 @@ function App() {
           <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/cards" element={<CardsPage />} /></Route>
           <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/cards/:cardId/edit" element={<EditCardPage />} /></Route>
           <Route element={<PrivateRoutes requiredRoles={["Admin"]}/>}> <Route path="/fileUpload" element={<FileUpload />} /></Route>
+          <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/schemes" element={<SchemesPage />} /></Route>
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </Router>

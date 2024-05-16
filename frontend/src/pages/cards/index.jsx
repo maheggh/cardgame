@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
-import EditImage from '../../assets/icons/edit.svg';
 import ErrorMessage from '../../components/ErrorMessage';
 
 const Card = ({ card, navigateToEditPage }) => (
@@ -19,7 +18,7 @@ const Card = ({ card, navigateToEditPage }) => (
           </div>
         </div>
         <button onClick={() => navigateToEditPage(card['_id'])}>
-          <img src={EditImage} alt="Edit icon"  />
+          <i className="fa-solid fa-pencil" style={{color: "#FFF"}}/>
         </button>
   </div>
 );

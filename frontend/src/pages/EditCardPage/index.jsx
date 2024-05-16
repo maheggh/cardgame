@@ -76,17 +76,17 @@ function EditCardPage() {
         <input type="text" value={card['card-name']} onChange={e => setCard({ ...card, 'card-name': e.target.value })} />
       </label>
       <label>
-        Description:
+        Description: <br/>
         <textarea value={card['card-description']} onChange={e => setCard({ ...card, 'card-description': e.target.value })} />
       </label>
       <label>
-        Details:
+        Details: <br/>
         <textarea value={card['card-details']} onChange={e => setCard({ ...card, 'card-details': e.target.value })} />
       </label>
       <div className="buttons">
-        <button className='red' type="button" onClick={handleDelete}>Delete</button>
+        <button className='red' type="button" onClick={handleDelete}><i className="fa-solid fa-trash"/>Delete</button>
         <button className='white' type="button" onClick={() => navigate('/cards')}>Cancel</button>
-        <button type="submit">Save</button>
+        <button type="submit"><i className="fa-solid fa-floppy-disk"/>Save</button>
       </div>
     </form>
   );
