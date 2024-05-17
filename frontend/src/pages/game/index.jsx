@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import StartScreen from '../../components/GameComponents/StartScreen';  
+import StartScreen from '../../components/GameComponents/StartScreen';
 import './style.css';
 
 function Game() {
@@ -28,12 +28,36 @@ function Game() {
     import("./../../components/MissionCard");
     import("./../../components/AssessmentCard");
     import("./../../components/DrawPile");
-  }, []);
 
-  //if (!gameStarted) {
-  //  return <StartScreen onStartGame={startGame} />;
-  //}
-  
+    const handleActionTaken = () => {
+      if (!actionTaken) { // Ensures that only one action can be taken at a time
+        setActionTaken(true);
+      }
+    };
+
+    // Listen for the custom event from the DrawPile component
+    document.addEventListener('actionTaken', handleActionTaken);
+
+    // Cleanup the event listener when the component is unmounted
+    return () => {
+      document.removeEventListener('actionTaken', handleActionTaken);
+    };
+  }, [actionTaken]); // Re-run effect if actionTaken changes
+
+  useEffect(() => {
+    if (actionTaken) {
+      setTimeout(() => {
+        nextPlayer();
+        setActionTaken(false); // Reset action taken after moving to the next player
+      }, 1000);
+    }
+  }, [actionTaken, nextPlayer]); // Depend on actionTaken to trigger this effect
+
+  if (!gameStarted) {
+    return <StartScreen onStartGame={startGame} />;
+  }
+
+  // Logic for refreshing all cards
   const refreshAllCards = () => {
     const event = new CustomEvent('refreshCards', { bubbles: true, composed: true });
     document.querySelector('.gameBoard').dispatchEvent(event);
@@ -41,9 +65,13 @@ function Game() {
   };
 
   const handleAction = () => {
-    setActionTaken(true);
-    setTimeout(nextPlayer, 1000); 
+    if (!actionTaken) {
+      setActionTaken(true);
+    }
   };
+
+  // This would be where the return statement starts
+
 
 return (
   <>

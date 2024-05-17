@@ -45,15 +45,30 @@ class DrawPile extends HTMLElement {
 
     connectedCallback() {
         this.button.addEventListener('click', () => {
-            document.dispatchEvent(new CustomEvent('drawNewCard', {
-                bubbles: true,
-                detail: {
-                    category: this.getAttribute('category'),
-                    refresh: true
-                }
-            }));
+            if (!this.button.disabled) {
+                this.button.disabled = true; // Disable the button immediately when clicked to prevent multiple presses
+                document.dispatchEvent(new CustomEvent('drawNewCard', {
+                    bubbles: true,
+                    detail: {
+                        category: this.getAttribute('category'),
+                        refresh: true
+                    }
+                }));
+    
+                // Dispatch an actionTaken event to signal that an action has been taken
+                document.dispatchEvent(new CustomEvent('actionTaken', {
+                    bubbles: true,
+                    composed: true
+                }));
+    
+                // Optionally re-enable the button here or elsewhere depending on game logic
+                // For example, re-enable the button after some conditions are met
+                setTimeout(() => {
+                    this.button.disabled = false; // Re-enable the button after 1 second for demo purposes
+                }, 1000);
+            }
         });
-
+    
         this.updateCardDetails();
     }
     
