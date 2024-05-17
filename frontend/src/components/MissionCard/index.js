@@ -11,10 +11,6 @@ class SuperMissionCard extends HTMLElement {
     }
 
     connectedCallback() {
-        document.addEventListener('refreshCards', () => {
-            console.log('Refreshing all mission cards');
-            this.loadAndRenderCards();
-        });
 
         document.addEventListener('drawNewCard', (event) => {
             if (event.detail.cardId === this.cardId) {
@@ -180,8 +176,8 @@ class SuperMissionCard extends HTMLElement {
 
         replaceButton.addEventListener("click", (e) => {
             e.stopPropagation();
-            SuperMissionCard.displayedCardIds.delete(this.currentCardId);  // Remove this card from the set
-            this.loadAndRenderCards();  // Refresh to potentially get a new card
+            SuperMissionCard.displayedCardIds.delete(this.currentCardId);  
+            this.loadAndRenderCards();  
         });
     }
 }

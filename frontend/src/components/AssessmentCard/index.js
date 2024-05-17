@@ -2,6 +2,7 @@ class SuperAssessmentCard extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
+        this.isVisible = false;  // Added to track visibility
         this.shadowRoot.innerHTML = `
             <div>Loading mission card...</div>
         `;
@@ -9,25 +10,36 @@ class SuperAssessmentCard extends HTMLElement {
     }
  
     connectedCallback() {
-        document.addEventListener('refreshCards', () => {
-            this.loadAndRenderCards(); // This refreshes all cards
-        });
-   
-        document.addEventListener('drawNewCard', (e) => {
-            console.log("drawNewCard event received for category:", e.detail.category);
-            if (e.detail.category === this.getAttribute('card-category') && e.detail.refresh) {
-                this.loadAndRenderCards(); // This should reload the card
+        document.addEventListener('refreshCards', () => this.loadAndRenderCards());
+        document.addEventListener('drawNewCard', e => {
+            if (e.detail.category === this.getAttribute('card-category')) {
+                if (!this.isVisible) {
+                    this.isVisible = true; 
+                    this.loadAndRenderCards();  
+                } else {
+                    this.loadAndRenderCards();  
+                }
             }
         });
     }
- 
-    loadAndRenderCards() {
-        fetch('http://localhost:3000/api/cards')
-            .then(response => response.json())
-            .then(data => this.renderCards(data))
-            .catch(error => console.error('Error:', error));
+
+    toggleVisibility() {
+        this.isVisible = !this.isVisible;
+        const card = this.shadowRoot.querySelector('.card');
+        if (card) {
+            card.style.display = this.isVisible ? 'block' : 'none';
+        }
     }
- 
+    
+loadAndRenderCards() {
+    fetch('http://localhost:3000/api/cards')
+        .then(response => response.json())
+        .then(data => {
+            this.renderCards(data); // Always render new card data when fetched
+        })
+        .catch(error => console.error('Error:', error));
+}
+
     renderCards(assessmentCardData) {
         // group the cards by category
         let cardsByCategory = {};
@@ -58,8 +70,10 @@ class SuperAssessmentCard extends HTMLElement {
         let selectedCard = cardsByCategory[category][Math.floor(Math.random() * cardsByCategory[category].length)];
         this.displayCard(selectedCard);
     }
+    
  
     displayCard(card) {
+        let displayStyle = this.isVisible ? 'block' : 'none'; // Use the visibility state to set display style
         let cardHTML = `
         <style>
         .card {
@@ -74,6 +88,7 @@ class SuperAssessmentCard extends HTMLElement {
             border: 11px solid;
             border-radius: 14px;
             background-color: white;
+            display: ${displayStyle};
         }
  
         .who-is-assessed .cardCategory{

@@ -30,9 +30,9 @@ function Game() {
     import("./../../components/DrawPile");
   }, []);
 
-  if (!gameStarted) {
-    return <StartScreen onStartGame={startGame} />;
-  }
+  //if (!gameStarted) {
+  //  return <StartScreen onStartGame={startGame} />;
+  //}
   
   const refreshAllCards = () => {
     const event = new CustomEvent('refreshCards', { bubbles: true, composed: true });

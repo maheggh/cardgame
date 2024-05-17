@@ -15,10 +15,6 @@ class DrawPile extends HTMLElement {
                     margin-top: 10px;
                     transition: background-color 0.3s;
                 }
-                button:disabled {
-                    background-color: #ccc;
-                    cursor: not-allowed;
-                }
                 .card {
                     display: flex;
                     flex-direction: column;
@@ -39,7 +35,7 @@ class DrawPile extends HTMLElement {
             </style>
             <div class="card">
                 <img id="card-image" src="" alt="Card Image">
-                <button id="draw-button" disabled>Draw New Card</button>
+                <button id="draw-button">Draw New Card</button> <!-- Button enabled by default -->
             </div>
         `;
 
@@ -48,24 +44,14 @@ class DrawPile extends HTMLElement {
     }
 
     connectedCallback() {
-        document.addEventListener('cardFlipped', (event) => {
-            if (event.detail.category === this.getAttribute('category') && event.detail.enableDraw) {
-                this.button.disabled = false;
-            }
-        });
         this.button.addEventListener('click', () => {
-            console.log("Attempting to dispatch drawNewCard event for category:", this.getAttribute('category'));
-            if (!this.button.disabled) {
-                // Dispatch the drawNewCard event with the necessary details
-                document.dispatchEvent(new CustomEvent('drawNewCard', {
-                    bubbles: true, // Ensure the event bubbles up through the DOM
-                    detail: {
-                        category: this.getAttribute('category'),
-                        refresh: true // Added refresh flag for clarity
-                    }
-                }));
-                this.button.disabled = true; // Disable button to prevent multiple draws
-            }
+            document.dispatchEvent(new CustomEvent('drawNewCard', {
+                bubbles: true,
+                detail: {
+                    category: this.getAttribute('category'),
+                    refresh: true
+                }
+            }));
         });
 
         this.updateCardDetails();
