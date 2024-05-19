@@ -35,7 +35,7 @@ class DrawPile extends HTMLElement {
             </style>
             <div class="card">
                 <img id="card-image" src="" alt="Card Image">
-                <button id="draw-button">Draw New Card</button> <!-- Button enabled by default -->
+                <button id="draw-button">Draw New Card</button>
             </div>
         `;
 
@@ -46,7 +46,7 @@ class DrawPile extends HTMLElement {
     connectedCallback() {
         this.button.addEventListener('click', () => {
             if (!this.button.disabled) {
-                this.button.disabled = true; // Disable the button immediately when clicked to prevent multiple presses
+                this.button.disabled = true;
                 document.dispatchEvent(new CustomEvent('drawNewCard', {
                     bubbles: true,
                     detail: {
@@ -54,22 +54,31 @@ class DrawPile extends HTMLElement {
                         refresh: true
                     }
                 }));
-    
-                // Dispatch an actionTaken event to signal that an action has been taken
+
                 document.dispatchEvent(new CustomEvent('actionTaken', {
                     bubbles: true,
                     composed: true
                 }));
-    
-                // Optionally re-enable the button here or elsewhere depending on game logic
-                // For example, re-enable the button after some conditions are met
-                setTimeout(() => {
-                    this.button.disabled = false; // Re-enable the button after 1 second for demo purposes
-                }, 1000);
             }
         });
-    
+
         this.updateCardDetails();
+
+        document.addEventListener('disableInteractions', this.disableButton);
+        document.addEventListener('enableInteractions', this.enableButton);
+    }
+
+    disconnectedCallback() {
+        document.removeEventListener('disableInteractions', this.disableButton);
+        document.removeEventListener('enableInteractions', this.enableButton);
+    }
+
+    disableButton = () => {
+        this.button.disabled = true;
+    }
+
+    enableButton = () => {
+        this.button.disabled = false;
     }
     
     updateCardDetails() {

@@ -8,20 +8,42 @@ function Game() {
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [actionTaken, setActionTaken] = useState(false);
   const [showTurnModal, setShowTurnModal] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+  const [interactionsDisabled, setInteractionsDisabled] = useState(false);
 
   const startGame = (players) => {
     setPlayers(players);
     setGameStarted(true);
     setCurrentPlayerIndex(0);
     setShowTurnModal(true);
-    setTimeout(() => setShowTurnModal(false), 3000); // Display modal for 3 seconds
+    setTimeout(() => setShowTurnModal(false), 3000);
   };
 
   const nextPlayer = () => {
     setCurrentPlayerIndex((currentPlayerIndex + 1) % players.length);
     setActionTaken(false);
     setShowTurnModal(true);
-    setTimeout(() => setShowTurnModal(false), 3000); // Display modal for 3 seconds
+    setInteractionsDisabled(true);
+    setCountdown(3);
+
+    // Emit event to disable interactions
+    document.dispatchEvent(new Event('disableInteractions'));
+
+    const timer = setInterval(() => {
+      setCountdown(prevCountdown => {
+        if (prevCountdown <= 1) {
+          clearInterval(timer);
+          setInteractionsDisabled(false);
+          setShowTurnModal(false);
+
+          // Emit event to enable interactions
+          document.dispatchEvent(new Event('enableInteractions'));
+
+          return 0;
+        }
+        return prevCountdown - 1;
+      });
+    }, 1000);
   };
 
   useEffect(() => {
@@ -30,34 +52,27 @@ function Game() {
     import("./../../components/DrawPile");
 
     const handleActionTaken = () => {
-      if (!actionTaken) { // Ensures that only one action can be taken at a time
+      if (!actionTaken) {
         setActionTaken(true);
       }
     };
 
-    // Listen for the custom event from the DrawPile component
     document.addEventListener('actionTaken', handleActionTaken);
 
-    // Cleanup the event listener when the component is unmounted
     return () => {
       document.removeEventListener('actionTaken', handleActionTaken);
     };
-  }, [actionTaken]); // Re-run effect if actionTaken changes
+  }, [actionTaken]);
 
   useEffect(() => {
     if (actionTaken) {
       setTimeout(() => {
         nextPlayer();
-        setActionTaken(false); // Reset action taken after moving to the next player
+        setActionTaken(false);
       }, 1000);
     }
-  }, [actionTaken, nextPlayer]); // Depend on actionTaken to trigger this effect
+  }, [actionTaken]);
 
-  if (!gameStarted) {
-    return <StartScreen onStartGame={startGame} />;
-  }
-
-  // Logic for refreshing all cards
   const refreshAllCards = () => {
     const event = new CustomEvent('refreshCards', { bubbles: true, composed: true });
     document.querySelector('.gameBoard').dispatchEvent(event);
@@ -70,55 +85,57 @@ function Game() {
     }
   };
 
-  // This would be where the return statement starts
+  if (!gameStarted) {
+    return <StartScreen onStartGame={startGame} />;
+  }
 
-
-return (
-  <>
-    <div className="game-container">
-      {showTurnModal && (
-        <div className="turn-modal">
-          <img src={`../../assets/avatars/${players[currentPlayerIndex].avatar}.png`} alt="Current Player" className="player-avatar" />
-          <h2>{players[currentPlayerIndex].name}'s Turn</h2>
-        </div>
-      )}
-      <main className="gameBoard">
-        <h1>Mission cards (x3)</h1>
-        <div className="card-container">
-          <super-mission-card card-id="mission1"></super-mission-card>
-          <super-mission-card card-id="mission2"></super-mission-card>
-          <super-mission-card card-id="mission3"></super-mission-card>
-        </div>
-        <h1>Assessment cards (x6)</h1>
-        <div className="card-container">
-          <super-assessment-card card-category="assessed"></super-assessment-card>
-          <super-assessment-card card-category="assessor"></super-assessment-card>
-          <super-assessment-card card-category="artefact"></super-assessment-card>
-          <super-assessment-card card-category="format"></super-assessment-card>
-          <super-assessment-card card-category="context"></super-assessment-card>
-          <super-assessment-card card-category="timing"></super-assessment-card>
-        </div>
-      </main>
-      <aside className="draw-container">
-        <h1 className="draw-pile-text">Draw Pile:</h1>
-        <div className="draw-pile-container">
-          <div className="draw-pile-right">
-            <draw-pile category="assessed"></draw-pile>
-            <draw-pile category="assessor"></draw-pile>
-            <draw-pile category="artefact"></draw-pile>
-            <draw-pile category="format"></draw-pile>
-            <draw-pile category="context"></draw-pile>
-            <draw-pile category="timing"></draw-pile>
+  return (
+    <>
+      <div className={`game-container ${interactionsDisabled ? 'disabled-interactions' : ''}`}>
+        {showTurnModal && (
+          <div className="turn-modal">
+            <img src={`../../assets/avatars/${players[currentPlayerIndex].avatar}.png`} alt="Current Player" className="player-avatar" />
+            <h2>{players[currentPlayerIndex].name}'s Turn</h2>
+            {countdown > 0 && <p>Next action in {countdown} seconds...</p>}
           </div>
-        </div>
-        <div className="playbutton-container">
-          <button className="randomize-button" onClick={refreshAllCards} disabled={actionTaken}>Refresh Cards</button>
-          <button className="endgame-button">END GAME</button>
-        </div>
-      </aside>
-    </div>
-  </>
-);
+        )}
+        <main className="gameBoard">
+          <h1>Mission cards (x3)</h1>
+          <div className="card-container">
+            <super-mission-card card-id="mission1"></super-mission-card>
+            <super-mission-card card-id="mission2"></super-mission-card>
+            <super-mission-card card-id="mission3"></super-mission-card>
+          </div>
+          <h1>Assessment cards (x6)</h1>
+          <div className="card-container">
+            <super-assessment-card card-category="assessed"></super-assessment-card>
+            <super-assessment-card card-category="assessor"></super-assessment-card>
+            <super-assessment-card card-category="artefact"></super-assessment-card>
+            <super-assessment-card card-category="format"></super-assessment-card>
+            <super-assessment-card card-category="context"></super-assessment-card>
+            <super-assessment-card card-category="timing"></super-assessment-card>
+          </div>
+        </main>
+        <aside className="draw-container">
+          <h1 className="draw-pile-text">Draw Pile:</h1>
+          <div className="draw-pile-container">
+            <div className="draw-pile-right">
+              <draw-pile category="assessed"></draw-pile>
+              <draw-pile category="assessor"></draw-pile>
+              <draw-pile category="artefact"></draw-pile>
+              <draw-pile category="format"></draw-pile>
+              <draw-pile category="context"></draw-pile>
+              <draw-pile category="timing"></draw-pile>
+            </div>
+          </div>
+          <div className="playbutton-container">
+            <button className="randomize-button" onClick={refreshAllCards} disabled={actionTaken || countdown > 0}>Refresh Cards</button>
+            <button className="endgame-button">END GAME</button>
+          </div>
+        </aside>
+      </div>
+    </>
+  );
 }
 
 export default Game;

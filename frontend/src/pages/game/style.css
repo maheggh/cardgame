@@ -120,6 +120,10 @@
     text-align: left;
 }
 
+.disabled-interactions {
+    pointer-events: none;
+  }
+  
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
