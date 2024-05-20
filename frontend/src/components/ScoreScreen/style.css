@@ -1,33 +1,67 @@
-.score-screen {
+:root {
+    --who-is-assessed-color: #007AA0;
+    --the-assessor-color: #896EAE;
+    --assessment-artefact-color: #D64B56;
+    --assessment-format-color: #A7D6A3;
+    --context-color: #F38AA7;
+    --assessment-timing-color: #F2963D;
+    --who-is-assessed-border-color: #056A92;
+    --the-assessor-border-color: #7D5EA5;
+    --assessment-artefact-border-color: #D11F44;
+    --assessment-format-border-color: #91CD90;
+    --context-border-color: #F17299;
+    --assessment-timing-border-color: #D1762C;
+    --randomize-button-color: #056A92;
+    --endgame-button-color: #D11F44;
+  }
+  
+  .score-page {
+    display: grid;
+    justify-content: center;
+    margin: 30px;
+  }
+
+  .score-screen {
     text-align: center;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 100px;
+    display: grid;
+    max-width: fit-content;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+    justify-content: center;
+    align-content: center;
     background-color: #f0f0f0;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: 20px;
   }
   
   .score-screen .mission-cards {
-    display: flex;
+    display: grid;
+    grid-gap: 20px;
     justify-content: center;
-    gap: 20px;
     margin-bottom: 20px;
   }
   
   .score-screen .mission-card {
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 20px;
     border-radius: 5px;
-    width: 200px;
     background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .score-screen ul {
     list-style: none;
     padding: 0;
+    width: 100%;
+  }
+
+  .score-screen span {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--the-assessor-border-color);
   }
   
   .score-screen li {
@@ -35,7 +69,9 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    justify-content: space-between;
   }
+  
   
   .score-screen .player-avatar,
   .leaderboard .leader-avatar {
@@ -52,6 +88,7 @@
   
   .score-screen .mission-score {
     display: flex;
+    flex-shrink: 1;
     align-items: center;
   }
   
@@ -59,28 +96,62 @@
     cursor: pointer;
     font-size: 30px;
     color: #ccc;
+    transition: color 0.3s;
+  }
+
+  .star, .mission-score {
+    background-color: #005f7a;
+    color: white;
+    padding: 5px;
+    border-radius: 20px;
   }
   
   .score-screen .star.selected {
-    color: gold;
+    color: rgb(255, 251, 0);
+  }
+  
+  .submit-button, .play-again-button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--assessment-format-border-color);
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+  }
+  
+  .submit-button:hover, .play-again-button:hover {
+    background-color: #005f7a;
   }
   
   /* Leaderboard Styles */
   .leaderboard {
     text-align: center;
     padding: 20px;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+    justify-content: center;
     align-items: center;
     background-color: #f0f0f0;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
   }
   
+  .player-name {
+    color: blue;
+  }
+
   .leaderboard ol {
     list-style: none;
     padding: 0;
+    width: 100%;
   }
   
   .leaderboard li {
@@ -89,11 +160,20 @@
     align-items: center;
     gap: 10px;
     font-size: 18px;
+    justify-content: center;
   }
   
   .leaderboard .medal {
     width: 30px;
     height: 30px;
+    object-fit: contain;
+  }
+  
+  .particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
   }
   
   .confetti {
@@ -101,5 +181,28 @@
     max-width: 300px;
     display: block;
     margin: 20px auto;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .score-screen, .leaderboard {
+      padding: 20px;
+    }
+  
+    .score-screen .mission-cards, .leaderboard ol {
+      grid-template-columns: 1fr;
+    }
+  
+    .score-screen ul, .leaderboard ol {
+      width: 100%;
+    }
+  
+    .score-screen .mission-card {
+      width: 100%;
+    }
+  
+    .leaderboard li {
+      flex-direction: column;
+    }
   }
   
