@@ -1,0 +1,105 @@
+.score-screen {
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+  }
+  
+  .score-screen .mission-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .score-screen .mission-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    width: 200px;
+    background-color: #fff;
+  }
+  
+  .score-screen ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .score-screen li {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .score-screen .player-avatar,
+  .leaderboard .leader-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  .score-screen .player-scores {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .score-screen .mission-score {
+    display: flex;
+    align-items: center;
+  }
+  
+  .score-screen .star {
+    cursor: pointer;
+    font-size: 30px;
+    color: #ccc;
+  }
+  
+  .score-screen .star.selected {
+    color: gold;
+  }
+  
+  /* Leaderboard Styles */
+  .leaderboard {
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  .leaderboard ol {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .leaderboard li {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+  }
+  
+  .leaderboard .medal {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .confetti {
+    width: 100%;
+    max-width: 300px;
+    display: block;
+    margin: 20px auto;
+  }
+  
