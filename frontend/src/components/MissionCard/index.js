@@ -7,24 +7,23 @@ class SuperMissionCard extends HTMLElement {
         this.shadowRoot.innerHTML = `<div>Loading mission cards...</div>`;
         this.cardId = this.getAttribute('card-id');
         this.currentCardId = null;
+        this.currentCard = null; // Added to keep track of the current card
         this.loadAndRenderCards();
     }
 
     connectedCallback() {
-
         document.addEventListener('drawNewCard', (event) => {
             if (event.detail.cardId === this.cardId) {
                 this.loadAndRenderCards();
             }
         });
     }
- 
+
     loadAndRenderCards() {
         fetch("http://localhost:3000/api/cards")
             .then(response => response.json())
             .then(data => {
                 const missionCardData = data.filter(card => card['card-type'] === 'Mission');
-                // Filter out cards already displayed
                 const availableCards = missionCardData.filter(card => !SuperMissionCard.displayedCardIds.has(card['card-id']));
                 if (availableCards.length > 0) {
                     this.renderRandomCard(availableCards);
@@ -36,19 +35,26 @@ class SuperMissionCard extends HTMLElement {
                 console.error("Error fetching mission cards:", error);
             });
     }
- 
+
     renderRandomCard(availableCards) {
         const selectedCard = availableCards[Math.floor(Math.random() * availableCards.length)];
-        // Remove the current card ID from the set if it exists
         if (this.currentCardId) {
             SuperMissionCard.displayedCardIds.delete(this.currentCardId);
         }
-        // Update the current card ID and add the new one to the set
         this.currentCardId = selectedCard['card-id'];
         SuperMissionCard.displayedCardIds.add(this.currentCardId);
+        this.currentCard = selectedCard; // Store the current card
         this.renderCard(selectedCard);
     }
- 
+
+    getCurrentCard() {
+        return {
+          "card-name": this.shadowRoot.querySelector('.card-header').innerText,
+          "card-description": this.shadowRoot.querySelector('.card-body').innerText
+        };
+      }
+      
+
     renderCard(card) {
         let cardHTML = `
         <style>
@@ -162,7 +168,7 @@ class SuperMissionCard extends HTMLElement {
         this.addClickEventToCard();
         import("../../assets/icons/Super_assessed.png");
     }
- 
+
     addClickEventToCard() {
         const card = this.shadowRoot.querySelector(".card");
         const replaceButton = this.shadowRoot.querySelector(".replace-button");
@@ -176,10 +182,10 @@ class SuperMissionCard extends HTMLElement {
 
         replaceButton.addEventListener("click", (e) => {
             e.stopPropagation();
-            SuperMissionCard.displayedCardIds.delete(this.currentCardId);  
-            this.loadAndRenderCards();  
+            SuperMissionCard.displayedCardIds.delete(this.currentCardId);
+            this.loadAndRenderCards();
         });
     }
 }
- 
+
 customElements.define("super-mission-card", SuperMissionCard);

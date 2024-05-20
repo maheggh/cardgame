@@ -5,7 +5,6 @@
     --assessment-format-color: #A7D6A3;
     --context-color: #F38AA7;
     --assessment-timing-color: #F2963D;
-
     --who-is-assessed-border-color: #056A92;
     --the-assessor-border-color: #7D5EA5;
     --assessment-artefact-border-color: #D11F44;
@@ -14,17 +13,17 @@
     --assessment-timing-border-color: #D1762C;
     --randomize-button-color: #056A92;
     --endgame-button-color: #D11F44;
-}
-
-.card-container {
-    max-width: 100%; 
+  }
+  
+  .card-container {
+    max-width: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px; 
+    gap: 10px;
     justify-content: center;
-}
-
-.turn-modal{
+  }
+  
+  .turn-modal {
     position: absolute;
     z-index: 1000;
     background-color: #007AA0;
@@ -32,65 +31,65 @@
     font-size: 40px;
     text-align: center;
     text-transform: uppercase;
-    transform: translateX(-50%, -50%, -50%)
-}
-
-.gameBoard{
+    transform: translateX(-50%, -50%, -50%);
+  }
+  
+  .gameBoard {
     padding: 40px;
-}
-
-.game-container {
+  }
+  
+  .game-container {
     display: flex;
     justify-content: space-around;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     background-color: #FEF286;
     flex-grow: 0;
-}
-
-.gameBoard, .draw-container {
-    flex: 1 1 50%; 
+  }
+  
+  .gameBoard, .draw-container {
+    flex: 1 1 50%;
     padding: 40px;
-}
-
-.draw-container {
+  }
+  
+  .draw-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #D9D9D9;
-    flex-grow: 1; 
-}
-
-.draw-pile-container {
+    flex-grow: 1;
+  }
+  
+  .draw-pile-container {
     display: grid;
     grid-template-columns: auto auto;
-    align-items: center; 
+    align-items: center;
     gap: 20px;
-}
-
-.mission-large {
+  }
+  
+  .mission-large {
     display: flex;
-    justify-content: flex-end; 
+    justify-content: flex-end;
     width: 100%;
-}
-
-.draw-pile-right {
+  }
+  
+  .draw-pile-right {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 10px;
     width: 100%;
-}
-
-.playbutton-container {
+  }
+  
+  .playbutton-container {
     display: flex;
-    justify-content: flex-end; 
+    justify-content: flex-end;
     align-items: center;
     width: 100%;
     padding: 20px;
-    margin-top: auto; 
-}
-
-.randomize-button, .endgame-button {
+    margin-top: auto;
+  }
+  
+  .randomize-button, .endgame-button {
     border: none;
     color: white;
     padding: 15px 32px;
@@ -100,46 +99,46 @@
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-}
-
-.randomize-button {
+  }
+  
+  .randomize-button {
     background-color: var(--randomize-button-color);
-}
-
-.endgame-button {
+  }
+  
+  .endgame-button {
     background-color: var(--endgame-button-color);
-}
-
-.card-container .super-assessment-card {
-    flex: 1 1 33%; 
-    max-width: calc(33.333% - 10px); 
-    box-sizing: border-box; 
-}
-
-.draw-pile-text {
+  }
+  
+  .card-container .super-assessment-card {
+    flex: 1 1 33%;
+    max-width: calc(33.333% - 10px);
+    box-sizing: border-box;
+  }
+  
+  .draw-pile-text {
     text-align: left;
-}
-
-.disabled-interactions {
+  }
+  
+  .disabled-interactions {
     pointer-events: none;
   }
   
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
     .game-container {
-        flex-direction: column; 
+      flex-direction: column;
     }
-
+  
     .gameBoard, .draw-container {
-        flex: 1 1 100%; 
+      flex: 1 1 100%;
     }
-
+  
     .draw-pile-container {
-        grid-template-columns: 1fr; 
+      grid-template-columns: 1fr;
     }
-
+  
     .mission-large {
-        justify-content: center; 
+      justify-content: center;
     }
-}
+  }
+  
