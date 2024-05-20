@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-//import StartScreen from '../../components/StartScreen/StartScreen';
-//import ScoreScreen from '../../components/ScoreScreen/ScoreScreen';
+import StartScreen from '../../components/StartScreen/StartScreen';
+import ScoreScreen from '../../components/ScoreScreen/ScoreScreen';
 import './style.css';
 
 function Game() {

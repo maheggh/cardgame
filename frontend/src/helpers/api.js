@@ -146,7 +146,7 @@ export async function logout(){
     return response.json();
 }
 
-export async function getTotalSchemes() {
+export async function getAllSchemes() {
     const response = await fetch(`${API_URL}/assscheme/`, {
         method: 'GET'
     });
