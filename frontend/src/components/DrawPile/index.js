@@ -44,6 +44,9 @@ class DrawPile extends HTMLElement {
     }
 
     connectedCallback() {
+        this.boundDisableButton = this.disableButton.bind(this);
+        this.boundEnableButton = this.enableButton.bind(this);
+
         this.button.addEventListener('click', () => {
             if (!this.button.disabled) {
                 this.button.disabled = true;
@@ -64,23 +67,23 @@ class DrawPile extends HTMLElement {
 
         this.updateCardDetails();
 
-        document.addEventListener('disableInteractions', this.disableButton);
-        document.addEventListener('enableInteractions', this.enableButton);
+        document.addEventListener('disableInteractions', this.boundDisableButton);
+        document.addEventListener('enableInteractions', this.boundEnableButton);
     }
 
     disconnectedCallback() {
-        document.removeEventListener('disableInteractions', this.disableButton);
-        document.removeEventListener('enableInteractions', this.enableButton);
+        document.removeEventListener('disableInteractions', this.boundDisableButton);
+        document.removeEventListener('enableInteractions', this.boundEnableButton);
     }
 
-    disableButton = () => {
+    disableButton() {
         this.button.disabled = true;
     }
 
-    enableButton = () => {
+    enableButton() {
         this.button.disabled = false;
     }
-    
+
     updateCardDetails() {
         const category = this.getAttribute('category');
         const categoryInfo = {

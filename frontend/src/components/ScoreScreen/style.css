@@ -132,7 +132,7 @@
   
   /* Leaderboard Styles */
   .leaderboard {
-    text-align: center;
+    text-align: left;
     padding: 20px;
     display: grid;
     grid-template-columns: 1fr;
