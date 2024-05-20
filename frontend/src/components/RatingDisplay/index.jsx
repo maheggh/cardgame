@@ -6,9 +6,6 @@ const RatingDisplay = ({rating}) => {
     const fullStars = Math.round(rating);
     const emptyStars = 5 - fullStars;
 
-    console.log("fullStars: " + fullStars);
-    console.log("emptyStars: " + emptyStars);
-
     const renderStars = () => {
         const stars = [];
 
@@ -28,7 +25,7 @@ const RatingDisplay = ({rating}) => {
 
     return (
         <div className="star-rating">
-            <span>{rating} </span>
+            <span><b>{rating}/5 </b></span>
             {renderStars()}
         </div>
     );

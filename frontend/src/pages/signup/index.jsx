@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {login, signup} from '../../helpers/api.js';
+import {login} from '../../helpers/api.js';
 
 function Signup() {
     // State for form inputs
@@ -19,7 +19,7 @@ function Signup() {
         const requestBody = { email, password, name, surname, department, university, position };
 
         // Send signup request
-        const response = await fetch('http://localhost:3000/api/users', {
+        const response = await fetch('http://localhost:3000/api/users/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -44,7 +44,6 @@ function Signup() {
         try {
             const response = await signup(email, password, name, surname, department, university, position);
             const loginRes = await login(email, password);
-            localStorage.setItem('user', JSON.stringify(loginRes.accessToken));
             navigate('/');
         } catch (error) {
             console.error('Signup failed:', error);

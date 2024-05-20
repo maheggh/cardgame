@@ -146,7 +146,6 @@ const logoutUser = async (req, res) =>{
 }
 
 const refresh = async (req, res) => {
-	console.log("token refresh");
 	const refreshToken = req.cookies.refresh;
 	if (refreshToken == null) return res.sendStatus(401);
 	const verified = jwt.verify(refreshToken, process.env.REFRESH_SECRET);

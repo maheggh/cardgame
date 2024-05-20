@@ -27,10 +27,6 @@ function authRole(role) {
 		const token = req.cookies.jwt
 		const tokenRole = JSON.parse(atob(token.split('.')[1])).role
 		if (tokenRole !== role){
-			console.log("tokenRole: "+tokenRole);
-			console.log("role: "+role);
-			console.log("token: "+token);
-			console.log("no permision");
 			res.status(401)
 			return res.send('you have no permision')
 	}
