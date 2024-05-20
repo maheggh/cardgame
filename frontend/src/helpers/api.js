@@ -145,3 +145,14 @@ export async function logout(){
 
     return response.json();
 }
+
+export async function getAllSchemes() {
+    const response = await fetch(`${API_URL}/assscheme/`, {
+        method: 'GET'
+    });
+    if (!response.ok) {
+        throw new Error('Failed to get total schemes');
+    }
+
+    return response.json();
+}

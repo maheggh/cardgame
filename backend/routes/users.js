@@ -24,12 +24,12 @@ router.get('/', auth, authRole('Admin'), getAllUsers);
 //GET: Read total all users
 router.get('/total', getTotalUsers);
 
+//POST: Create user
+router.post('/signup',[check('email').isEmail(),
+check('password').isLength({min:8})], createUser);
+
 //GET: Read single user
 router.get('/:id', auth, authRole('Admin'), getSingleUser);
-
-//POST: Create user
-router.post('/',[check('email').isEmail(),
-check('password').isLength({min:8})], createUser);
 
 //PATCH: Update single user
 router.patch('/:id', auth, authRole('Admin'), updateUser);

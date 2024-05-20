@@ -1,0 +1,21 @@
+.scheme-card{
+    background-color: #fff;
+    padding: 12px;
+    border-radius: 12px;
+    width: 100%;
+}
+
+.scheme-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.scheme-title h1{
+    margin-bottom: 8px;
+}
+
+.star-rating{
+    font-size: 20px;
+    padding: 10px;
+    height: min-content;
+}
