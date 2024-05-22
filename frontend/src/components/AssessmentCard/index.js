@@ -79,6 +79,7 @@ class SuperAssessmentCard extends HTMLElement {
         }
 
         let selectedCard = cardsByCategory[category][Math.floor(Math.random() * cardsByCategory[category].length)];
+        this.setAttribute('data-card-id', selectedCard._id); // Set data-card-id attribute
         this.displayCard(selectedCard);
     }
 
@@ -199,7 +200,7 @@ class SuperAssessmentCard extends HTMLElement {
             transform: skewX(-30deg);
         }
     </style>
-            <div class="card ${card["card-category"].replace(/\s+/g, '-').toLowerCase()}">
+            <div class="card ${card["card-category"].replace(/\s+/g, '-').toLowerCase()}" data-card-id="${card._id}">
                 <img class="card-image" style="display: none;" src="./assets/cards-png/SUPER cards poker size ${"061123" + (card['card-id'] * 2)}.png">
                 <div class="card-content">
                     <div class="cardCategory">${card["card-category"]}</div>

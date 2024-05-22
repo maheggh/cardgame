@@ -1,94 +1,83 @@
+const mongoose = require('mongoose');
 const AssessmentSchemes = require('../schemas/assessmentSchemeSchema');
 
-//CRUD: Create
+// CRUD: Create
 const createScheme = async (req, res) => {
-	const scheme = new AssessmentSchemes({
-		'scheme-name': req.body['scheme-name'],
-		'card-who-is': req.body['card-who-is'],
-		'card-assessor': req.body['card-assessor'],
-		'card-artefact': req.body['card-artefact'],
-		'card-format': req.body['card-format'],
-		'card-context': req.body['card-context'],
-		'card-timing': req.body['card-timing'],
-		'card-mission-one': req.body['card-mission-one'],
-		'card-mission-two': req.body['card-mission-two'],
-		'card-mission-three': req.body['card-mission-three'],
-		'creator': req.body['scheme-creator']
-	})
+    try {
+        const schemeData = {
+            'scheme-name': req.body['scheme-name'],
+            'card-who-is': new mongoose.Types.ObjectId(req.body['card-who-is']),
+            'card-assessor': new mongoose.Types.ObjectId(req.body['card-assessor']),
+            'card-artefact': new mongoose.Types.ObjectId(req.body['card-artefact']),
+            'card-format': new mongoose.Types.ObjectId(req.body['card-format']),
+            'card-context': new mongoose.Types.ObjectId(req.body['card-context']),
+            'card-timing': new mongoose.Types.ObjectId(req.body['card-timing']),
+            'card-mission-one': new mongoose.Types.ObjectId(req.body['card-mission-one']),
+            'card-mission-two': new mongoose.Types.ObjectId(req.body['card-mission-two']),
+            'card-mission-three': new mongoose.Types.ObjectId(req.body['card-mission-three']),
+            'creator': new mongoose.Types.ObjectId(req.body['scheme-creator']),
+        };
 
-	try {
-		const a1 = await scheme.save();
-		// if successful, prints success message and the new scheme
-		res.json({ message: 'Scheme created successfully', scheme: a1 }).status(201);
-	} catch (err) {
-		// if unsuccessful, prints error message and sends a 500 status
-		res.status(500).send('Error: ' + err);
-	}
-}
+        const scheme = new AssessmentSchemes(schemeData);
+        const savedScheme = await scheme.save();
+        res.status(201).json({ message: 'Scheme created successfully', scheme: savedScheme });
+    } catch (err) {
+        res.status(500).json({ error: 'Error creating scheme', details: err.message });
+    }
+};
 
-//CRUD: Read
+// CRUD: Read
 const getAllSchemes = async (req, res) => {
-	try {
-		const schemes = await AssessmentSchemes.find();
-		// if successful, prints all schemes
-		res.status(200).json(schemes);
-	} catch (err) {
-		// if unsuccessful, prints error message and sends a 500 status
-		res.status(500).send('Error: ' + err);
-	}
-}
+    try {
+        const schemes = await AssessmentSchemes.find();
+        res.status(200).json(schemes);
+    } catch (err) {
+        res.status(500).json({ error: 'Error fetching schemes', details: err.message });
+    }
+};
 
-//CRUD: Read
+// CRUD: Read
 const getSingleScheme = async (req, res) => {
-	const _id = req.params.id;
-	try {
-		const scheme = await AssessmentSchemes.findById(_id);
+    const _id = req.params.id;
+    try {
+        const scheme = await AssessmentSchemes.findById(_id);
 
-		if (!scheme) {
-			//Send 404 status if the updated scheme can't be found
-			return res.status(404).json({ error: 'Could not find scheme. Scheme not found' });
-		}
-		// if successful, prints scheme and sends 200 status
-		res.json(scheme);
-	} catch (err) {
-		// if unsuccessful, prints error message and sends a 500 status
-		res.status(500).send('Error: ' + err);
-	}
-}
+        if (!scheme) {
+            return res.status(404).json({ error: 'Scheme not found' });
+        }
+        res.status(200).json(scheme);
+    } catch (err) {
+        res.status(500).json({ error: 'Error fetching scheme', details: err.message });
+    }
+};
 
-//CRUD: Update
+// CRUD: Update
 const updateScheme = async (req, res) => {
-	const _id = req.params.id;
-	try {
-		const scheme = await AssessmentSchemes.findByIdAndUpdate(_id, req.body); //updates scheme
-		const updatedScheme = await AssessmentSchemes.findById(_id); //returns updated scheme
-		if (!scheme) {
-			//Send 404 status if the updated scheme can't be found
-			return res.status(404).json({ error: 'Could not update scheme. Scheme not found' });
-		}
-		// if successful, prints updated scheme and sends 200 status
-		res.json({ message: 'Scheme updated successfully', Scheme: updatedScheme }).status(200);
-	} catch (err) {
-		// if unsuccessful, prints error message and sends a 500 status
-		res.status(500).send('Error: ' + err);
-	}
-}
+    const _id = req.params.id;
+    try {
+        const scheme = await AssessmentSchemes.findByIdAndUpdate(_id, req.body, { new: true });
 
-//CRUD: Delete
+        if (!scheme) {
+            return res.status(404).json({ error: 'Scheme not found' });
+        }
+        res.status(200).json({ message: 'Scheme updated successfully', scheme });
+    } catch (err) {
+        res.status(500).json({ error: 'Error updating scheme', details: err.message });
+    }
+};
+
+// CRUD: Delete
 const deleteScheme = async (req, res) => {
     const _id = req.params.id;
     try {
-        const card = await AssessmentSchemes.findByIdAndDelete(_id);
-        if (!card) {
-            console.log(`Could not find card with ID: ${_id}`);
-            return res.status(404).json({ message: 'Card not found' });
+        const scheme = await AssessmentSchemes.findByIdAndDelete(_id);
+        if (!scheme) {
+            return res.status(404).json({ error: 'Scheme not found' });
         }
-        
-        console.log('Deleted card:', card);
-        res.json({ message: 'Card deleted successfully', Card: card });
+        res.status(200).json({ message: 'Scheme deleted successfully', scheme });
     } catch (err) {
-        console.error('Errors deleting card:', err);
-        res.status(500).json({ message: 'Error deleting card', error: err.message || err });
+        res.status(500).json({ error: 'Error deleting scheme', details: err.message });
     }
 };
-module.exports = { createScheme, getAllSchemes, getSingleScheme, updateScheme, deleteScheme }
+
+module.exports = { createScheme, getAllSchemes, getSingleScheme, updateScheme, deleteScheme };

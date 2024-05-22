@@ -9,13 +9,13 @@ const cookieParser = require('cookie-parser');
 connectDB();
 
 // Routes
-const cardsRoutes = require('./routes/Cards'); // Adjust path as necessary
-const usersRoutes = require('./routes/users'); // Adjust path as necessary
-const searchRoutes = require('./routes/Search'); // Adjust path as necessary
-const iconsRoutes = require('./routes/Icons'); // Adjust path as necessary
-const AssSchemeRoutes = require('./routes/AssessmentScheme'); // Adjust path as necessary
-const bulkUploadRoutes = require('./routes/Bulk'); // Adjust path as necessary
-const ratingsRoutes = require('./routes/Ratings'); // Adjust path as necessary
+const cardsRoutes = require('./routes/Cards'); 
+const usersRoutes = require('./routes/users'); 
+const searchRoutes = require('./routes/Search'); 
+const iconsRoutes = require('./routes/Icons'); 
+const AssSchemeRoutes = require('./routes/AssessmentScheme'); 
+const bulkUploadRoutes = require('./routes/Bulk'); 
+const ratingsRoutes = require('./routes/Ratings'); 
 
 // Middlewares
 app.use(cookieParser());

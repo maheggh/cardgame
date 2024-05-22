@@ -24,7 +24,7 @@ class SuperMissionCard extends HTMLElement {
             .then(response => response.json())
             .then(data => {
                 const missionCardData = data.filter(card => card['card-type'] === 'Mission');
-                const availableCards = missionCardData.filter(card => !SuperMissionCard.displayedCardIds.has(card['card-id']));
+                const availableCards = missionCardData.filter(card => !SuperMissionCard.displayedCardIds.has(card._id));
                 if (availableCards.length > 0) {
                     this.renderRandomCard(availableCards);
                 } else {
@@ -41,8 +41,9 @@ class SuperMissionCard extends HTMLElement {
         if (this.currentCardId) {
             SuperMissionCard.displayedCardIds.delete(this.currentCardId);
         }
-        this.currentCardId = selectedCard['card-id'];
+        this.currentCardId = selectedCard._id;
         SuperMissionCard.displayedCardIds.add(this.currentCardId);
+        this.setAttribute('data-card-id', this.currentCardId); // Set card-id attribute
         this.currentCard = selectedCard; // Store the current card
         this.renderCard(selectedCard);
     }
@@ -52,9 +53,8 @@ class SuperMissionCard extends HTMLElement {
           "card-name": this.shadowRoot.querySelector('.card-header').innerText,
           "card-description": this.shadowRoot.querySelector('.card-body').innerText
         };
-      }
+    }
       
-
     renderCard(card) {
         let cardHTML = `
         <style>
