@@ -36,7 +36,7 @@ const UserDashboard = () => {
           </div>
         </>) : (<ErrorMessage error="401" subtitle="Unauthorized" text="Sorry, you need to be authorized to access this information"/>)}
         </>
-      ) : (<p>Loading...</p>)}
+      ) : (<h1>Loading...</h1>)}
     </div>
   );
 };
