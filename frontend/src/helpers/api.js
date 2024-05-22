@@ -217,3 +217,21 @@ export async function isRated(scheme) {
 
     return response.json();
 }
+
+export async function deleteScheme(id) {
+    const response = await fetch(`/api/assscheme/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      credentials: 'include'
+    });
+  
+    if (!response.ok) {
+      throw new Error('Failed to delete scheme');
+    }
+  
+    return response.json();
+  }
+  
