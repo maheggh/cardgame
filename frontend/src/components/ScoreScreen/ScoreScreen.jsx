@@ -73,21 +73,26 @@ function ScoreScreen({ players, missionCards, onScoreChange, onSubmitScores }) {
         
       {!showLeaderboard ? (
         <>
-          <h2>Missions</h2>
+          <h1>Missions</h1>
           <div className="mission-cards">
             {missionCards.map((card, index) => (
-              <div key={index} className="mission-card">
-                <h2>{card.name}</h2>
+            <div className={`mini-card mission`} key={index}>
+              <div className="mini-card-header">{"MISSION "+(index+1)}</div>
+              <div className="mini-card-content">
+                <h1>{card.name}</h1>
                 <p>{card.description}</p>
               </div>
+            </div>
             ))}
           </div>
-          <ul>
-            <h1>Rate player performance</h1>
+          <h1>Rate player performance</h1>
+          <ul>   
             {players.map((player, playerIndex) => (
               <li key={playerIndex}>
+              <div className="player-info">
                 <img src={`../../assets/avatars/${player.avatar}.png`} alt={player.name} className="player-avatar" />
                 <span>{player.name}</span>
+              </div>
                 <div className="player-scores">
                   {missionCards.map((_, missionIndex) => (
                     <div key={missionIndex} className="mission-score">
@@ -97,7 +102,7 @@ function ScoreScreen({ players, missionCards, onScoreChange, onSubmitScores }) {
                           key={star}
                           className={`star ${scores[playerIndex].missionScores[missionIndex] >= star ? 'selected' : ''}`}
                           onClick={() => handleScoreChange(playerIndex, missionIndex, star)}
-                        >☆</span>
+                        ><i className="fa-solid fa-star"/></span>
                       ))}
                     </div>
                   ))}

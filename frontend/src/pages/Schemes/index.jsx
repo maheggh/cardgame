@@ -16,7 +16,7 @@ function SchemesPage() {
     <div className="content-wrapper">
       <h1 className="title">Schemes</h1>
         {schemes ? schemes.map(card => (
-          <SchemeCard props={card} rating={2.4} key={card._id}/>
+          <SchemeCard data={card} key={card._id}/>
         )) : (<></>)}
       
     </div>

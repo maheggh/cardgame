@@ -32,22 +32,6 @@ export async function login(email, password) {
     return response.json();
 }
 
-export async function authorize(token){
-    const response = await fetch(`${API_URL}/cards`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-            'auth-token': `Bearer ${token}`
-        }
-    });
-    if (!response.ok) {
-        throw new Error('Login failed');
-    }
-
-    return response.json();
-}
-
-
 export async function getAllUsers(){
     const response = await fetch(`${API_URL}/users`, {
         method: 'GET',
@@ -67,30 +51,6 @@ export async function getTotalTeachers() {
     });
     if (!response.ok) {
         throw new Error('Failed to get total users');
-    }
-
-    const totalTeachers = await response.json();
-    return totalTeachers.toString();
-}
-
-export async function getTotalCards() {
-    const response = await fetch(`${API_URL}/cards/total`, {
-        method: 'GET'
-    });
-    if (!response.ok) {
-        throw new Error('Failed to get total cards');
-    }
-
-    const totalTeachers = await response.json();
-    return totalTeachers.toString();
-}
-
-export async function getTotalCardTypes() {
-    const response = await fetch(`${API_URL}/cards/types`, {
-        method: 'GET'
-    });
-    if (!response.ok) {
-        throw new Error('Failed to get total card types');
     }
 
     const totalTeachers = await response.json();
@@ -146,28 +106,6 @@ export async function logout(){
     return response.json();
 }
 
-export async function getAllSchemes() {
-    const response = await fetch(`${API_URL}/assscheme/`, {
-        method: 'GET'
-    });
-    if (!response.ok) {
-        throw new Error('Failed to get total schemes');
-    }
-
-    return response.json();
-}
-
-export async function getAvgRating(id) {
-    const response = await fetch(`${API_URL}/ratings/avg/${id}`, {
-        method: 'GET'
-    });
-    if (!response.ok) {
-        throw new Error('Failed to get average rating');
-    }
-
-    return response.json();
-}
-
 export async function getUserName(id) {
     const response = await fetch(`${API_URL}/users/name/${id}`, {
         method: 'GET'
@@ -179,41 +117,47 @@ export async function getUserName(id) {
     return response.json();
 }
 
-export async function getSingleCard(id) {
-    const response = await fetch(`${API_URL}/cards/${id}`, {
-        method: 'GET'
-    });
+// Fetch user data
+export const fetchUser = (userId) => {
+  return fetch(`${API_URL}/users/${userId}`, {
+        method: 'GET',
+        credentials: 'include' 
+  })
+    .then(response => response.json())
+    .catch(error => console.error('Error:', error));
+};
+
+
+// Update user data
+export const updateUser = (userId, user) => {
+  return fetch(`${API_URL}/users/${userId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user),
+    credentials: 'include' 
+  })
+  .then(response => {
     if (!response.ok) {
-        throw new Error('Failed to get total schemes');
+      throw new Error('Network response was not ok');
     }
-
     return response.json();
-}
+  })
+  .catch(error => console.error('Error:', error));
+};
 
-export async function rateScheme(score, scheme) {
-    const response = await fetch(`${API_URL}/ratings/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ score, scheme }),
-    });
-
+// Delete user
+export const deleteUser = (userId) => {
+  return fetch(`${API_URL}/users/${userId}`, {
+    method: 'DELETE',
+    credentials: 'include' 
+  })
+  .then(response => {
     if (!response.ok) {
-        throw new Error('Failed to get total schemes');
+      throw new Error('Network response was not ok');
     }
-
     return response.json();
-}
-
-export async function isRated(scheme) {
-    const response = await fetch(`${API_URL}/ratings/rated/${scheme}`, {
-        method: 'GET'
-    });
-
-    if (!response.ok) {
-        throw new Error('Rating not found');
-    }
-
-    return response.json();
-}
+  })
+  .catch(error => console.error('Error:', error));
+};

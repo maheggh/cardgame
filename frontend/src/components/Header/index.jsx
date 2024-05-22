@@ -16,20 +16,20 @@ if (isAuth){
     return(
         <header className="super-assessor-header">
             <div className="header-wrapper">
-                <Link  to='/' className="logo">
+                <Link  to='/' className="logo" >
                     <img src={logo} alt="Logo"/>
                 </Link >
                 <nav>
-                    <Link  to="/game" className="link nav-button">Game</Link>
-                    <Link  to="/schemes" className="link nav-button">Schemes</Link>
+                    <Link  to="/game" className="link nav-button" >Game</Link>
+                    <Link  to="/schemes" className="link nav-button" >Schemes</Link>
                     {userRole=="Admin" ? (
                     <>
-                    <Link  to="/cards" className="link nav-button">Cards</Link >
-                    <Link  to="/users" className="link nav-button">Users</Link >
-                    <Link  to="/fileupload" className="link nav-button">Upload</Link >
+                    <Link  to="/cards" className="link nav-button" >Cards</Link >
+                    <Link  to="/users" className="link nav-button" >Users</Link >
+                    <Link  to="/fileupload" className="link nav-button" >Upload</Link >
                     </>
                     ) : (<></>)}
-                    <a  href="/" className="link nav-button" onClick={handleLogout}>Log out</a>
+                    <a  href="/" className="link nav-button" onClick={handleLogout} >Log out</a>
                 </nav>
             </div>
         </header>
@@ -45,8 +45,8 @@ else{
             </Link>
 
             <nav>
-            <Link to="/login" className="link nav-button">Login</Link>
-            <Link to="/signup" className="link nav-button">Sign up</Link>
+            <Link to="/login" className="link nav-button" >Login</Link>
+            <Link to="/signup" className="link nav-button" >Sign up</Link>
             </nav>
         </div>
     </header>   

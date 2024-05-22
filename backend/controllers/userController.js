@@ -78,6 +78,24 @@ const getSingleUser = async (req, res) => {
 	}
 }
 
+//CRUD: Read
+const getSingleUserName = async (req, res) => {
+	const _id = req.params.id;
+	try {
+		const user = await Users.findById(_id).select('name surname');
+
+		if (!user) {
+			// Send 404 status if the user can't be found
+			return res.status(404).json({ error: 'Could not find user. User not found' }); 
+		}
+		// if successful, prints user and sends 200 status
+		res.status(200).json(user); 
+	} catch (err) {
+		// if unsuccessful, prints error message and sends a 500 status
+		res.send('Error: ' + err);
+	}
+}
+
 //CRUD: Update
 const updateUser = async (req, res) => {
 	const _id = req.params.id;
@@ -162,4 +180,4 @@ const status = (req, res) => {
 
 }
 
-module.exports = { getAllUsers, getTotalUsers, getSingleUser, createUser, updateUser, deleteUser, authenticateUser, refresh, logoutUser, status }
+module.exports = { getAllUsers, getTotalUsers, getSingleUser, createUser, updateUser, deleteUser, authenticateUser, refresh, logoutUser, status, getSingleUserName }

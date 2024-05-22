@@ -1,10 +1,10 @@
 const Ratings = require('../schemas/ratingSchema');
+const mongoose = require('mongoose');
 
 //CRUD: Create
 const createRating = async (req, res) => {
-	console.log(req.body);
 	const rating = new Ratings({
-		'creator': req.body['creator'],
+		'creator': req.user._id,
 		'score': req.body['score'],
 		'scheme': req.body['scheme']
 	})
@@ -85,4 +85,52 @@ const deleteRating = async (req, res) => {
 	}
 }
 
-module.exports = { createRating, getAllRatings, getSingleRating,  updateRating, deleteRating }
+const calculateAverageRating = async (req, res) => {
+  const _id = req.params.id;
+  try {
+    const schemeObjectId = new mongoose.Types.ObjectId(_id);
+
+    const result = await Rating.aggregate([
+    	//find ratings for the scheme
+      { $match: { scheme: schemeObjectId } },
+      {
+      	//return avg ratings and the id of the scheme
+        $group: {
+          _id: '$scheme',
+          averageRating: { $avg: '$score' }
+        }
+      }
+    ]);
+
+    // If there are no ratings return a 404 status with a message
+    if (result.length === 0) {
+      return res.status(404).json({ error: 'No ratings found for this scheme' });
+    }
+
+    // Return the average rating
+    res.status(200).json({ _id, averageRating: result[0].averageRating });
+  } catch (error) {
+    console.error('Error calculating average rating:', error);
+    res.status(500).send('Error: ' + error);
+  }
+};
+
+//CRUD: Read
+const findUserRating = async (req, res) => {
+		const _id = req.params.id;
+		const rating = await Ratings.findOne({creator:req.user._id,scheme:_id})
+	try {
+		if (!rating) {
+			//Send 404 status if the updated rating can't be found
+			return res.status(404).json({ error: 'Could not find rating. Rating not found' });
+		}
+		// if successful, prints rating and sends 200 status
+		res.json(rating);
+	} catch (err) {
+		// if unsuccessful, prints error message and sends a 500 status
+		res.status(500).send('Error: ' + err);
+	}
+		res.status(200);
+}
+
+module.exports = { createRating, getAllRatings, getSingleRating,  updateRating, deleteRating, calculateAverageRating, findUserRating }

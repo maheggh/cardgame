@@ -1,7 +1,7 @@
 //User routes go here
 const express 		= require('express');
 const router 		= express.Router();
-const {getAllUsers, getTotalUsers, getSingleUser, updateUser, deleteUser, createUser, authenticateUser, refresh, logoutUser, status} = require('../controllers/userController');
+const {getAllUsers, getTotalUsers, getSingleUser, updateUser, deleteUser, createUser, authenticateUser, refresh, logoutUser, status, getSingleUserName} = require('../controllers/userController');
 const {check,validationResult} = require('express-validator');
 const {auth, authRole} = require('../helpers/verifyToken');
 
@@ -30,6 +30,9 @@ check('password').isLength({min:8})], createUser);
 
 //GET: Read single user
 router.get('/:id', auth, authRole('Admin'), getSingleUser);
+
+//GET: Read single user
+router.get('/name/:id', auth, getSingleUserName);
 
 //PATCH: Update single user
 router.patch('/:id', auth, authRole('Admin'), updateUser);

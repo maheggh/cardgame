@@ -1,20 +1,3 @@
-:root {
-    --who-is-assessed-color: #007AA0;
-    --the-assessor-color: #896EAE;
-    --assessment-artefact-color: #D64B56;
-    --assessment-format-color: #A7D6A3;
-    --context-color: #F38AA7;
-    --assessment-timing-color: #F2963D;
-    --who-is-assessed-border-color: #056A92;
-    --the-assessor-border-color: #7D5EA5;
-    --assessment-artefact-border-color: #D11F44;
-    --assessment-format-border-color: #91CD90;
-    --context-border-color: #F17299;
-    --assessment-timing-border-color: #D1762C;
-    --randomize-button-color: #056A92;
-    --endgame-button-color: #D11F44;
-  }
-  
   .card-container {
     max-width: 100%;
     display: flex;

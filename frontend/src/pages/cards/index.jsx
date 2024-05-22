@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import ErrorMessage from '../../components/ErrorMessage';
+import { getAllCards } from '../../API/cards'; 
 
 const Card = ({ card, navigateToEditPage }) => (
   <div className='card-page_card-container'>
@@ -25,14 +26,12 @@ const Card = ({ card, navigateToEditPage }) => (
 
 const CardsPage = () => {
   const [cards, setCards] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(null);
 
   useEffect(() => {
     const getCards = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/cards');
-        const data = await response.json();
-        setCards(data);
+       getAllCards().then(data => setCards(data));
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);

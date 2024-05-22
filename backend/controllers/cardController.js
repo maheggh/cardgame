@@ -2,7 +2,6 @@ const Cards = require('../schemas/cardSchema');
 
 //CRUD: Create
 const createCard = async (req, res) => {
-	console.log(req.body);
 	const card = new Cards({
 		'card-id': req.body['card-id'],
 		'card-type': req.body['card-type'],
@@ -99,7 +98,6 @@ const updateCard = async (req, res) => {
 //CRUD: Delete
 const deleteCard = async (req, res) => {
     const _id = req.params.id;
-    console.log(_id);
     try {
         const card = await Cards.findByIdAndDelete(_id);
         if (!card) {

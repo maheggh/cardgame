@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useFetchCard, updateCard, deleteCard } from './editCardLogic';
+import { getSingleCard, updateCard, deleteCard } from '../../API/cards';
 import './style.css';
 
 function EditCardPage() {
   const { cardId } = useParams();
   const [card, setCard] = useState(null);
   const navigate = useNavigate();
-  const { fetchCard } = useFetchCard();
 
   // Fetch card data on component mount
   useEffect(() => {
     console.log('useEffect called with cardId:', cardId);
     if (cardId) {
       console.log('Fetching card data for cardId:', cardId);
-      fetchCard(cardId)
+      getSingleCard(cardId)
         .then(data => {
           console.log('Fetched card data:', data);
           setCard(data);

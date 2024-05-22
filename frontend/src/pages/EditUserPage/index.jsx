@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchUser, updateUser, deleteUser } from './editUserLogic';
+import { fetchUser, updateUser, deleteUser } from '../../API/users';
 import './style.css'
 
 
@@ -13,7 +13,6 @@ function EditUserPage() {
   useEffect(() => {
     fetchUser(userId)
       .then(data => {
-        console.log(data);
         setUser(data); 
       });
   }, [userId]);
@@ -23,8 +22,6 @@ function EditUserPage() {
     event.preventDefault();
     updateUser(userId, user)
       .then(data => {
-        console.log(data);
-
         navigate('/users');
       });
   };

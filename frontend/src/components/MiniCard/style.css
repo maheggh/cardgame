@@ -1,0 +1,113 @@
+.mini-card.artefact{
+	border-color: var(--assessment-artefact-border-color);	
+}
+
+.mini-card.assessor{
+	border-color: var(--the-assessor-border-color);	
+}
+
+.mini-card.context{
+	border-color: var(--context-border-color);	
+}
+
+.mini-card.format{
+	border-color: var(--assessment-format-border-color);	
+}
+
+.mini-card.timing{
+	border-color: var(--assessment-timing-border-color);	
+}
+
+.mini-card.who{
+	border-color: var(--who-is-assessed-border-color);	
+}
+
+.mini-card.mission{
+	border-color: #FBDC81;	
+}
+
+.artefact .mini-card-header{
+	background-color: var(--assessment-artefact-color);	
+}
+
+.assessor .mini-card-header{
+	background-color: var(--the-assessor-color);	
+}
+
+.context .mini-card-header{
+	background-color: var(--context-color);	
+}
+
+.format .mini-card-header{
+	background-color: var(--assessment-format-color);	
+}
+
+.timing .mini-card-header{
+	background-color: var(--assessment-timing-color);	
+}
+
+.who .mini-card-header{
+	background-color: var(--who-is-assessed-color);	
+}
+
+.mission .mini-card-header{
+	background-color: white;
+	color: black;
+}
+
+.mini-card{
+	aspect-ratio: 5 / 7;
+	max-height: 240px;
+	border-radius: 14px;
+	border: 9px solid;
+	user-select: none;
+}
+
+.mini-card-header{
+	color: white;
+	height: 42px;
+	font-size: 15px;
+	text-transform: uppercase;
+	font-weight: 800;
+	display: flex;
+	align-items: center;
+	letter-spacing: 0.4px;
+	line-height: 14px;
+	padding: 0 6px;
+	border-radius: 4.5px 4.5px 0px 0px;
+}
+
+.card-holder{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+    justify-content: left;
+    margin: 10px 0;
+}
+
+.mini-card h1{
+	font-size: 12px;
+	font-weight: 800;
+	margin-bottom: 4px;
+	text-transform: uppercase;
+	line-height: 14px;
+}
+
+.mini-card h2{
+	font-size: 11px;
+	font-weight: 800;
+	margin: 6px 0;
+	text-transform: uppercase;
+	line-height: 14px;
+	color: gray;
+}
+
+.mini-card p{
+	font-size: 10px;
+}
+
+
+.mini-card-content{
+	padding: 6px;
+}

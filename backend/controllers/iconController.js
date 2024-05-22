@@ -2,7 +2,6 @@ const Icons = require('../schemas/iconSchema');
 
 //CRUD: Create
 const createIcon = async (req, res) => {
-	console.log(req.body);
 	const icon = new Icons({
 		'iconURL': req.body['iconURL']
 	})

@@ -4,7 +4,7 @@ import './style.css';
 const RatingDisplay = ({rating}) => {
 
     const fullStars = Math.round(rating);
-    const emptyStars = 5 - fullStars;
+    const emptyStars = 5 - (fullStars ? fullStars : 0);
 
     const renderStars = () => {
         const stars = [];
@@ -25,7 +25,7 @@ const RatingDisplay = ({rating}) => {
 
     return (
         <div className="star-rating">
-            <span><b>{rating}/5 </b></span>
+            <span><b>{rating ? Math.round(rating * 10) / 10 : "?"}/5 </b></span>
             {renderStars()}
         </div>
     );

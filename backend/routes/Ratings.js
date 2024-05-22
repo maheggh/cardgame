@@ -1,21 +1,29 @@
 //Icon routes go here
 const express 		= require('express');
 const router 		= express.Router();
-const {createRating, getAllRatings, getSingleRating,  updateRating, deleteRating } = require('../controllers/ratingController');
+const {createRating, getAllRatings, getSingleRating,  updateRating, deleteRating, calculateAverageRating, findUserRating } = require('../controllers/ratingController');
+const {auth, authRole, authCanUpdate} = require('../helpers/verifyToken');
+const ratingSchema = require('../schemas/ratingSchema');
 
-//POST: Create card
-router.post('/', createRating);
+//POST: Create rating
+router.post('/', auth, createRating);
 
-//GET: Read all cards
+//GET: Read all ratings
 router.get('/', getAllRatings);
 
-//GET: Read single card
-router.get('/:id', getSingleRating);
+//GET: Check for user rating
+router.get('/rated/:id', auth, findUserRating);
 
-//PATCH: Update single card
-router.patch('/:id', updateRating);
+//GET: Read single rating
+router.get('/:id', auth, getSingleRating);
 
-//DELETE: Delete single card
-router.delete('/:id', deleteRating);
+//GET: Read avg rating for scheme
+router.get('/avg/:id', calculateAverageRating);
+
+//PATCH: Update single rating
+router.patch('/:id', auth, authCanUpdate(ratingSchema), updateRating);
+
+//DELETE: Delete single rating
+router.delete('/:id', auth, deleteRating);
 
 module.exports = router;

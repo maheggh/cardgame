@@ -28,7 +28,6 @@ const createScheme = async (req, res) => {
 
 //CRUD: Read
 const getAllSchemes = async (req, res) => {
-	console.log(req.body);
 	try {
 		const schemes = await AssessmentSchemes.find();
 		// if successful, prints all schemes
