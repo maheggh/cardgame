@@ -23,17 +23,21 @@ function Game() {
     };
 
     const endGame = () => {
-        const missionCards = Array.from(document.querySelectorAll('super-mission-card')).map(card => {
-            const cardId = card.getAttribute('data-card-id');
-            console.log(`Mission Card ID: ${cardId}`);
-            return cardId ? cardId : null;
-        });
+        const missionCards = Array.from(document.querySelectorAll('super-mission-card'))
+            .filter(card => card.offsetParent !== null) // Check if the card is visible
+            .map(card => {
+                const cardId = card.getAttribute('data-card-id');
+                console.log(`Mission Card ID: ${cardId}`);
+                return cardId ? cardId : null;
+            });
     
-        const assessmentCards = Array.from(document.querySelectorAll('super-assessment-card')).map(card => {
-            const cardId = card.getAttribute('data-card-id');
-            console.log(`Assessment Card ID: ${cardId}`);
-            return cardId ? cardId : null;
-        });
+        const assessmentCards = Array.from(document.querySelectorAll('super-assessment-card'))
+            .filter(card => card.offsetParent !== null) // Check if the card is visible
+            .map(card => {
+                const cardId = card.getAttribute('data-card-id');
+                console.log(`Assessment Card ID: ${cardId}`);
+                return cardId ? cardId : null;
+            });
     
         const [cardWhoIs, cardAssessor, cardArtefact, cardFormat, cardContext, cardTiming] = assessmentCards;
     
