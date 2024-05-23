@@ -15,7 +15,7 @@ const createScheme = async (req, res) => {
             'card-mission-one': new mongoose.Types.ObjectId(req.body['card-mission-one']),
             'card-mission-two': new mongoose.Types.ObjectId(req.body['card-mission-two']),
             'card-mission-three': new mongoose.Types.ObjectId(req.body['card-mission-three']),
-            'creator': new mongoose.Types.ObjectId(req.body['scheme-creator']),
+            'creator': req.user._id, 
         };
 
         const scheme = new AssessmentSchemes(schemeData);
@@ -25,6 +25,8 @@ const createScheme = async (req, res) => {
         res.status(500).json({ error: 'Error creating scheme', details: err.message });
     }
 };
+
+
 
 // CRUD: Read
 const getAllSchemes = async (req, res) => {
