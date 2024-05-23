@@ -23,21 +23,28 @@ function Game() {
     };
 
     const endGame = () => {
-        const missionCards = Array.from(document.querySelectorAll('super-mission-card')).map(card => {
-            const cardId = card.getAttribute('data-card-id');
-            console.log(`Mission Card ID: ${cardId}`);
-            return cardId ? cardId : null;
-        });
+        const missionCards = Array.from(document.querySelectorAll('super-mission-card'))
+            .filter(card => card.offsetParent !== null) // Check if the card is visible
+            .map(card => {
+                const cardId = card.getAttribute('data-card-id');
+                console.log(`Mission Card ID: ${cardId}`);
+                return cardId ? cardId : null;
+            });
     
-        const assessmentCards = Array.from(document.querySelectorAll('super-assessment-card')).filter(card => {
-            return card.isVisible; // Only include cards where isVisible is true
-        }).map(card => {
-            const cardId = card.getAttribute('data-card-id');
-            console.log(`Assessment Card ID: ${cardId}`);
-            return cardId ? cardId : null;
-        }).filter(Boolean); // Filter out null values
+        const assessmentCards = Array.from(document.querySelectorAll('super-assessment-card'))
+            .filter(card => card.offsetParent !== null) // Check if the card is visible
+            .map(card => {
+                const cardId = card.getAttribute('data-card-id');
+                console.log(`Assessment Card ID: ${cardId}`);
+                return cardId ? cardId : null;
+            });
     
         const [cardWhoIs, cardAssessor, cardArtefact, cardFormat, cardContext, cardTiming] = assessmentCards;
+    
+        if (!cardWhoIs || !cardAssessor || !cardArtefact || !cardFormat || !cardContext || !cardTiming) {
+            console.error('Some card IDs are missing.');
+            return;
+        }
     
         const schemeData = {
             'scheme-name': 'Example Scheme',
@@ -130,13 +137,6 @@ function Game() {
             }, 1000);
         }
     }, [actionTaken]); // Depend on actionTaken to trigger this effect
-
-    useEffect(() => {
-        console.log('Game component mounted');
-        import("./../../components/MissionCard").then(() => {
-            console.log('MissionCard component loaded');
-        });
-    }, []);
 
     if (!gameStarted) {
         return <StartScreen onStartGame={startGame} />;
