@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 const AssessmentSchemes = require('../schemas/assessmentSchemeSchema');
+const Ratings = require('../schemas/ratingSchema');
 
 // CRUD: Create
 const createScheme = async (req, res) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
     try {
         const schemeData = {
             'scheme-name': req.body['scheme-name'],
@@ -15,18 +18,31 @@ const createScheme = async (req, res) => {
             'card-mission-one': new mongoose.Types.ObjectId(req.body['card-mission-one']),
             'card-mission-two': new mongoose.Types.ObjectId(req.body['card-mission-two']),
             'card-mission-three': new mongoose.Types.ObjectId(req.body['card-mission-three']),
-            'creator': req.user._id, 
+            'creator': req.user._id,
         };
 
         const scheme = new AssessmentSchemes(schemeData);
-        const savedScheme = await scheme.save();
+        const savedScheme = await scheme.save({ session });
+
+        // Create an initial rating for the new scheme
+        const initialRating = new Ratings({
+            score: 3, // Initial score, can be adjusted as needed
+            creator: req.user._id,
+            scheme: savedScheme._id
+        });
+
+        await initialRating.save({ session });
+
+        await session.commitTransaction();
+        session.endSession();
+
         res.status(201).json({ message: 'Scheme created successfully', scheme: savedScheme });
     } catch (err) {
+        await session.abortTransaction();
+        session.endSession();
         res.status(500).json({ error: 'Error creating scheme', details: err.message });
     }
 };
-
-
 
 // CRUD: Read
 const getAllSchemes = async (req, res) => {

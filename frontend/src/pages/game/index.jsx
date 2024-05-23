@@ -13,6 +13,7 @@ function Game() {
     const [interactionsDisabled, setInteractionsDisabled] = useState(false);
     const [gameEnded, setGameEnded] = useState(false);
     const [missionCards, setMissionCards] = useState([]);
+    const [schemeSubmitted, setSchemeSubmitted] = useState(false);
 
     const startGame = (players) => {
         setPlayers(players);
@@ -30,7 +31,7 @@ function Game() {
                 console.log(`Mission Card ID: ${cardId}`);
                 return cardId ? cardId : null;
             });
-    
+
         const assessmentCards = Array.from(document.querySelectorAll('super-assessment-card'))
             .filter(card => card.offsetParent !== null) // Check if the card is visible
             .map(card => {
@@ -38,14 +39,14 @@ function Game() {
                 console.log(`Assessment Card ID: ${cardId}`);
                 return cardId ? cardId : null;
             });
-    
+
         const [cardWhoIs, cardAssessor, cardArtefact, cardFormat, cardContext, cardTiming] = assessmentCards;
-    
+
         if (!cardWhoIs || !cardAssessor || !cardArtefact || !cardFormat || !cardContext || !cardTiming) {
             console.error('Some card IDs are missing.');
             return;
         }
-    
+
         const schemeData = {
             'scheme-name': 'Example Scheme',
             'card-who-is': cardWhoIs,
@@ -58,9 +59,9 @@ function Game() {
             'card-mission-two': missionCards[1],
             'card-mission-three': missionCards[2]
         };
-    
+
         console.log('Submitting scheme: ', schemeData);
-    
+
         fetch('http://localhost:3000/api/assscheme', {
             method: 'POST',
             headers: {
@@ -79,12 +80,13 @@ function Game() {
         })
         .then(data => {
             console.log('Successfully submitted scheme:', data);
+            setGameEnded(true);
+            setSchemeSubmitted(true);
         })
         .catch(error => {
             console.error('Failed to submit card setup', error);
         });
     };
-    
 
     const nextPlayer = () => {
         const actionCooldown = 3; // 3 seconds cooldown

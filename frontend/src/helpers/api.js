@@ -1,7 +1,7 @@
 const API_URL = '/api';
 
 export async function signup(email, name, surname, department, university, position, password) {
-    const response = await fetch(`${API_URL}/signup`, {
+    const response = await fetch(`${API_URL}/users/signup`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -37,16 +37,15 @@ export async function authorize(token){
         method: 'GET',
         credentials: 'include',
         headers: {
-            'auth-token': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`
         }
     });
     if (!response.ok) {
-        throw new Error('Login failed');
+        throw new Error('Authorization failed');
     }
 
     return response.json();
 }
-
 
 export async function getAllUsers(){
     const response = await fetch(`${API_URL}/users`, {
@@ -59,7 +58,6 @@ export async function getAllUsers(){
 
     return response.json();
 }
-
 
 export async function getTotalTeachers() {
     const response = await fetch(`${API_URL}/users/total`, {
@@ -81,8 +79,8 @@ export async function getTotalCards() {
         throw new Error('Failed to get total cards');
     }
 
-    const totalTeachers = await response.json();
-    return totalTeachers.toString();
+    const totalCards = await response.json();
+    return totalCards.toString();
 }
 
 export async function getTotalCardTypes() {
@@ -93,8 +91,8 @@ export async function getTotalCardTypes() {
         throw new Error('Failed to get total card types');
     }
 
-    const totalTeachers = await response.json();
-    return totalTeachers.toString();
+    const totalCardTypes = await response.json();
+    return totalCardTypes.toString();
 }
 
 export async function getStatus(setIsAuth) {
@@ -104,19 +102,13 @@ export async function getStatus(setIsAuth) {
     });
 
     if (!response.ok) {
-        //if the response is not ok, ask for a new token from the refresh function
         const newToken = await refreshToken();
-        //if a token is returned, try the request again with the new token
         if (newToken) {
             return getStatus(setIsAuth);
         } else {
-            //if the oken fails, set the user as unauthenticated
             setIsAuth(false);
             throw new Error('Token refresh failed');
         }
-        //for other errors, set the user to unauth
-        setIsAuth(false);
-        throw new Error('Status failed');
     }
     setIsAuth(true);
     return response.json();
@@ -129,7 +121,7 @@ export async function refreshToken() {
     });
 
     if (!response.ok) {
-        throw new Error('Status failed');
+        throw new Error('Token refresh failed');
     }
     return response.json();
 }
@@ -147,11 +139,12 @@ export async function logout(){
 }
 
 export async function getAllSchemes() {
-    const response = await fetch(`${API_URL}/assscheme/`, {
-        method: 'GET'
+    const response = await fetch(`${API_URL}/assscheme`, {
+        method: 'GET',
     });
+
     if (!response.ok) {
-        throw new Error('Failed to get total schemes');
+        throw new Error('Failed to get all schemes');
     }
 
     return response.json();
@@ -162,7 +155,7 @@ export async function getAvgRating(id) {
         method: 'GET'
     });
     if (!response.ok) {
-        throw new Error('Failed to get average rating');
+        return null; // Return null if the rating is not found
     }
 
     return response.json();
@@ -173,7 +166,7 @@ export async function getUserName(id) {
         method: 'GET'
     });
     if (!response.ok) {
-        throw new Error('Failed to get total schemes');
+        throw new Error('Failed to get user name');
     }
 
     return response.json();
@@ -184,14 +177,14 @@ export async function getSingleCard(id) {
         method: 'GET'
     });
     if (!response.ok) {
-        throw new Error('Failed to get total schemes');
+        throw new Error('Failed to get card details');
     }
 
     return response.json();
 }
 
 export async function rateScheme(score, scheme) {
-    const response = await fetch(`${API_URL}/ratings/`, {
+    const response = await fetch(`${API_URL}/ratings`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -200,7 +193,7 @@ export async function rateScheme(score, scheme) {
     });
 
     if (!response.ok) {
-        throw new Error('Failed to get total schemes');
+        throw new Error('Failed to rate scheme');
     }
 
     return response.json();
@@ -212,26 +205,25 @@ export async function isRated(scheme) {
     });
 
     if (!response.ok) {
-        throw new Error('Rating not found');
+        return false; // Return false if the rating is not found
     }
 
     return response.json();
 }
 
 export async function deleteScheme(id) {
-    const response = await fetch(`/api/assscheme/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-      credentials: 'include'
+    const response = await fetch(`${API_URL}/assscheme/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        credentials: 'include'
     });
-  
+
     if (!response.ok) {
-      throw new Error('Failed to delete scheme');
+        throw new Error('Failed to delete scheme');
     }
-  
+
     return response.json();
-  }
-  
+}
