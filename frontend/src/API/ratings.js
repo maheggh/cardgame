@@ -41,21 +41,3 @@ export async function isRated(scheme) {
 
     return response.json();
 }
-
-export async function createRating(score, scheme) {
-    const response = await fetch(`${API_URL}/ratings`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        credentials: 'include',
-        body: JSON.stringify({ score, scheme })
-    });
-
-    if (!response.ok) {
-        throw new Error('Failed to create rating');
-    }
-
-    return response.json();
-}

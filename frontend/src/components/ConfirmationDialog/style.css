@@ -34,9 +34,16 @@ margin-top: 20px;
     background-color: #f44336;
     color: white;
   }
+
+  .confirmation-dialog .confirm-button:hover {
+    background-color: black;
+  }
   
   .confirmation-dialog .cancel-button {
     background-color: white;
     color: #575757;
     border: 1px solid #575757;
+  }
+  .confirmation-dialog .cancel-button:hover {
+    text-decoration: underline;
   }

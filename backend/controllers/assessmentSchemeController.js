@@ -4,45 +4,29 @@ const Ratings = require('../schemas/ratingSchema');
 
 // CRUD: Create
 const createScheme = async (req, res) => {
-    const session = await mongoose.startSession();
-    session.startTransaction();
+    const scheme = new AssessmentSchemes({
+        'scheme-name': req.body['scheme-name'],
+        'card-who-is': req.body['card-who-is'],
+        'card-assessor': req.body['card-assessor'],
+        'card-artefact': req.body['card-artefact'],
+        'card-format': req.body['card-format'],
+        'card-context': req.body['card-context'],
+        'card-timing': req.body['card-timing'],
+        'card-mission-one': req.body['card-mission-one'],
+        'card-mission-two': req.body['card-mission-two'],
+        'card-mission-three': req.body['card-mission-three'],
+        'creator': req.body['scheme-creator']
+    })
+
     try {
-        const schemeData = {
-            'scheme-name': req.body['scheme-name'],
-            'card-who-is': new mongoose.Types.ObjectId(req.body['card-who-is']),
-            'card-assessor': new mongoose.Types.ObjectId(req.body['card-assessor']),
-            'card-artefact': new mongoose.Types.ObjectId(req.body['card-artefact']),
-            'card-format': new mongoose.Types.ObjectId(req.body['card-format']),
-            'card-context': new mongoose.Types.ObjectId(req.body['card-context']),
-            'card-timing': new mongoose.Types.ObjectId(req.body['card-timing']),
-            'card-mission-one': new mongoose.Types.ObjectId(req.body['card-mission-one']),
-            'card-mission-two': new mongoose.Types.ObjectId(req.body['card-mission-two']),
-            'card-mission-three': new mongoose.Types.ObjectId(req.body['card-mission-three']),
-            'creator': req.user._id,
-        };
-
-        const scheme = new AssessmentSchemes(schemeData);
-        const savedScheme = await scheme.save({ session });
-
-        // Create an initial rating for the new scheme
-        const initialRating = new Ratings({
-            score: 3, // Initial score, can be adjusted as needed
-            creator: req.user._id,
-            scheme: savedScheme._id
-        });
-
-        await initialRating.save({ session });
-
-        await session.commitTransaction();
-        session.endSession();
-
-        res.status(201).json({ message: 'Scheme created successfully', scheme: savedScheme });
+        const a1 = await scheme.save();
+        // if successful, prints success message and the new scheme
+        res.json({ message: 'Scheme created successfully', scheme: a1 }).status(201);
     } catch (err) {
-        await session.abortTransaction();
-        session.endSession();
-        res.status(500).json({ error: 'Error creating scheme', details: err.message });
+        // if unsuccessful, prints error message and sends a 500 status
+        res.status(500).send('Error: ' + err);
     }
-};
+}
 
 // CRUD: Read
 const getAllSchemes = async (req, res) => {

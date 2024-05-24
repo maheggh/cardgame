@@ -7,22 +7,15 @@ function SchemesPage() {
     const [schemes, setSchemes] = useState([]);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        fetchSchemes();
-    }, []);
+  useEffect(() => {
+    getSchemes();
+  }, []);
 
-    const fetchSchemes = async () => {
-        try {
-            const data = await getAllSchemes();
-            for (const scheme of data) {
-                scheme.avgRating = await getAvgRating(scheme._id);
-                scheme.isRated = await isRated(scheme._id);
-            }
-            setSchemes(data);
-        } catch (error) {
-            setError(error.message);
-        }
-    };
+    const getSchemes = async () =>{
+          getAllSchemes()
+      .then(data => setSchemes(data))
+      .catch(error => console.error(error));  
+    }
 
     const handleDelete = async (id) => {
         try {

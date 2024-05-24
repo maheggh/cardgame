@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import StartScreen from '../../components/StartScreen/StartScreen';
 import ScoreScreen from '../../components/ScoreScreen/ScoreScreen';
+import { createScheme } from '../../API/schemes'; 
 import './style.css';
 
 function Game() {
@@ -24,14 +25,14 @@ function Game() {
     };
 
     const endGame = () => {
-        const missionCards = Array.from(document.querySelectorAll('super-mission-card'))
+        const displayedMissionCards = Array.from(document.querySelectorAll('super-mission-card'))
             .filter(card => card.offsetParent !== null) // Check if the card is visible
             .map(card => {
                 const cardId = card.getAttribute('data-card-id');
                 console.log(`Mission Card ID: ${cardId}`);
                 return cardId ? cardId : null;
             });
-
+        setMissionCards(displayedMissionCards);
         const assessmentCards = Array.from(document.querySelectorAll('super-assessment-card'))
             .filter(card => card.offsetParent !== null) // Check if the card is visible
             .map(card => {
@@ -62,29 +63,11 @@ function Game() {
 
         console.log('Submitting scheme: ', schemeData);
 
-        fetch('http://localhost:3000/api/assscheme', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}` // Assuming you store the token in localStorage
-            },
-            credentials: 'include',
-            body: JSON.stringify(schemeData)
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Failed to submit card setup');
-            }
-        })
+        createScheme(schemeData)
         .then(data => {
             console.log('Successfully submitted scheme:', data);
             setGameEnded(true);
             setSchemeSubmitted(true);
-        })
-        .catch(error => {
-            console.error('Failed to submit card setup', error);
         });
     };
 

@@ -25,7 +25,7 @@ const RatingDisplay = ({rating}) => {
 
     return (
         <div className="star-rating">
-            <span><b>{rating ? Math.round(rating * 10) / 10 : "?"}/5 </b></span>
+            <span><b>{rating ? Math.round(rating * 10) / 10 : "-"}/5 </b></span>
             {renderStars()}
         </div>
     );
