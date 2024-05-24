@@ -15,7 +15,7 @@ const createScheme = async (req, res) => {
         'card-mission-one': req.body['card-mission-one'],
         'card-mission-two': req.body['card-mission-two'],
         'card-mission-three': req.body['card-mission-three'],
-        'creator': req.body['scheme-creator']
+        'creator': req.user._id
     })
 
     try {

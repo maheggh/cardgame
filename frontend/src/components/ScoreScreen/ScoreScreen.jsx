@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Confetti from 'react-confetti';
+import MiniCard from '../MiniCard';
 import './style.css';
 
-function ScoreScreen({ players, missionCards, onScoreChange, onSubmitScores }) {
+
+function ScoreScreen({ players, missionCards, finalScheme, onScoreChange, onSubmitScores, onSubmitAndSave, onTextChange }) {
   const [scores, setScores] = useState(
     players.map(player => ({
       playerName: player.name,
@@ -35,6 +37,11 @@ function ScoreScreen({ players, missionCards, onScoreChange, onSubmitScores }) {
     onSubmitScores(scores);
   };
 
+  const handleSubmitAndSave = () => {
+    setShowLeaderboard(true);
+    onSubmitAndSave();
+  };
+
   const handlePlayAgain = () => {
     window.location.reload();
   };
@@ -52,19 +59,23 @@ function ScoreScreen({ players, missionCards, onScoreChange, onSubmitScores }) {
         <div className="score-screen">
           {!showLeaderboard ? (
             <>
-              <h1>Missions</h1>
+              <h1 className="title">Assement cards</h1>
+              <div className="mission-cards">
+
+                <MiniCard cardId={finalScheme['card-artefact']} type={'artefact'}/>
+                <MiniCard cardId={finalScheme['card-assessor']} type={'assessor'}/>
+                <MiniCard cardId={finalScheme['card-context']} type={'context'}/>
+                <MiniCard cardId={finalScheme['card-format']} type={'format'}/>
+                <MiniCard cardId={finalScheme['card-timing']} type={'timing'}/>
+                <MiniCard cardId={finalScheme['card-who-is']} type={'who'}/>            
+              </div>
+              <h1 className="title">Missions</h1>
               <div className="mission-cards">
                 {missionCards.map((card, index) => (
-                  <div className={`mini-card mission`} key={index}>
-                    <div className="mini-card-header">{"MISSION " + (index + 1)}</div>
-                    <div className="mini-card-content">
-                      <h1>{card.name}</h1>
-                      <p>{card.description}</p>
-                    </div>
-                  </div>
-                ))}
+                  <MiniCard cardId={card}type={'mission'} key={index}/>
+                ))}              
               </div>
-              <h1>Rate player performance</h1>
+              <h1  className="title">Rate player performance</h1>
               <ul>
                 {players.map((player, playerIndex) => (
                   <li key={playerIndex}>
@@ -89,7 +100,15 @@ function ScoreScreen({ players, missionCards, onScoreChange, onSubmitScores }) {
                   </li>
                 ))}
               </ul>
-              <button className="submit-button" onClick={handleSubmitScores}>Submit Scores</button>
+              <p>Name your Scheme:</p>
+                <input
+                type="text"
+                placeholder={finalScheme['scheme-name']}
+                value={finalScheme['scheme-name']}
+                onChange={(e) => onTextChange(e.target.value)}
+              />
+              <button className="submit-button" onClick={handleSubmitScores}>Submit Scores only</button>
+              <button className="submit-button" onClick={handleSubmitAndSave}>Submit Scores and Save scheme</button>
             </>
           ) : (
             <>

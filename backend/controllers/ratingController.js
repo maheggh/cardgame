@@ -84,7 +84,7 @@ const calculateAverageRating = async (req, res) => {
         ]);
 
         if (result.length === 0) {
-            return res.status(404).json({ error: 'No ratings found for this scheme' });
+            return res.status(204).json({ error: 'No ratings found for this scheme' });
         }
 
         res.status(200).json({ _id, averageRating: result[0].averageRating });
@@ -98,7 +98,7 @@ const findUserRating = async (req, res) => {
     try {
         const rating = await Ratings.findOne({ creator: req.user._id, scheme: _id });
         if (!rating) {
-            return res.status(404).json({ error: 'Could not find rating. Rating not found' });
+            return res.status(204).json({ error: 'Could not find rating. Rating not found' });
         }
         res.status(200).json(rating);
     } catch (err) {

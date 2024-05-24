@@ -9,7 +9,9 @@ export async function getAvgRating(id) {
     if (!response.ok) {
         throw new Error('Failed to get average rating');
     }
-
+    if (response.status === 204) {
+      return;
+    }
     return response.json();
 }
 

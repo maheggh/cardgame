@@ -14,6 +14,7 @@ function Game() {
     const [interactionsDisabled, setInteractionsDisabled] = useState(false);
     const [gameEnded, setGameEnded] = useState(false);
     const [missionCards, setMissionCards] = useState([]);
+    const [finalScheme, setFinalScheme] = useState([]);
     const [schemeSubmitted, setSchemeSubmitted] = useState(false);
 
     const startGame = (players) => {
@@ -56,20 +57,40 @@ function Game() {
             'card-format': cardFormat,
             'card-context': cardContext,
             'card-timing': cardTiming,
-            'card-mission-one': missionCards[0],
-            'card-mission-two': missionCards[1],
-            'card-mission-three': missionCards[2]
+            'card-mission-one': displayedMissionCards[0],
+            'card-mission-two': displayedMissionCards[1],
+            'card-mission-three': displayedMissionCards[2]
         };
+
+        console.log(missionCards);
+        console.log(missionCards[0]);
 
         console.log('Submitting scheme: ', schemeData);
 
-        createScheme(schemeData)
+        /*createScheme(schemeData)
         .then(data => {
             console.log('Successfully submitted scheme:', data);
             setGameEnded(true);
             setSchemeSubmitted(true);
-        });
+        });*/
+        setFinalScheme(schemeData);
+        setGameEnded(true);
     };
+
+    const submitScheme = () => {
+    createScheme(finalScheme)
+        .then(data => {
+            console.log('Successfully submitted scheme:', data);
+            setSchemeSubmitted(true);
+        });    
+    }
+
+  const handleInput = (input) => {
+  setFinalScheme(prevState => ({
+    ...prevState,
+    'scheme-name': input
+  }));
+  }
 
     const nextPlayer = () => {
         const actionCooldown = 3; // 3 seconds cooldown
@@ -128,7 +149,7 @@ function Game() {
     }
 
     if (gameEnded) {
-        return <ScoreScreen players={players} missionCards={missionCards} onScoreChange={() => {}} onSubmitScores={() => {}} />;
+        return <ScoreScreen players={players} missionCards={missionCards} finalScheme={finalScheme} onTextChange={(e) => {handleInput(e)}} onScoreChange={() => {}} onSubmitScores={() => {}} onSubmitAndSave={() => {submitScheme()}} />;
     }
 
     const refreshAllCards = () => {
