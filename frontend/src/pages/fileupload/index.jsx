@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import CardsList from "../../cardList";
 import FileUpload from "./fileUpload.jsx";
 import "./style.css";
-import { generatePDF } from './pdf-file/pdf-logic.jsx';
+import MakePDF from './pdf-file/pdf-logic.jsx';
 
 const App = () => {
   const [cards, setCards] = useState([]);
   const [favoriteCards, setFavoriteCards] = useState([]);
-  const [selectedCardsForPDF, setSelectedCardsForPDF] = useState([]); // Define selectedCardsForPDF
+  const [selectedCardsForPDF, setSelectedCardsForPDF] = useState([]);
 
   useEffect(() => {
     // Load favorite cards from local storage
@@ -21,7 +21,6 @@ const App = () => {
     loadFavoriteCards();
   }, []);
 
-  // Define handleCardClick
   const handleCardClick = (card) => {
     setSelectedCardsForPDF(prevCards => {
       if (prevCards.some(selectedCard => selectedCard['_id'] === card['_id'])) {
@@ -41,7 +40,6 @@ const App = () => {
         <CardsList cards={cards} setCards={setCards} className="cards-list" />
       )}
 
-      {/* Display favorite cards */}
       <div className="favorite-cards-container">
         <h2>Favorite Cards</h2>
         <ul>
@@ -57,10 +55,8 @@ const App = () => {
         </ul>
       </div>
 
-        <button onClick={() => generatePDF(selectedCardsForPDF)} className="button generate-pdf-button">
-          <i className="fa-solid fa-file-pdf"/> Generate PDF
-        </button>
-      </div>
+      <MakePDF />
+    </div>
   );
 };
 
