@@ -1,67 +1,68 @@
+import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 
-export function generatePDF() {
-  // Retrieve cards from local storage
-const cards = JSON.parse(localStorage.getItem('FAVOURITE_CARDS_LIST_STORE')) || [];
+const schemaId = "664f9ca9a23f3905a8f625e8";
 
-let imageSrcArray = [];
-let imageSrc2Array = [];
+const MakePDF = () => {
+  const [data, setData] = useState(null);
 
-cards.forEach((card) => {
-  const imageSrc = `./assets/cards-png/SUPER cards poker size ${ "061123" + (card['card-id']*2-1)}.png`;
-  const imageSrc2 = `./assets/cards-png/SUPER cards poker size ${ "061123" + (card['card-id']*2)}.png`;
-  imageSrcArray.push(imageSrc);
-  imageSrc2Array.push(imageSrc2);
-});
+  useEffect(() => {
+    fetch(`/api/assscheme/${schemaId}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log('Fetched data:', data); // Log fetched data
+        setData(data);
+      })
+      .catch(error => console.error('Error:', error));
+  }, []);
 
-let combinedArray = [];
+  const generatePDF = (data) => {
+    console.log('Data passed to generatePDF:', data); // Log data passed to generatePDF
 
-for (let i = 0; i < imageSrcArray.length; i += 3) {
-  combinedArray.push(...imageSrcArray.slice(i, i + 3));
-  combinedArray.push(...imageSrc2Array.slice(i, i + 3));
-}
+    const { 
+      _id, 
+      "scheme-name": schemeName, 
+      "card-who-is": cardWhoIs,
+      "card-assessor": cardAssessor,
+      "card-artefact": cardArtefact,
+      "card-format": cardFormat,
+      "card-context": cardContext,
+      "card-timing": cardTiming,
+      "card-mission-one": cardMissionOne,
+      "card-mission-two": cardMissionTwo,
+      "card-mission-three": cardMissionThree,
+      creator,
+      __v 
+    } = data;
 
-const cardsHTML = combinedArray.map((src, index) => {
-  const isFront = Math.floor(index / 3) % 2 === 0;
-  return `
-    <div class="card">
-      <img src="${src}" alt="${isFront ? 'Front' : 'Back'} of card" style="width: 200px; height: 305px;" />
-    </div>
-  `;
-}).join('');
+    // Create a new jsPDF instance
+    const doc = new jsPDF();
 
-  // Create a container to hold the HTML elements
-  const container = document.createElement('div');
-  container.innerHTML = cardsHTML;
-
-  // Temporarily append the container to the body
-  document.body.appendChild(container);
-
-  // Convert the HTML elements into a canvas
-  html2canvas(container).then((canvas) => {
-    const imgData = canvas.toDataURL('image/png');
-
-    // Create a new PDF and add the image
-    const pdf = new jsPDF();
-    let imgHeight = 300; 
-    let heightLeft = imgHeight;
-    let position = 0;
-
-    pdf.addImage(imgData, 'PNG', 0, position, imgHeight, canvas.height * imgHeight / canvas.width);
-    heightLeft -= imgHeight;
-
-    while (heightLeft >= 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(imgData, 'PNG', 0, position, imgHeight, canvas.height * imgHeight / canvas.width);
-      heightLeft -= imgHeight;
-    }
+    // Set the content of the PDF
+    doc.text(`Scheme ID: ${_id}`, 10, 10);
+    doc.text(`Scheme Name: ${schemeName}`, 10, 20);
+    doc.text(`Card Who Is: ${cardWhoIs}`, 10, 30);
+    doc.text(`Card Assessor: ${cardAssessor}`, 10, 40);
+    doc.text(`Card Artefact: ${cardArtefact}`, 10, 50);
+    doc.text(`Card Format: ${cardFormat}`, 10, 60);
+    doc.text(`Card Context: ${cardContext}`, 10, 70);
+    doc.text(`Card Timing: ${cardTiming}`, 10, 80);
+    doc.text(`Card Mission One: ${cardMissionOne}`, 10, 90);
+    doc.text(`Card Mission Two: ${cardMissionTwo}`, 10, 100);
+    doc.text(`Card Mission Three: ${cardMissionThree}`, 10, 110);
+    doc.text(`Creator: ${creator}`, 10, 120);
 
     // Save the PDF
-    pdf.save('cards.pdf');
+    doc.save('scheme.pdf');
+  };
 
-    // Remove the container from the body
-    document.body.removeChild(container);
-  });
-}
+  return (
+    <div>
+      <button onClick={() => data && generatePDF(data)} className="button generate-pdf-button">
+        <i className="fa-solid fa-file-pdf"/> Generate PDF
+      </button>
+    </div>
+  );
+};
+
+export default MakePDF;
