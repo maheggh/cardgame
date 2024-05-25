@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { createRating, getAllRatings, getSingleRating, updateRating, deleteRating, calculateAverageRating, findUserRating } = require('../controllers/ratingController');
-const { auth, authRole, authCanUpdate } = require('../helpers/verifyToken');
+const { auth, authCanUpdate } = require('../helpers/verifyToken');
 const ratingSchema = require('../schemas/ratingSchema');
 
 // POST: Create rating
@@ -18,7 +18,7 @@ router.get('/rated/:id', auth, findUserRating);
 router.get('/:id', auth, getSingleRating);
 
 // GET: Read avg rating for scheme
-router.get('/avg/:id', calculateAverageRating);
+router.get('/avg/:id', auth, calculateAverageRating);
 
 // PATCH: Update single rating
 router.patch('/:id', auth, authCanUpdate(ratingSchema), updateRating);

@@ -17,12 +17,12 @@ router.get('/types',getTotalCardTypes);
 router.get('/:id', getSingleCard);
 
 //POST: Create card
-router.post('/', auth, createCard);
+router.post('/', auth, authRole('Admin'), createCard);
 
 //PATCH: Update single card
-router.patch('/:id', auth, updateCard);
+router.patch('/:id', auth, authRole('Admin'), updateCard);
 
 //DELETE: Delete single card
-router.delete('/:id', auth, deleteCard);
+router.delete('/:id', auth, authRole('Admin'), deleteCard);
 
 module.exports = router;
