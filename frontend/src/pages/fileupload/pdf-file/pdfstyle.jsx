@@ -1,12 +1,23 @@
 // Styles.jsx
 const Styles = `
+    html, body {
+        height: auto;
+        margin: 0;
+        padding: 0;
+    }
     .card-container { 
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         justify-items: center;
         gap: 0px;
-        transform: scale(0.93);
+        transform: scale(0.977);
         transform-origin: center 0;
+    }
+
+    img {
+        width: 220px;
+        aspect-ratio: 5 / 7;
+        border-radius: 14px;
     }
 
     .assessmentcard {
