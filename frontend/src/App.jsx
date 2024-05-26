@@ -14,6 +14,7 @@ import Game from './pages/game/';
 import EditUserPage from './pages/EditUserPage/';
 import CardsPage from './pages/cards/';
 import EditCardPage from './pages/EditCardPage/';
+import OwnUserRedirect from './pages/OwnUserRedirect/';
 import PrivateRoutes from './components/PrivateRoute/';
 
 //fjern før levering: poenget med å ha filene som "index.jsx" inni mapper er for å slippe å skrive "index.jsx" i import. ser cleanere ut
@@ -35,6 +36,7 @@ function App() {
           <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/cards/:cardId/edit" element={<EditCardPage />} /></Route>
           <Route element={<PrivateRoutes requiredRoles={["Admin"]}/>}> <Route path="/fileUpload" element={<FileUpload />} /></Route>
           <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/schemes" element={<SchemesPage />} /></Route>
+          <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/account" element={<OwnUserRedirect />} /></Route>
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </Router>

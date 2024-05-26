@@ -29,6 +29,7 @@ if (isAuth){
                     <Link  to="/fileupload" className="link nav-button" >Upload</Link >
                     </>
                     ) : (<></>)}
+                    <Link  to="/account" className="link nav-button" >Account</Link>
                     <a  href="/" className="link nav-button" onClick={handleLogout} >Log out</a>
                 </nav>
             </div>

@@ -1,7 +1,7 @@
 //code mostly copied from presentation from lefteris
 const jwt = require('jsonwebtoken');
 const Users = require('../schemas/userSchema');
-
+const mongoose = 	require('mongoose');
 
 const auth = async (req, res, next) => {
 	const authtoken = req.cookies.jwt;
@@ -56,5 +56,24 @@ function authCanUpdate(Model) {
 	}
 }
 
+//allows user to update self
+//code copied and modified from presentation from lefteris 
+const userCanUpdate = async (req, res, next) => {
+		const _id = req.params.id;
+	try{
+		const scheme = await Users.findById(_id);
+            if (!scheme) {
+                return res.status(404).send('Resource not found');
+            }
+			if(_id != req.user.id && req.user.role != 'Admin'){
+				res.status(401)
+				return res.send('you have no permision to access this user')
+			}
+			next()
+	}catch(error){
+		res.json({message:error})
+	}
+}
 
-module.exports = {auth, authRole, authCanUpdate}
+
+module.exports = {auth, authRole, authCanUpdate, userCanUpdate}

@@ -5,6 +5,9 @@ const connectDB = require('./dbconnect');
 const app = express();
 const port = process.env.PORT || 3000;
 const cookieParser = require('cookie-parser'); 
+const swaggerDoc = require('swagger-ui-express');
+const swaggerDocumentation = require('./documentation');
+
 // Connects to the MongoDB
 connectDB();
 
@@ -43,6 +46,8 @@ app.use('/api/icons', iconsRoutes);
 app.use('/api/assscheme', AssSchemeRoutes);
 app.use('/api/ratings', ratingsRoutes);
 app.use('/api/cards', bulkUploadRoutes); // Mounting the bulk upload operations route
+app.use('/documentation', swaggerDoc.serve);
+app.use('/documentation', swaggerDoc.setup(swaggerDocumentation));
 
 // Start the server
 app.listen(port, () => console.log(`Express server listening on port ${port}...`));

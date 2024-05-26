@@ -161,3 +161,18 @@ export const deleteUser = (userId) => {
   })
   .catch(error => console.error('Error:', error));
 };
+
+// Delete user
+export const getUserId = () => {
+  return fetch(`${API_URL}/users/account`, {
+    method: 'GET',
+    credentials: 'include' 
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .catch(error => console.error('Error:', error));
+};

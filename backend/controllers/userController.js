@@ -180,4 +180,8 @@ const status = (req, res) => {
 
 }
 
-module.exports = { getAllUsers, getTotalUsers, getSingleUser, createUser, updateUser, deleteUser, authenticateUser, refresh, logoutUser, status, getSingleUserName }
+const getOwnId = (req, res) =>{
+	return res.json({_id:req.user._id}).status(200);
+}
+
+module.exports = { getAllUsers, getTotalUsers, getSingleUser, createUser, updateUser, deleteUser, authenticateUser, refresh, logoutUser, status, getSingleUserName, getOwnId }

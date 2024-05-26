@@ -4,7 +4,7 @@ import { useAuth } from './UserContext';
 const PrivateRoutes = ({requiredRoles}) => {
     const { isAuth, role } = useAuth();
     const userRole = role;
-    
+
     if(isAuth == false){
         return <Navigate to="/login"/>;
     }
@@ -12,6 +12,11 @@ const PrivateRoutes = ({requiredRoles}) => {
     if(isAuth == true && requiredRoles.includes(userRole)){
         return <Outlet/>;  
     }
+
+    if(isAuth == true && !requiredRoles.includes(userRole)){
+        return <Navigate to="/"/>; 
+    }
+
 }
 
 export default PrivateRoutes;
