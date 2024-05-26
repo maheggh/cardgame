@@ -7,8 +7,8 @@ function ConfirmationDialog({ message, onConfirm, onCancel }) {
       <div className="confirmation-dialog-content">
         <p>{message}</p>
         <div className="confirmation-dialog-buttons">
-          <button className="confirm-button" onClick={onConfirm}>Yes</button>
-          <button className="cancel-button" onClick={onCancel}>Cancel</button>
+          <button className="confirm-button" onClick={onConfirm} tabIndex="1">Yes</button>
+          <button className="cancel-button" onClick={onCancel} tabIndex="1">Cancel</button>
         </div>
       </div>
     </div>

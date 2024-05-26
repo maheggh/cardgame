@@ -31,7 +31,7 @@ if (isAuth){
                 </Link >
                 <nav className={`${isOpen ? 'open' : ''}`}>
                     <Link  to="/game" className="link nav-button" onClick={closeMenu}>Game</Link>
-                    <Link  to="/schemes" className="link nav-button" onClick={closeMenu}>Schemes</Link>
+                    <Link  to="/decks" className="link nav-button" onClick={closeMenu}>Decks</Link>
                     {userRole=="Admin" ? (
                     <>
                     <Link  to="/cards" className="link nav-button" onClick={closeMenu}>Cards</Link >

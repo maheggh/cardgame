@@ -1,0 +1,62 @@
+.title-with-buttons{
+	margin-bottom: 0;
+}
+
+.pill{
+    padding: 8px 12px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: unset;
+    border: 2px solid black;
+    color: black;
+    box-sizing: content-box;
+    margin: 1px;
+}
+
+.pill:hover, .pill:focus{
+	border-width: 3px;
+	border-color: #056A92;
+	color: #056A92;
+	margin: unset;
+	background-color: white;
+}
+
+
+.pill.active{
+    border-color: #056A92;
+    background-color: #056A92;
+    color: white;
+}
+
+.pill.active:hover, .pill.active:focus{
+    margin: 1px;
+    border-width: 2px;
+}
+
+.pill-box{
+	display: flex;
+	gap: 10px;
+    margin-bottom: 16px;
+}
+
+.schemecard-container{
+    display: none;
+}
+
+.schemecard-container.active{
+    display: unset;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .pill-box {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 6px;
+    }
+    .pill{
+        padding: 6px 9px;
+    }
+}
