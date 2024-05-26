@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "html2canvas": "^1.4.1",
+    "html2pdf.js": "^0.10.1",
     "jspdf": "^2.5.1",
+    "juice": "^10.0.0",
     "jwt-decode": "^4.0.0",
+    "raw-loader": "^4.0.2",
     "react": "^18.2.0",
     "react-confetti": "^6.1.0",
     "react-dom": "^18.2.0",
