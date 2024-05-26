@@ -146,6 +146,32 @@ class SuperMissionCard extends HTMLElement {
                 font-weight: bold;
                 font-size: 160%;
             }
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+                .card{
+                    width: 160px;
+                    margin: 4px;
+                }
+                .card-header{
+                    margin: 5px;
+                    font-size: 16px;
+                }
+                .card-body{
+                    margin: 5px;
+                    font-size: 12px;
+                }
+                .button-wrap {
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-content: center;
+                    margin-top: 10px;
+                    margin-bottom: 20px;
+                }
+                button.replace-button{
+                    margin: 0;
+                }
+            }
         </style>
         <div class="card">
             <div class="card-content">
@@ -162,7 +188,7 @@ class SuperMissionCard extends HTMLElement {
                 </div>
             </div>
         </div>
-        <button class="replace-button">Replace</button>
+        <span class="button-wrap"><button class="replace-button">Replace</button></span>
         `;
         this.shadowRoot.innerHTML = cardHTML;
         this.addClickEventToCard();

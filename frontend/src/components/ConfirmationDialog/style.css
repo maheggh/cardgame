@@ -47,3 +47,13 @@ margin-top: 20px;
   .confirmation-dialog .cancel-button:hover {
     text-decoration: underline;
   }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .confirmation-dialog .confirmation-dialog-content{
+    max-width: 90vw;
+  }
+  .edit_form{
+    margin: 40px auto;
+  }
+}

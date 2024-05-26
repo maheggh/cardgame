@@ -1,6 +1,6 @@
 .loginscreen, .signupscreen {
     background-color: rgb(128, 128, 128);
-    height: 95vh;
+    min-height: calc(100vh - 72px);
     display: grid;
     place-items: center;
 }
@@ -59,4 +59,18 @@
 
 .signupscreen_content a, .loginscreen_content a {
     color: rgb(1, 1, 173);
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .loginscreen .loginscreen_content, .signupscreen .signupscreen_content {
+        max-width: 90vw;
+    }
+    .loginscreen, .signupscreen{
+        display: flex;
+        flex-direction: column;
+        padding: 5vh 0;
+        height: unset;
+    }
 }

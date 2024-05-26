@@ -1,7 +1,6 @@
 .edit_form {
     max-width: 700px;
     width: 90%;
-    margin: 20px;
     font-family: Arial, sans-serif;
     position: relative;
     margin: 100px auto;
@@ -121,4 +120,19 @@
     margin-top: 5px;
     color: black;
 }
-  
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .edit_form .names, .edit_form .school_info{
+    flex-direction: column;
+  }
+  .edit_form .names label, .school_info-long, .school_info-short{
+    width: 100%;
+  }
+  .edit_form button{
+    padding: 13px 10px;
+  }
+  .edit_form{
+    margin: 40px auto;
+  }
+}

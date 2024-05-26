@@ -102,7 +102,7 @@ export async function getStatus(setIsAuth) {
     });
 
     if (!response.ok) {
-        const newToken = await refreshToken();
+        const newToken = await refreshToken(setIsAuth);
         if (newToken) {
             return getStatus(setIsAuth);
         } else {
@@ -114,13 +114,14 @@ export async function getStatus(setIsAuth) {
     return response.json();
 }
 
-export async function refreshToken() {
+export async function refreshToken(setIsAuth) {
     const response = await fetch(`${API_URL}/users/token`, {
         method: 'GET',
         credentials: 'include'
     });
 
     if (!response.ok) {
+        setIsAuth(false);
         throw new Error('Token refresh failed');
     }
     return response.json();

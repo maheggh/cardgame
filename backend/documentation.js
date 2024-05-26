@@ -345,7 +345,8 @@ const swaggerDocumentation = {
 					"schema": {
 						"type": "string",
 						"example": "6616691fbcbe4af4b1d62823"
-					}
+					},
+					"description": "The user ID"
 				}],
 				"responses": {
 					"200": {

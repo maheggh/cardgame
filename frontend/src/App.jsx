@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import './App.css';
-import { AuthProvider } from './components/PrivateRoute/UserContext.jsx';
+import { AuthProvider } from './components/PrivateRoute/UserContext';
 import Header from './components/Header/';
 import Login from './pages/login/';
 import Signup from './pages/signup/';
@@ -32,8 +32,8 @@ function App() {
           <Route element={<PrivateRoutes requiredRoles={["Admin"]}/>}> <Route path="/users" element={<UserDashboard />} /></Route>
           <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/users/:userId/edit" element={<EditUserPage />} /></Route>
           <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/game" element={<Game />} /></Route>
-          <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/cards" element={<CardsPage />} /></Route>
-          <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/cards/:cardId/edit" element={<EditCardPage />} /></Route>
+          <Route element={<PrivateRoutes requiredRoles={["Admin"]}/>}> <Route path="/cards" element={<CardsPage />} /></Route>
+          <Route element={<PrivateRoutes requiredRoles={["Admin"]}/>}> <Route path="/cards/:cardId/edit" element={<EditCardPage />} /></Route>
           <Route element={<PrivateRoutes requiredRoles={["Admin"]}/>}> <Route path="/fileUpload" element={<FileUpload />} /></Route>
           <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/schemes" element={<SchemesPage />} /></Route>
           <Route element={<PrivateRoutes requiredRoles={["User", "Admin"]}/>}> <Route path="/account" element={<OwnUserRedirect />} /></Route>

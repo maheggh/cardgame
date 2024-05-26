@@ -199,6 +199,38 @@ class SuperAssessmentCard extends HTMLElement {
         .card:hover .card-number {
             transform: skewX(-30deg);
         }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .card{
+                width: 160px;
+                margin: 5px;
+            }
+            .cardCategory{
+                font-size: 16px;
+                margin-bottom: 0;
+            }
+            .cardText{
+                font-size: 12px;
+                padding: 5px;
+            }
+            .card-name, .card-description{
+                font-size: 10px; 
+            }
+            .button-wrap {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-content: center;
+                margin-top: 10px;
+            }
+            button.replace-button{
+                margin: 0;
+            }
+            p{
+                margin: 4px 0;
+                font-size: 10px;
+            }
+        }
     </style>
             <div class="card ${card["card-category"].replace(/\s+/g, '-').toLowerCase()}" data-card-id="${card._id}">
                 <img class="card-image" style="display: none;" src="./assets/cards-png/SUPER cards poker size ${"061123" + (card['card-id'] * 2)}.png">
