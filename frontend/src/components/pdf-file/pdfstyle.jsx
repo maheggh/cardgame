@@ -21,7 +21,7 @@ const Styles = `
         padding: 0;
     }
 
-    img {
+    .card-container img {
         width: 220px;
         aspect-ratio: 5 / 7;
         border-radius: 14px;
@@ -95,7 +95,7 @@ const Styles = `
         font-size: 18px;
         font-weight: bold;
         padding: 6px;
-        height: 45px;
+        height: 55px;
         line-height: 20px;
         text-transform: uppercase;
         align-content: center;
@@ -142,8 +142,13 @@ const Styles = `
         margin: 0;
     }
 
-    p {
+    .cardInfo{
         font-size: 12px;
+    }
+
+    .card-name{
+        font-size: 16px;
+        margin-bottom: 8px;
     }
 
     .card-number {
@@ -154,7 +159,6 @@ const Styles = `
         font-weight: bold;
         transition: all 0.2s;
     }
-
 `;
 
 export default Styles;

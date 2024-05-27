@@ -9,6 +9,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    gap: 10px;
 }
 
 .scheme-title h1{
@@ -56,6 +57,10 @@
     color:#808080;
 }
 
+.generate-pdf-button:hover{
+    color:#056A92;
+}
+
 .rating-star:hover{
     scale: 1.3;
 }
@@ -83,6 +88,8 @@
     font-size: 28px;
     margin: 4px;
     color: black;
+    cursor: pointer;
+    height: fit-content;
 }
 
 .bookmark-icon.active{

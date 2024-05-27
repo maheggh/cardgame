@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import RatingDisplay from '../RatingDisplay';
 import ConfirmationDialog from '../ConfirmationDialog';
+import MakePDF from '../pdf-file';
 import MiniCard from '../MiniCard';
 import { getAvgRating, rateScheme, isRated } from '../../API/ratings'; 
 import { Bookmarked, bookmark, unBookmark } from '../../API/bookmarks';
@@ -86,6 +87,7 @@ const DeckCard = ({data, onDelete, onBookmark}) => {
                     <h1>{data['scheme-name'] ? data['scheme-name'] : ("--") } <span>{rating ? <RatingDisplay rating={rating.averageRating}/> : <p className="not-rated">No ratings yet</p>}</span></h1>
                     <p className="scheme-creator">{username ? (username.name + " " + username.surname) : "Unknown user"}</p>
                 </div>
+                <MakePDF schemaId={data._id}/>
                 <span className={"bookmark-icon"+(isBookmarked ? ' active' : '')}>
                     <i className={`${isBookmarked ? "fa-solid fa-bookmark" : "fa-regular fa-bookmark"}`} onClick={() => handleBookmark()}/>
                 </span>
