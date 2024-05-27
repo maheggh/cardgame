@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import RatingDisplay from '../RatingDisplay';
 import ConfirmationDialog from '../ConfirmationDialog';
-
 import MiniCard from '../MiniCard';
 import { getAvgRating, rateScheme, isRated } from '../../API/ratings'; 
+import { Bookmarked } from '../../API/bookmarks';
 import { deleteScheme } from '../../API/schemes'; 
 import { getUserName } from '../../API/users'; 
 import './style.css';
 
-const SchemeCard = ({data, onDelete}) => {
+const DeckCard = ({data, onDelete}) => {
   const [rating, setRating] = useState('');
   const [username, setUsername] = useState('');
   const [userRating, setUserRating] = useState(null);
   const [hover, setHover] = useState(null);
   const [ratedByUser, setRatedByUser] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   useEffect(() => {
-    getAvgRating(data._id).then(data => setRating(data));
+      getAvgRating(data._id).then(data => setRating(data));
+    Bookmarked(data._id).then(data => setIsBookmarked(data.bookmarked));
     getUserName(data.creator).then(data => setUsername(data));
     isRated(data._id).then(data => {
         setRatedByUser(true);
@@ -33,6 +35,10 @@ const SchemeCard = ({data, onDelete}) => {
       }
       if(userRating){
           rateScheme(score, schemeId).then(setRatedByUser(true));
+          setRating([
+          { averageRating: ((userRating+rating.averageRating)/2) },
+          ...rating
+        ]);
       }
   }
 
@@ -53,22 +59,27 @@ const SchemeCard = ({data, onDelete}) => {
     setShowConfirmDialog(false);
   };
 
+  const handleBookmark = () =>{
+      setIsBookmarked(!isBookmarked);
+  }
 
     return (
         <div className="scheme-card">
             {showConfirmDialog && (
                 <ConfirmationDialog
-                message="Are you sure you want to delete this scheme?"
+                message="Are you sure you want to delete this deck?"
                 onConfirm={handleConfirmDelete}
                 onCancel={handleCancelDelete}
                 />
             )}
             <div className="scheme-header">
                 <div className="scheme-title">
-                    <h1>{data['scheme-name'] ? data['scheme-name'] : ("--") }</h1>
+                    <h1>{data['scheme-name'] ? data['scheme-name'] : ("--") } <span>{rating ? <RatingDisplay rating={rating.averageRating}/> : <p className="not-rated">No ratings yet</p>}</span></h1>
                     <p className="scheme-creator">{username ? (username.name + " " + username.surname) : "Unknown user"}</p>
                 </div>
-                {rating ? <RatingDisplay rating={rating.averageRating}/> : <p className="not-rated">No ratings yet</p>}
+                <span className={"bookmark-icon"+(isBookmarked ? ' active' : '')}>
+                    <i className={`${isBookmarked ? "fa-solid fa-bookmark" : "fa-regular fa-bookmark"}`} onClick={() => handleBookmark()}/>
+                </span>
             </div>    
             <div className="card-holder">
                 <MiniCard cardId={data['card-artefact']} type={'artefact'}/>
@@ -97,4 +108,4 @@ const SchemeCard = ({data, onDelete}) => {
     );
 }
 
-export default SchemeCard;
+export default DeckCard;

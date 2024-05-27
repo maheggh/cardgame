@@ -18,6 +18,7 @@ const searchRoutes = require('./routes/Search');
 const iconsRoutes = require('./routes/Icons'); 
 const AssSchemeRoutes = require('./routes/AssessmentScheme'); 
 const bulkUploadRoutes = require('./routes/Bulk'); 
+const bookmarkRoutes = require('./routes/Bookmarks');
 const ratingsRoutes = require('./routes/Ratings'); 
 
 // Middlewares
@@ -45,6 +46,7 @@ app.use('/api/search', searchRoutes);
 app.use('/api/icons', iconsRoutes);
 app.use('/api/assscheme', AssSchemeRoutes);
 app.use('/api/ratings', ratingsRoutes);
+app.use('/api/bookmarks', bookmarkRoutes);
 app.use('/api/cards', bulkUploadRoutes); // Mounting the bulk upload operations route
 app.use('/documentation', swaggerDoc.serve);
 app.use('/documentation', swaggerDoc.setup(swaggerDocumentation));

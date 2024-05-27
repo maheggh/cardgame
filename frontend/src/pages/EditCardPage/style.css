@@ -16,3 +16,10 @@
 .edit_form{
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .edit_form textarea{
+        min-height: 100px;
+    }
+}

@@ -33,3 +33,28 @@ export async function createScheme(data) {
 
     return response.json();
 }
+
+export async function getAllSchemes() {
+    const response = await fetch(`${API_URL}/assscheme`, {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to get all schemes');
+    }
+
+    return response.json();
+}
+
+export async function getSingleScheme(id) {
+    const response = await fetch(`${API_URL}/assscheme/${id}`, {
+        method: 'GET',
+        credentials: 'include'
+    });
+    if (!response.ok) {
+        throw new Error('Failed to get single schemes');
+    }
+
+    return response.json();
+}

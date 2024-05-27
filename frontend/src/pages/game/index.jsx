@@ -9,7 +9,7 @@ function Game() {
     const [players, setPlayers] = useState([]);
     const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
     const [actionTaken, setActionTaken] = useState(false);
-    const [showTurnModal, setShowTurnModal] = useState(false);
+    const [showTurnModal, setShowTurnModal] = useState(true);
     const [countdown, setCountdown] = useState(0);
     const [interactionsDisabled, setInteractionsDisabled] = useState(false);
     const [gameEnded, setGameEnded] = useState(false);
@@ -175,13 +175,13 @@ function Game() {
                     </div>
                 )}
                 <main className="gameBoard">
-                    <h1>Mission cards (x3)</h1>
+                    <h1 className="game-header">Mission cards</h1>
                     <div className="card-container">
                         <super-mission-card card-id="mission1"></super-mission-card>
                         <super-mission-card card-id="mission2"></super-mission-card>
                         <super-mission-card card-id="mission3"></super-mission-card>
                     </div>
-                    <h1>Assessment cards (x6)</h1>
+                    <h1 className="game-header">Assessment cards </h1>
                     <div className="card-container">
                         <super-assessment-card card-category="assessed"></super-assessment-card>
                         <super-assessment-card card-category="assessor"></super-assessment-card>
@@ -192,7 +192,7 @@ function Game() {
                     </div>
                 </main>
                 <aside className="draw-container">
-                    <h1 className="draw-pile-text">Draw Pile:</h1>
+                    <h1 className="draw-pile-text">Draw pile</h1>
                     <div className="draw-pile-container">
                         <div className="draw-pile-right">
                             <draw-pile category="assessed"></draw-pile>

@@ -111,3 +111,13 @@
 .mini-card-content{
 	padding: 6px;
 }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .mini-card{
+    	max-height: 224px;
+    }
+    .card-holder{
+    	gap: 4px;
+    }
+}

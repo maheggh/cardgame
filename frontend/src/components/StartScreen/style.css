@@ -18,7 +18,6 @@
     padding: 2vw; /* Use viewport width for dynamic padding */
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    width: 80%;
     max-width: 80vw; /* Make max-width relative to the viewport width */
     text-align: center;
 }
@@ -141,7 +140,54 @@
     background-color: #c82333;
 }
 
+.start-game-button:disabled{
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+    color: #808080;
+}
+
+.start-game-button:disabled:hover{
+    background-color: #d3d3d3;
+}
 .error-message {
     color: #dc3545;
     margin-top: 10px;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .start-screen .modal{
+        max-width: 90vw;
+    }
+    .start-screen{
+        height: unset;
+        padding: 20px 0;
+    }
+    .start-screen .avatar-selection{
+        margin: 10px;
+        padding: 10px 4px;
+    }
+    .start-screen .avatar{
+        height: 72px;
+        width: 72px;
+        margin: 0;
+    }
+    .start-screen input[type="text"]{
+        width: 90%;
+        margin: unset;
+        margin-bottom: 20px;
+    }
+    .modal h2{
+        padding: unset;
+    }
+    .start-screen .modal{
+        padding: 20px 4px;
+    }
+    .selection-button-container{
+        margin: 0;
+    }
+    .start-screen button{
+        padding: 10px 20px;
+    }
 }

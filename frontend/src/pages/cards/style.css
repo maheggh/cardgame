@@ -61,3 +61,32 @@
     display: flex;
     flex-direction: column;
 }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .one-card{
+        padding: 20px 16px;
+    }
+
+    .one-card_upper{
+        max-width: 100%;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+    .one-card .one-card_upper{
+        align-items: unset;
+        gap: 16px;
+    }
+    .card-page_card-container{
+        gap: 16px;
+    }
+    .cards_screen_list{
+        gap: 20px;
+    }
+    .one-card-bottom{
+        gap: 16px;
+        display: flex;
+        flex-direction: column;
+    }
+}

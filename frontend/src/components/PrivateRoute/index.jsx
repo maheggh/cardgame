@@ -4,16 +4,15 @@ import { useAuth } from './UserContext';
 const PrivateRoutes = ({requiredRoles}) => {
     const { isAuth, role } = useAuth();
     const userRole = role;
-
     if(isAuth == false){
         return <Navigate to="/login"/>;
     }
 
-    if(isAuth == true && requiredRoles.includes(userRole)){
+    if(isAuth == true && requiredRoles.includes(userRole) && userRole !== ""){
         return <Outlet/>;  
     }
 
-    if(isAuth == true && !requiredRoles.includes(userRole)){
+    if(isAuth == true && !requiredRoles.includes(userRole) && userRole !== ""){
         return <Navigate to="/"/>; 
     }
 

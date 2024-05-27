@@ -4,6 +4,7 @@
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
+    margin-bottom: 20px;
   }
   
   .turn-modal {
@@ -27,8 +28,14 @@
     flex-wrap: wrap;
     background-color: #FEF286;
     flex-grow: 0;
+    height: calc(100vh - 72px);
   }
   
+  .game-header{
+    text-align: center;
+  }
+
+
   .gameBoard, .draw-container {
     flex: 1 1 50%;
     padding: 40px;
@@ -100,6 +107,7 @@
   
   .draw-pile-text {
     text-align: left;
+    font-size: 32px;
   }
   
   .disabled-interactions {
@@ -110,18 +118,51 @@
   @media (max-width: 768px) {
     .game-container {
       flex-direction: column;
+      height: unset;
     }
   
     .gameBoard, .draw-container {
       flex: 1 1 100%;
     }
-  
-    .draw-pile-container {
-      grid-template-columns: 1fr;
+    .card-container{
+      gap: 0;
     }
-  
+    .draw-pile-container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .draw-pile-right{
+      display: flex;
+      flex-wrap: wrap;
+    }
     .mission-large {
       justify-content: center;
+    }
+    .gameBoard, .draw-container{
+      padding: 12px;
+      max-width: 100vw;
+    }
+    .turn-modal {
+      position: fixed;
+      z-index: 1000;
+      background-color: #007AA0;
+      border-radius: 20px;
+      font-size: 40px;
+      text-align: center;
+      text-transform: uppercase;
+      transform: translate(-50%, -50%);
+      top: 50vh;
+      left: 50vw;
+      padding: 15px 10px;
+    }
+    .turn-modal h2{
+      font-size: 24px;
+    }
+    .turn-modal p{
+      font-size: 20px;
+    }
+    img.player-avatar {
+      width: 250px;
     }
   }
   

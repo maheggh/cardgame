@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchUser, updateUser, deleteUser } from '../../API/users';
+import ErrorMessage from '../../components/ErrorMessage';
 import ConfirmationDialog from '../../components/ConfirmationDialog';
 import './style.css';
 
 function EditUserPage() {
   const { userId } = useParams();
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchUser(userId).then(data => {
       setUser(data);
+      setIsLoading(false);
     });
   }, [userId]);
 
@@ -42,8 +45,12 @@ function EditUserPage() {
     setShowConfirmDialog(false);
   };
 
-  if (!user) {
-    return <div>Loading...</div>;
+  if (user===null) {
+    return (<div className="content-wrapper"><p>Loading...</p></div>);
+  }
+
+  if (user===undefined){
+    return (<div className="content-wrapper"><ErrorMessage error="401" subtitle="Unauthorized" text="Sorry, you need to be authorized to access this information"/></div>);
   }
 
   return (

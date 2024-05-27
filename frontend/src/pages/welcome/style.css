@@ -4,9 +4,15 @@ ul li{
 }
 
 .cardWrapper{
-	display: grid;
+	display: flex;
 	width: 100%;
-	grid-template-columns: repeat(3, 1fr);
     gap: 12px;
     margin-bottom: 32px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .cardWrapper{
+    	flex-direction: column;
+    }
 }

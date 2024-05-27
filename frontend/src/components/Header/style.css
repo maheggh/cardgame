@@ -39,3 +39,48 @@
     width: 100%;
     margin: 0 auto;
 }
+
+.menu-icon {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .super-assessor-header nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+    }
+
+    .menu-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .super-assessor-header nav.open {
+        display: flex;
+        position: absolute;
+        background-color: white;
+        height: calc(100vh - 72px);
+        top: 72px;
+        padding: 20px;
+        max-width: 70vw;
+        right: 0;
+        box-shadow: 1px 10px 9px #0000003d;
+        z-index: 9999;
+    }
+    .super-assessor-header .nav-button{
+        margin: unset;
+        margin-bottom: 16px;
+        padding: 0;
+        text-align: right;
+    }
+    .super-assessor-header{
+        padding: 14px;
+    }
+}

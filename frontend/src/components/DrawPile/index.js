@@ -32,6 +32,19 @@ class DrawPile extends HTMLElement {
                 .card:hover {
                     transform: scale(1.02);
                 }
+                /* Responsive adjustments */
+                @media (max-width: 768px) {
+                    .card img{
+                        width: 160px;
+                    }
+                    .card{
+                        margin-bottom: 10px;
+                    }
+                    button{
+                        padding: 8px 12px;
+                        font-size: 15px;
+                    }
+                }
             </style>
             <div class="card">
                 <img id="card-image" src="" alt="Card Image">
