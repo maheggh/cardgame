@@ -11,12 +11,12 @@ router.post('/:id', auth, bookmark);
 router.get('/', auth, getAllUserBookmarks);
 
 // GET: Read single bookmark
-router.get('/:id', getBookmark);
+router.get('/:id',auth, getBookmark);
 
 // GET: Read single bookmark
-router.get('/bookmarked/:id', isBookmarked);
+router.get('/bookmarked/:id',auth, isBookmarked);
 
 // DELETE: Delete bookmark
-router.delete('/:id', unBookmark);
+router.delete('/:id',auth, unBookmark);
 
 module.exports = router;

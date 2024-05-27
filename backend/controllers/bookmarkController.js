@@ -20,12 +20,10 @@ const bookmark = async (req, res) => {
 
 const getBookmark = async (req, res) => {
     const _id = req.params.id;
-    console.log(_id);
-    console.log(req.user);
     try {
         const bookmark = await Bookmarks.findOne({ creator: req.user._id, scheme: _id });
         if (!bookmark) {
-            return res.status(204).json({ error: 'Could not find bookmark. bookmark not found' });
+            return res.status(204).json({ error: 'Could not find bookmark. Vookmark not found' });
         }
         res.status(200).json(bookmark);
     } catch (err) {
@@ -34,14 +32,22 @@ const getBookmark = async (req, res) => {
 };
 
 const unBookmark = async (req, res) => {
-    console.log('removing bookmark'); // Log request body
-    return res.sendStatus(200);
+    const _id = req.params.id;
+    try {
+        console.log(_id);
+        console.log(req.user._id);
+        const rating = await Bookmarks.findOneAndDelete({ creator: req.user._id, scheme: _id });
+        if (!rating) {
+            return res.status(404).json({ error: 'Could not delete bookmark. Vookmark not found' });
+        }
+        res.status(200).json({ message: 'Bookmark deleted successfully', Rating: rating });
+    } catch (err) {
+        res.status(500).send('Error: ' + err);
+    }
 };
 
 const getAllUserBookmarks = async (req, res) => {
     const _id = req.params.id;
-    console.log(_id);
-    console.log(req.user);
     try {
         const bookmarks = await Bookmarks.find({ creator: req.user._id }).populate('scheme');
 

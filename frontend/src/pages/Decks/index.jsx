@@ -41,6 +41,16 @@ function SchemesPage() {
         return <div>Error: {error}</div>;
     }
 
+    const handleBookmark = ({data, bookmarked}) => {
+            if(bookmarked){
+                setFavSchemes([...favSchemes, data]);
+            }
+            if(!bookmarked){
+                setFavSchemes(favSchemes.filter(item => item !== data));
+                getSchemes();
+            }
+    }
+
     return (
         <div className="content-wrapper">
             <h1 className="title title-with-buttons">Decks</h1>
@@ -50,14 +60,14 @@ function SchemesPage() {
             </div>
             <div className={`schemecard-container ${!showBookmarked ? 'active' : ''}`}>
             {schemes.length > 0 ? schemes.map(scheme => (
-                <DeckCard data={scheme} key={scheme._id} onDelete={handleDelete} />
+                <DeckCard data={scheme} key={scheme._id} onDelete={handleDelete} onBookmark={handleBookmark}/>
             )) : (
                 <div>No decks available</div>
             )}
             </div>
             <div className={`schemecard-container ${showBookmarked ? 'active' : ''}`}>
             {favSchemes.length > 0 ? favSchemes.map(scheme => (
-                <DeckCard data={scheme} key={scheme._id} onDelete={handleDelete} />
+                <DeckCard data={scheme} key={scheme._id} onDelete={handleDelete} onBookmark={handleBookmark}/>
             )) : (
                 <div>No bookmarked decks</div>
             )}

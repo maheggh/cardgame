@@ -7,7 +7,7 @@ export async function bookmark(id) {
     });
 
     if (!response.ok) {
-        throw new Error('Failed to get average rating');
+        throw new Error('Failed to bookmark');
     }
     if (response.status === 204) {
       return;
@@ -22,7 +22,7 @@ export async function getBookmark(id) {
     });
 
     if (!response.ok) {
-        throw new Error('Failed to get total schemes');
+        throw new Error('Failed to get bookmark');
     }
 
     return response.json();
@@ -35,7 +35,7 @@ export async function unBookmark(id) {
     });
 
     if (!response.ok) {
-        throw new Error('Rating not found');
+        throw new Error('Bookmark not found');
     }
 
     return response.json();
@@ -48,7 +48,7 @@ export async function getAllUserBookmarks() {
     });
 
     if (!response.ok) {
-        throw new Error('Rating not found');
+        throw new Error('Bookmark not found');
     }
 
     return response.json();
@@ -61,7 +61,7 @@ export async function Bookmarked(id) {
     });
 
     if (!response.ok) {
-        throw new Error('Rating not found');
+        throw new Error('Bookmark not found');
     }
 
     return response.json();

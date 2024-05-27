@@ -3,12 +3,12 @@ import RatingDisplay from '../RatingDisplay';
 import ConfirmationDialog from '../ConfirmationDialog';
 import MiniCard from '../MiniCard';
 import { getAvgRating, rateScheme, isRated } from '../../API/ratings'; 
-import { Bookmarked } from '../../API/bookmarks';
+import { Bookmarked, bookmark, unBookmark } from '../../API/bookmarks';
 import { deleteScheme } from '../../API/schemes'; 
 import { getUserName } from '../../API/users'; 
 import './style.css';
 
-const DeckCard = ({data, onDelete}) => {
+const DeckCard = ({data, onDelete, onBookmark}) => {
   const [rating, setRating] = useState('');
   const [username, setUsername] = useState('');
   const [userRating, setUserRating] = useState(null);
@@ -25,7 +25,7 @@ const DeckCard = ({data, onDelete}) => {
         setRatedByUser(true);
         setUserRating(data.score);
     });
-  }, [ratedByUser]);
+  }, [ratedByUser, data]);
 
     const handleSubmitRating = () => {
         const score = userRating;
@@ -60,7 +60,16 @@ const DeckCard = ({data, onDelete}) => {
   };
 
   const handleBookmark = () =>{
-      setIsBookmarked(!isBookmarked);
+      if(!isBookmarked){
+        setIsBookmarked(true);
+        onBookmark({data: data, bookmarked: !isBookmarked});
+        bookmark(data._id);
+      }
+      if(isBookmarked){
+        setIsBookmarked(false);
+        onBookmark({data: data, bookmarked: !isBookmarked});
+        unBookmark(data._id);
+      }
   }
 
     return (
