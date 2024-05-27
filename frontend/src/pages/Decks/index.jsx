@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
-import { getAllSchemes, deleteScheme, getAvgRating, isRated } from '../../helpers/api.js';
+import { getAllUserBookmarks } from '../../API/bookmarks';
+import { getAllSchemes, deleteScheme, getSingleScheme } from '../../API/schemes';
+import { getAvgRating, isRated } from '../../API/ratings';
 import DeckCard from '../../components/DeckCard';
 
 function SchemesPage() {
@@ -11,11 +13,18 @@ function SchemesPage() {
 
   useEffect(() => {
     getSchemes();
+    getBookmarks();
   }, []);
 
     const getSchemes = async () =>{
-          getAllSchemes()
+      getAllSchemes()
       .then(data => setSchemes(data))
+      .catch(error => console.error(error));  
+    }
+
+    const getBookmarks = async () =>{
+      getAllUserBookmarks()
+      .then(data => setFavSchemes(data))
       .catch(error => console.error(error));  
     }
 

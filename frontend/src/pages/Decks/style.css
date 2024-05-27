@@ -43,10 +43,12 @@
 
 .schemecard-container{
     display: none;
+    gap: 12px;
 }
 
 .schemecard-container.active{
-    display: unset;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Responsive adjustments */

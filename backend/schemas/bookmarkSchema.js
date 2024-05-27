@@ -14,6 +14,7 @@ const bookmarkSchema = new Schema({
 	}  
 });
 
+bookmarkSchema.index({ "creator": 1, "scheme": 1 }, { unique: true });
 
 //compile schema to model
 module.exports = Bookmark = mongoose.model('bookmark', bookmarkSchema);	

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import RatingDisplay from '../RatingDisplay';
 import ConfirmationDialog from '../ConfirmationDialog';
-
 import MiniCard from '../MiniCard';
 import { getAvgRating, rateScheme, isRated } from '../../API/ratings'; 
+import { Bookmarked } from '../../API/bookmarks';
 import { deleteScheme } from '../../API/schemes'; 
 import { getUserName } from '../../API/users'; 
 import './style.css';
@@ -18,7 +18,8 @@ const DeckCard = ({data, onDelete}) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   useEffect(() => {
-    getAvgRating(data._id).then(data => setRating(data));
+      getAvgRating(data._id).then(data => setRating(data));
+    Bookmarked(data._id).then(data => setIsBookmarked(data.bookmarked));
     getUserName(data.creator).then(data => setUsername(data));
     isRated(data._id).then(data => {
         setRatedByUser(true);
