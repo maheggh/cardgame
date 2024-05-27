@@ -9,9 +9,16 @@ const Styles = `
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         justify-items: center;
+        align-items: center;
+        margin: 0 50px;
         gap: 0px;
-        transform: scale(0.977);
+        transform: scale(0.998);
         transform-origin: center 0;
+    }
+
+    .card-container > * {
+        margin: 0;
+        padding: 0;
     }
 
     img {
@@ -88,7 +95,7 @@ const Styles = `
         font-size: 18px;
         font-weight: bold;
         padding: 6px;
-        height: 38px;
+        height: 45px;
         line-height: 20px;
         text-transform: uppercase;
         align-content: center;

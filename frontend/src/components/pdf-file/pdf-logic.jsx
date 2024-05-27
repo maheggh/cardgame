@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import html2pdf from 'html2pdf.js';
 import Styles from './pdfstyle.jsx';
 
-import whoAssessedImg from '../../../assets/cards-background/who-is-assessed.png';
-import theAssessorImg from '../../../assets/cards-background/the-assessor.png';
-import timingImg from '../../../assets/cards-background/timing.png';
-import formatImg from '../../../assets/cards-background/format.png';
-import contextImg from '../../../assets/cards-background/context.png';
-import artefactImg from '../../../assets/cards-background/artefact.png';
-import missionImg from '../../../assets/cards-background/mission.png';
+import whoAssessedImg from '../../assets/cards-background/who-is-assessed.png';
+import theAssessorImg from '../../assets/cards-background/the-assessor.png';
+import timingImg from '../../assets/cards-background/timing.png';
+import formatImg from '../../assets/cards-background/format.png';
+import contextImg from '../../assets/cards-background/context.png';
+import artefactImg from '../../assets/cards-background/artefact.png';
+import missionImg from '../../assets/cards-background/mission.png';
 
 const schemaId = "664f9ca9a23f3905a8f625e8";
 
@@ -127,7 +127,7 @@ const MakePDF = () => {
 
         // Use html2pdf to convert the HTML to a PDF
         const opt = {
-          margin:       0.8,
+          margin:       0.7,
           filename:     'top-shcema.pdf',
           image:        { type: 'jpeg', quality: 0.98 },
           html2canvas:  { scale: 2 },
