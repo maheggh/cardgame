@@ -56,6 +56,7 @@ const getAllUserBookmarks = async (req, res) => {
         if (!bookmarks) {
             return res.status(204).json({ error: 'Could not find bookmark. bookmark not found' });
         }
+        console.log(schemes);
         res.status(200).json(schemes);
     } catch (err) {
         res.status(500).send('Error: ' + err);

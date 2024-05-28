@@ -5,6 +5,7 @@ import MakePDF from '../pdf-file';
 import MiniCard from '../MiniCard';
 import { getAvgRating, rateScheme, isRated } from '../../API/ratings'; 
 import { Bookmarked, bookmark, unBookmark } from '../../API/bookmarks';
+import { useAuth } from '../PrivateRoute/UserContext';
 import { deleteScheme } from '../../API/schemes'; 
 import { getUserName } from '../../API/users'; 
 import './style.css';
@@ -17,8 +18,10 @@ const DeckCard = ({data, onDelete, onBookmark}) => {
   const [ratedByUser, setRatedByUser] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const { role } = useAuth();
 
   useEffect(() => {
+      console.log(role);
       getAvgRating(data._id).then(data => setRating(data));
     Bookmarked(data._id).then(data => setIsBookmarked(data.bookmarked));
     getUserName(data.creator).then(data => setUsername(data));
@@ -105,7 +108,8 @@ const DeckCard = ({data, onDelete, onBookmark}) => {
             </div>
 
             <div className="buttons">
-                <button className='delete-button' type="button" onClick={handleShowConfirmDialog}><i className="fa-solid fa-trash"/> Delete</button>
+            {role && role=='Admin' ? (<button className='delete-button' type="button" onClick={handleShowConfirmDialog}><i className="fa-solid fa-trash"/> Delete</button>) : (<></>)}
+                
                 <p><b>{ratedByUser ? "Your rating:" : "You haven't rated this yet!"}</b></p>
                 <div className="star-holder">
                 {[...Array(5)].map((star, i) => {

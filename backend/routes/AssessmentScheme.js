@@ -18,6 +18,6 @@ router.post('/', auth, createScheme);
 router.patch('/:id', auth, authCanUpdate(AssessmentSchemes), updateScheme);
 
 //DELETE: Delete single scheme
-router.delete('/:id', auth, deleteScheme);
+router.delete('/:id', auth, authCanUpdate(AssessmentSchemes), deleteScheme);
 
 module.exports = router;
