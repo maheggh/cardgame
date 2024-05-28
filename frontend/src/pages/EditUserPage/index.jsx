@@ -6,50 +6,58 @@ import ConfirmationDialog from '../../components/ConfirmationDialog';
 import './style.css';
 
 function EditUserPage() {
-  const { userId } = useParams();
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const navigate = useNavigate();
+  const { userId } = useParams(); // Get the userId from the URL parameters
+  const [user, setUser] = useState(null); // State to store user data
+  const [isLoading, setIsLoading] = useState(true); // State to handle loading
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false); // State to show/hide the confirmation dialog
+  const navigate = useNavigate(); // Navigation hook
 
+  // Fetch user data when component mounts or userId changes
   useEffect(() => {
     fetchUser(userId).then(data => {
       setUser(data);
-      setIsLoading(false);
+      setIsLoading(false); // Data has been loaded
     });
   }, [userId]);
 
+  // Handle form submission to update user data
   const handleSubmit = event => {
     event.preventDefault();
     updateUser(userId, user).then(data => {
-      navigate('/users');
+      navigate('/users'); // Navigate to users list after update
     });
   };
 
+  // Handle user deletion
   const handleDelete = () => {
     deleteUser(userId).then(() => {
-      navigate('/users');
+      navigate('/users'); // Navigate to users list after deletion
     });
   };
 
+  // Show the confirmation dialog
   const handleShowConfirmDialog = () => {
     setShowConfirmDialog(true);
   };
 
+  // Confirm the deletion
   const handleConfirmDelete = () => {
     setShowConfirmDialog(false);
     handleDelete();
   };
 
+  // Cancel the deletion
   const handleCancelDelete = () => {
     setShowConfirmDialog(false);
   };
 
-  if (user===null) {
+  // Show loading message while data is being fetched
+  if (isLoading) {
     return (<div className="content-wrapper"><p>Loading...</p></div>);
   }
 
-  if (user===undefined){
+  // Show error message if user is unauthorized
+  if (user === undefined) {
     return (<div className="content-wrapper"><ErrorMessage error="401" subtitle="Unauthorized" text="Sorry, you need to be authorized to access this information"/></div>);
   }
 

@@ -1,33 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
+// Importing API methods
 import { getAllUserBookmarks } from '../../API/bookmarks';
 import { getAllSchemes, deleteScheme, getSingleScheme } from '../../API/schemes';
 import { getAvgRating, isRated } from '../../API/ratings';
+// Importing DeckCard component
 import DeckCard from '../../components/DeckCard';
 
 function SchemesPage() {
+    // State variables
     const [schemes, setSchemes] = useState([]);
     const [favSchemes, setFavSchemes] = useState([]);
     const [showBookmarked, setShowBookmarked] = useState (false);
     const [error, setError] = useState(null);
 
-  useEffect(() => {
-    getSchemes();
-    getBookmarks();
-  }, []);
+    // Fetching schemes and bookmarks on component mount
+    useEffect(() => {
+        getSchemes();
+        getBookmarks();
+    }, []);
 
+    // Fetching all schemes
     const getSchemes = async () =>{
-      getAllSchemes()
-      .then(data => setSchemes(data))
-      .catch(error => console.error(error));  
+        getAllSchemes()
+        .then(data => setSchemes(data))
+        .catch(error => console.error(error));  
     }
 
+    // Fetching all user bookmarks
     const getBookmarks = async () =>{
-      getAllUserBookmarks()
-      .then(data => setFavSchemes(data))
-      .catch(error => console.error(error));  
+        getAllUserBookmarks()
+        .then(data => setFavSchemes(data))
+        .catch(error => console.error(error));  
     }
 
+    // Deleting a scheme
     const handleDelete = async (id) => {
         try {
             await deleteScheme(id);
@@ -37,20 +44,23 @@ function SchemesPage() {
         }
     };
 
+    // If there's an error, render an error message
     if (error) {
         return <div>Error: {error}</div>;
     }
 
+    // Handling bookmarking and unbookmarking
     const handleBookmark = ({data, bookmarked}) => {
-            if(bookmarked){
-                setFavSchemes([...favSchemes, data]);
-            }
-            if(!bookmarked){
-                setFavSchemes(favSchemes.filter(item => item !== data));
-                getSchemes();
-            }
+        if(bookmarked){
+            setFavSchemes([...favSchemes, data]);
+        }
+        if(!bookmarked){
+            setFavSchemes(favSchemes.filter(item => item !== data));
+            getSchemes();
+        }
     }
 
+    // Rendering the component
     return (
         <div className="content-wrapper">
             <h1 className="title title-with-buttons">Decks</h1>

@@ -1,3 +1,4 @@
+// Importing necessary hooks and functions
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getSingleCard, updateCard, deleteCard } from '../../API/cards';
@@ -5,11 +6,15 @@ import ConfirmationDialog from '../../components/ConfirmationDialog';
 import './style.css';
 
 function EditCardPage() {
+  // Getting the cardId from the URL parameters
   const { cardId } = useParams();
+  // Setting up state for the card data and the confirmation dialog
   const [card, setCard] = useState(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  // Setting up navigation
   const navigate = useNavigate();
 
+  // Fetching the card data when the component mounts
   useEffect(() => {
     if (cardId) {
       getSingleCard(cardId).then(data => {
@@ -18,6 +23,7 @@ function EditCardPage() {
     }
   }, [cardId]);
 
+  // Handling form submission
   const handleSubmit = event => {
     event.preventDefault();
     if (cardId && card) {
@@ -27,6 +33,7 @@ function EditCardPage() {
     }
   };
 
+  // Handling card deletion
   const handleDelete = () => {
     if (cardId) {
       deleteCard(cardId).then(() => {
@@ -35,23 +42,28 @@ function EditCardPage() {
     }
   };
 
+  // Showing the confirmation dialog
   const handleShowConfirmDialog = () => {
     setShowConfirmDialog(true);
   };
 
+  // Confirming card deletion
   const handleConfirmDelete = () => {
     setShowConfirmDialog(false);
     handleDelete();
   };
 
+  // Canceling card deletion
   const handleCancelDelete = () => {
     setShowConfirmDialog(false);
   };
 
+  // If the card data is not loaded yet, show a loading message
   if (!card) {
     return <div>Loading...</div>;
   }
 
+  // Rendering the component
   return (
     <div>
       {showConfirmDialog && (

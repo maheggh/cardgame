@@ -5,18 +5,19 @@ import { createScheme } from '../../API/schemes';
 import './style.css';
 
 function Game() {
-    const [gameStarted, setGameStarted] = useState(false);
-    const [players, setPlayers] = useState([]);
-    const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
-    const [actionTaken, setActionTaken] = useState(false);
-    const [showTurnModal, setShowTurnModal] = useState(true);
-    const [countdown, setCountdown] = useState(0);
-    const [interactionsDisabled, setInteractionsDisabled] = useState(false);
-    const [gameEnded, setGameEnded] = useState(false);
-    const [missionCards, setMissionCards] = useState([]);
-    const [finalScheme, setFinalScheme] = useState([]);
-    const [schemeSubmitted, setSchemeSubmitted] = useState(false);
+    const [gameStarted, setGameStarted] = useState(false); // State to track if the game has started
+    const [players, setPlayers] = useState([]); // State to store players
+    const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0); // State to track the current player
+    const [actionTaken, setActionTaken] = useState(false); // State to track if an action has been taken
+    const [showTurnModal, setShowTurnModal] = useState(true); // State to show/hide the turn modal
+    const [countdown, setCountdown] = useState(0); // State for action countdown
+    const [interactionsDisabled, setInteractionsDisabled] = useState(false); // State to disable interactions
+    const [gameEnded, setGameEnded] = useState(false); // State to track if the game has ended
+    const [missionCards, setMissionCards] = useState([]); // State to store mission cards
+    const [finalScheme, setFinalScheme] = useState([]); // State to store the final scheme
+    const [schemeSubmitted, setSchemeSubmitted] = useState(false); // State to track if the scheme has been submitted
 
+    // Function to start the game
     const startGame = (players) => {
         setPlayers(players);
         setGameStarted(true);
@@ -25,6 +26,7 @@ function Game() {
         setTimeout(() => setShowTurnModal(false), 3000); // Display modal for 3 seconds
     };
 
+    // Function to end the game and gather mission and assessment cards
     const endGame = () => {
         const displayedMissionCards = Array.from(document.querySelectorAll('super-mission-card'))
             .filter(card => card.offsetParent !== null) // Check if the card is visible
@@ -34,6 +36,7 @@ function Game() {
                 return cardId ? cardId : null;
             });
         setMissionCards(displayedMissionCards);
+
         const assessmentCards = Array.from(document.querySelectorAll('super-assessment-card'))
             .filter(card => card.offsetParent !== null) // Check if the card is visible
             .map(card => {
@@ -67,31 +70,28 @@ function Game() {
 
         console.log('Submitting scheme: ', schemeData);
 
-        /*createScheme(schemeData)
-        .then(data => {
-            console.log('Successfully submitted scheme:', data);
-            setGameEnded(true);
-            setSchemeSubmitted(true);
-        });*/
         setFinalScheme(schemeData);
         setGameEnded(true);
     };
 
+    // Function to submit the scheme to the server
     const submitScheme = () => {
-    createScheme(finalScheme)
-        .then(data => {
-            console.log('Successfully submitted scheme:', data);
-            setSchemeSubmitted(true);
-        });    
+        createScheme(finalScheme)
+            .then(data => {
+                console.log('Successfully submitted scheme:', data);
+                setSchemeSubmitted(true);
+            });    
     }
 
-  const handleInput = (input) => {
-  setFinalScheme(prevState => ({
-    ...prevState,
-    'scheme-name': input
-  }));
-  }
+    // Handle input changes for the scheme name
+    const handleInput = (input) => {
+        setFinalScheme(prevState => ({
+            ...prevState,
+            'scheme-name': input
+        }));
+    }
 
+    // Function to move to the next player
     const nextPlayer = () => {
         const actionCooldown = 3; // 3 seconds cooldown
         setCurrentPlayerIndex((currentPlayerIndex + 1) % players.length);
@@ -115,6 +115,7 @@ function Game() {
         }, 1000);
     };
 
+    // Effect to import necessary components and handle custom events
     useEffect(() => {
         import("./../../components/MissionCard");
         import("./../../components/AssessmentCard");
@@ -135,6 +136,7 @@ function Game() {
         };
     }, [actionTaken]); // Re-run effect if actionTaken changes
 
+    // Effect to move to the next player if an action has been taken
     useEffect(() => {
         if (actionTaken) {
             setTimeout(() => {
@@ -144,26 +146,39 @@ function Game() {
         }
     }, [actionTaken]); // Depend on actionTaken to trigger this effect
 
+    // Render start screen if game hasn't started
     if (!gameStarted) {
         return <StartScreen onStartGame={startGame} />;
     }
 
+    // Render score screen if game has ended
     if (gameEnded) {
-        return <ScoreScreen players={players} missionCards={missionCards} finalScheme={finalScheme} onTextChange={(e) => {handleInput(e)}} onScoreChange={() => {}} onSubmitScores={() => {}} onSubmitAndSave={() => {submitScheme()}} />;
+        return <ScoreScreen 
+            players={players} 
+            missionCards={missionCards} 
+            finalScheme={finalScheme} 
+            onTextChange={(e) => {handleInput(e.target.value)}} 
+            onScoreChange={() => {}} 
+            onSubmitScores={() => {}} 
+            onSubmitAndSave={submitScheme} 
+        />;
     }
 
+    // Function to refresh all cards
     const refreshAllCards = () => {
         const event = new CustomEvent('refreshCards', { bubbles: true, composed: true });
         document.querySelector('.gameBoard').dispatchEvent(event);
         handleAction();
     };
 
+    // Handle an action being taken
     const handleAction = () => {
         if (!actionTaken) {
             setActionTaken(true);
         }
     };
 
+    // Main game render
     return (
         <>
             <div className={`game-container ${interactionsDisabled ? 'disabled-interactions' : ''}`}>
