@@ -1,5 +1,5 @@
 import React from 'react';
-import Game from '../../src/pages/game'; // Correct path
+import Game from '../../src/pages/game'; 
 
 export default {
   title: 'Example/Game',

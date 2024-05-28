@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from '../../src/components/PrivateRoute/UserContext'; // Correct path
-import Login from '../../src/pages/login'; // Correct path
+import { AuthProvider } from '../../src/components/PrivateRoute/UserContext'; 
+import Login from '../../src/pages/login'; 
 
 export default {
   title: 'Example/Login',
