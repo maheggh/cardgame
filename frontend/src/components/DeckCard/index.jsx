@@ -106,7 +106,6 @@ const DeckCard = ({data, onDelete, onBookmark}) => {
                 <MiniCard cardId={data['card-mission-two']}type={'mission'}/>
                 <MiniCard cardId={data['card-mission-three']}type={'mission'}/>
             </div>
-
             <div className="buttons">
             {role && role=='Admin' ? (<button className='delete-button' type="button" onClick={handleShowConfirmDialog}><i className="fa-solid fa-trash"/> Delete</button>) : (<></>)}
                 

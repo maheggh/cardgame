@@ -195,19 +195,27 @@ class SuperMissionCard extends HTMLElement {
         import("../../assets/icons/Super_assessed.png");
     }
 
+    //adds click event to cards
     addClickEventToCard() {
+        //Selecting the card and replace button elements
         const card = this.shadowRoot.querySelector(".card");
         const replaceButton = this.shadowRoot.querySelector(".replace-button");
 
+        //adds click event listener to the card
         card.addEventListener("click", () => {
             const contentElement = card.querySelector(".card-content");
             const imageElement = card.querySelector(".card-background");
+
+            // Toggle display property of image and content elements
             imageElement.style.display = imageElement.style.display === 'none' ? 'block' : 'none';
             contentElement.style.display = imageElement.style.display === 'none' ? 'block' : 'none';
         });
 
+        // adds click event listener to the replace button
         replaceButton.addEventListener("click", (e) => {
             e.stopPropagation();
+            
+            // delete current card ID from displayedCardIds set and reload cards
             SuperMissionCard.displayedCardIds.delete(this.currentCardId);
             this.loadAndRenderCards();
         });

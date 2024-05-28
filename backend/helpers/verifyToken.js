@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const Users = require('../schemas/userSchema');
 const mongoose = 	require('mongoose');
 
+
+//checkes the user to see if they have a jwt in their cookie and wether its valid or not
 const auth = async (req, res, next) => {
 	const authtoken = req.cookies.jwt;
 	if (!authtoken) {
@@ -56,7 +58,7 @@ function authCanUpdate(Model) {
 	}
 }
 
-//allows user to update self
+//allows user to update. self different from authCanUpdate as its meant to work with users and not content they created
 //code copied and modified from presentation from lefteris 
 const userCanUpdate = async (req, res, next) => {
 		const _id = req.params.id;
