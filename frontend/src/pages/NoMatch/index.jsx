@@ -1,6 +1,7 @@
 import React from 'react';
 import './style.css'
 
+// displays an error message when the users navigate to a route that does not exist
 function NoMatch() {
   return (
     <div className="content-wrapper">
