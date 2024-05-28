@@ -28,7 +28,6 @@ const CardsPage = () => {
   const navigate = useNavigate(); 
 
   const navigateToEditPage = (id) => {
-    console.log(id);
     navigate(`/cards/${id}/edit`);
   };
 

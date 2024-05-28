@@ -40,6 +40,7 @@ app.get('/', (req, res) => {
 });
 
 // API routes
+app.use('/api/bulk', bulkUploadRoutes); // Mounting the bulk upload operations route
 app.use('/api/cards', cardsRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/search', searchRoutes);
@@ -47,7 +48,6 @@ app.use('/api/icons', iconsRoutes);
 app.use('/api/assscheme', AssSchemeRoutes);
 app.use('/api/ratings', ratingsRoutes);
 app.use('/api/bookmarks', bookmarkRoutes);
-app.use('/api/cards', bulkUploadRoutes); // Mounting the bulk upload operations route
 app.use('/documentation', swaggerDoc.serve);
 app.use('/documentation', swaggerDoc.setup(swaggerDocumentation));
 
