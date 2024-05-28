@@ -17,12 +17,14 @@ export const AuthProvider = ({ children }) => {
     getStatus(setIsAuth);
   };
 
+  //sends logout request to backend and rechecks auth
   const handleLogout = () => {
     logout();
     getStatus(setIsAuth);
   }
 
   useEffect(() => {
+    //on load checks the users status
     getStatus(setIsAuth)
       .then(responseData => {
         setRole(responseData.userRole);

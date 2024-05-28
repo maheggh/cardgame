@@ -7,10 +7,10 @@ const {auth, authRole} = require('../helpers/verifyToken');
 //GET: Read all cards
 router.get('/', getAllCards);
 
-//
+//GET: total cards
 router.get('/total',getTotalCards);
 
-//
+//GET: total card types
 router.get('/types',getTotalCardTypes);
 
 //GET: Read single card
