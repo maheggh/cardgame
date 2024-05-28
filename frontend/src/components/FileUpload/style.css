@@ -3,7 +3,9 @@
 }
 
 .uploadWrapper {
-  flex-direction: column;
+  display: flex;
+  gap: 16px;
+  width: 100%;
 }
 
 .app-title {
@@ -12,14 +14,10 @@
 }
 
 .file-upload {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 20px;
-  padding: 20px;
   border-radius: 10px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .file-upload-button-container {
@@ -30,7 +28,8 @@
 .upload-status {
   margin-top: 10px; 
   font-size: 16px;
-  color: #4CAF50; 
+  color: #4CAF50;
+  text-align: center;
 }
 
 .cards-list {

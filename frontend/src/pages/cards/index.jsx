@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import ErrorMessage from '../../components/ErrorMessage';
+import FileUpload from '../../components/FileUpload';
 import { getAllCards } from '../../API/cards'; 
 import Card from '../../components/CardInfo';
 
@@ -27,7 +28,6 @@ const CardsPage = () => {
   const navigate = useNavigate(); 
 
   const navigateToEditPage = (id) => {
-    console.log(id);
     navigate(`/cards/${id}/edit`);
   };
 
@@ -36,6 +36,7 @@ const CardsPage = () => {
       {isLoading == false ? (<>
           {cards.length > 1 ? (<>
               <h1>Cards</h1>
+              <FileUpload/>
               <div className='cards_screen_list'>
                 {cards.map(card => (
                   <Card key={card['_id']} card={card} navigateToEditPage={navigateToEditPage} />

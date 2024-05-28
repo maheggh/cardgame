@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import handleFileUpload from './onFileUpload';
 import { useAuth } from '../../components/PrivateRoute/UserContext.jsx';
-
+import "./style.css";
 
 
 const FileUpload = ({ setCards }) => {
@@ -83,24 +83,11 @@ const handleDeleteClick = async () => {
   // Render file upload form
   return (
     <div className="file-upload">
-      <div className="file-upload-button-container">
         <input type="file" id="file" className="file-input" onChange={handleFileChange} accept=".json" />
+        <span className="uploadWrapper">
         <label htmlFor="file" className="button upload-button"><i className="fa-solid fa-file-import"/>Velg fil</label>
         <button className="button upload-button" onClick={handleUploadClick}><i className="fa-solid fa-arrow-up-from-bracket"/>Upload</button>
-      </div>
-      <div className="delete-card-input-container">
-        <input 
-          type="text" 
-          className="delete-card-input" 
-          placeholder="Enter Card ID to delete" 
-          value={deleteCardId} 
-          onChange={(e) => setDeleteCardId(e.target.value)}
-        />
-        <button className="button delete-card-button" onClick={handleDeleteClick}>
-          <i className="fa-solid fa-trash"/>
-          Delete Card 
-        </button>
-      </div>
+        </span>
       {uploadStatus && <div className="upload-status"><p>{uploadStatus}</p></div>}
     </div>
   );

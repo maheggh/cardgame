@@ -49,7 +49,7 @@ export async function getSingleCard(id) {
 }
 
 export const updateCard = (cardId, card) => {
-  return fetch(`${URL}${cardId}`, {
+  return fetch(`${API_URL}/cards/${cardId}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export const updateCard = (cardId, card) => {
 };
 
 export const deleteCard = (cardId) => {
-  return fetch(`${URL}${cardId}`, {
+  return fetch(`${API_URL}/cards/${cardId}`, {
     method: 'DELETE',
     credentials: 'include' 
   })

@@ -1,7 +1,7 @@
 const handleFileUpload = async (content, setCards) => {
   try {
     const cards = JSON.parse(content);
-    const response = await fetch('http://localhost:3000/api/cards/bulk', { 
+    const response = await fetch('http://localhost:3000/api/bulk', { 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
