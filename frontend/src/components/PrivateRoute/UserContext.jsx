@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { getStatus, logout } from '../../helpers/api.js';
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 
 const AuthContext = createContext();
 
@@ -22,12 +22,12 @@ export const AuthProvider = ({ children }) => {
     getStatus(setIsAuth);
   }
 
-useEffect(() => {
-  getStatus(setIsAuth)
-  .then(responseData =>{
-    setRole(responseData.userRole);
-  })
-},[isAuth]);
+  useEffect(() => {
+    getStatus(setIsAuth)
+      .then(responseData => {
+        setRole(responseData.userRole);
+      });
+  }, [isAuth]);
 
   return (
     <AuthContext.Provider value={{ isAuth, loginAuth, handleLogout, role }}>
