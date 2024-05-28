@@ -13,7 +13,6 @@ const bookmark = async (req, res) => {
         const a1 = await bookmark.save();
         res.status(201).json({ message: 'Bookmark created successfully', Bookmark: a1 });
     } catch (err) {
-        console.log(err.code);
         res.status(500).send('Error: ' + err);
     }
 };
@@ -34,8 +33,6 @@ const getBookmark = async (req, res) => {
 const unBookmark = async (req, res) => {
     const _id = req.params.id;
     try {
-        console.log(_id);
-        console.log(req.user._id);
         const rating = await Bookmarks.findOneAndDelete({ creator: req.user._id, scheme: _id });
         if (!rating) {
             return res.status(404).json({ error: 'Could not delete bookmark. Vookmark not found' });
@@ -56,7 +53,6 @@ const getAllUserBookmarks = async (req, res) => {
         if (!bookmarks) {
             return res.status(204).json({ error: 'Could not find bookmark. bookmark not found' });
         }
-        console.log(schemes);
         res.status(200).json(schemes);
     } catch (err) {
         res.status(500).send('Error: ' + err);
