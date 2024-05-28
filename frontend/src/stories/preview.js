@@ -1,8 +1,10 @@
 // Import global CSS files
-import '../src/app.css'; // Ensure this path is correct
-import '../src/pages/welcome/style.css'; // Ensure this path is correct
+import '../src/app.css';
+import '../src/pages/welcome/style.css';
 
-// You can add global decorators here if necessary
+// Import Jest setup file
+import '../stories/setupTests';
+
 export const decorators = [
   (Story) => (
     <>
