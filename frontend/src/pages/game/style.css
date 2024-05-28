@@ -28,7 +28,7 @@
     flex-wrap: wrap;
     background-color: #FEF286;
     flex-grow: 0;
-    height: calc(100vh - 72px);
+    min-height: calc(100vh - 72px);
   }
   
   .game-header{

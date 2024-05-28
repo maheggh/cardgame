@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './style.css'
 import StatCounter from '../../components/StatCounter/';
-import { getTotalTeachers, getTotalCards, getTotalCardTypes } from '../../helpers/api.js'; 
+import FPDeck from '../../components/FrontPageDeck/';
+import { getTotalTeachers, getTotalCards, getTotalCardTypes } from '../../helpers/api.js';
+import { getTopSchemes } from '../../API/schemes'; 
 
 function Welcome() {
   const [totalTeachers, setTotalTeachers] = useState(null);
   const [totalCards, setTotalCards] = useState(null);
   const [totalCardTypes, setTotalCardTypes] = useState(null);
+  const [topDecks, setTopDecks] = useState(null);
 
   useEffect(() => {
     getTotalTeachers()
@@ -17,6 +20,9 @@ function Welcome() {
       .catch(error => console.error(error));
     getTotalCardTypes()
       .then(data => setTotalCardTypes(data))
+      .catch(error => console.error(error));
+    getTopSchemes()
+      .then(data => setTopDecks(data))
       .catch(error => console.error(error));
   }, []);
 
@@ -35,7 +41,14 @@ function Welcome() {
           <li><b>Gameplay:</b> Players take turns and can choose from four actions: a. Add a card to any category on the table. b. Remove a card from the table by turning it face down. c. Replace a card by turning the existing card face down and placing a new card over it. d. Discard all cards in hand and draw six new ones. Players should always have six cards in hand, so they draw a new card after using one. </li>
           <li><b>Ending the Game:</b> The game ends when half or more of the players agree they are satisfied with the assessment method they've created. This triggers the final round. 4. Scoring: Players evaluate how well they achieved their missions, awarding up to three points for each mission.</li>
         </ul>
-      
+        <br/><br/>
+        <h1>Most popular decks</h1>
+        {topDecks && topDecks.length > 0 ? topDecks.map(scheme => (
+            <FPDeck data={scheme} key={scheme._id}/>
+        )) : (
+            <div>No decks available</div>
+        )}
+
     </div>
   );
 }

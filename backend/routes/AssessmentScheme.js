@@ -1,9 +1,12 @@
 //Assessment scheme routes go here
 const express 		= require('express');
 const router 		= express.Router();
-const {createScheme, getAllSchemes, getSingleScheme, updateScheme, deleteScheme} = require('../controllers/assessmentSchemeController');
+const {createScheme, getAllSchemes, getSingleScheme, updateScheme, deleteScheme, getTopRatedSchemes} = require('../controllers/assessmentSchemeController');
 const {auth, authRole, authCanUpdate} = require('../helpers/verifyToken');
 const AssessmentSchemes = require('../schemas/assessmentSchemeSchema');
+
+//GET: Read all schemes
+router.get('/top', getTopRatedSchemes);
 
 //GET: Read all schemes
 router.get('/', getAllSchemes);

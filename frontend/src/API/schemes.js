@@ -58,3 +58,15 @@ export async function getSingleScheme(id) {
 
     return response.json();
 }
+
+export async function getTopSchemes(id) {
+    const response = await fetch(`${API_URL}/assscheme/top`, {
+        method: 'GET',
+        credentials: 'include'
+    });
+    if (!response.ok) {
+        throw new Error('Failed to get single schemes');
+    }
+
+    return response.json();
+}

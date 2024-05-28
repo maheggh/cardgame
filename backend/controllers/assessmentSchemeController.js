@@ -82,4 +82,42 @@ const deleteScheme = async (req, res) => {
     }
 };
 
-module.exports = { createScheme, getAllSchemes, getSingleScheme, updateScheme, deleteScheme };
+const getTopRatedSchemes = async (req, res) => {
+    const _id = req.params.id;
+    try {
+        const topRatedSchemes = await AssessmentSchemes.aggregate([
+          {
+            $lookup: {
+              from: 'ratings', // The name of the collection, not the model
+              localField: '_id',
+              foreignField: 'scheme',
+              as: 'ratings'
+            }
+          },
+          {
+            $unwind: '$ratings'
+          },
+          {
+            $group: {
+              _id: '$_id',
+              scheme: { $first: '$$ROOT' },
+              averageRating: { $avg: '$ratings.score' }
+            }
+          },
+          {
+            $sort: { averageRating: -1 }
+          },
+          {
+            $limit: 3
+          }
+        ]);
+        if (!topRatedSchemes) {
+            return res.status(404).json({ error: 'Top schemes not found' });
+        }
+        res.status(200).json(topRatedSchemes);
+    } catch (err) {
+        res.status(500).json({ error: 'Could not get top schemes', details: err.message });
+    }
+};
+
+module.exports = { createScheme, getAllSchemes, getSingleScheme, updateScheme, deleteScheme, getTopRatedSchemes };
