@@ -2,7 +2,7 @@ class SuperAssessmentCard extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.isVisible = false;  // Added to track visibility
+        this.isVisible = false; // Track card visibility
         this.shadowRoot.innerHTML = `
             <div>Loading mission card...</div>
         `;
@@ -24,6 +24,7 @@ class SuperAssessmentCard extends HTMLElement {
         this.boundDisableInteractions = () => this.interactionsDisabled = true;
         this.boundEnableInteractions = () => this.interactionsDisabled = false;
 
+        // Add event listeners for various custom events
         document.addEventListener('refreshCards', this.boundRefreshCards);
         document.addEventListener('drawNewCard', this.boundDrawNewCard);
         document.addEventListener('disableInteractions', this.boundDisableInteractions);
@@ -31,6 +32,7 @@ class SuperAssessmentCard extends HTMLElement {
     }
 
     disconnectedCallback() {
+        // Remove event listeners when the element is removed from the DOM
         document.removeEventListener('refreshCards', this.boundRefreshCards);
         document.removeEventListener('drawNewCard', this.boundDrawNewCard);
         document.removeEventListener('disableInteractions', this.boundDisableInteractions);
@@ -46,6 +48,7 @@ class SuperAssessmentCard extends HTMLElement {
     }
 
     loadAndRenderCards() {
+        // Fetch card data from the server
         fetch('http://localhost:3000/api/cards')
             .then(response => response.json())
             .then(data => {
@@ -56,6 +59,7 @@ class SuperAssessmentCard extends HTMLElement {
 
     renderCards(assessmentCardData) {
         let cardsByCategory = {};
+        // Group cards by category
         for (let card of assessmentCardData) {
             if (!cardsByCategory[card["card-category"]]) {
                 cardsByCategory[card["card-category"]] = [];
@@ -78,6 +82,7 @@ class SuperAssessmentCard extends HTMLElement {
             return;
         }
 
+        // Select a random card from the category
         let selectedCard = cardsByCategory[category][Math.floor(Math.random() * cardsByCategory[category].length)];
         this.setAttribute('data-card-id', selectedCard._id); // Set data-card-id attribute
         this.displayCard(selectedCard);
@@ -287,6 +292,7 @@ class SuperAssessmentCard extends HTMLElement {
                     cardContent.style.display = 'none';
                     cardImage.style.display = 'block';
 
+                    // Trigger custom events when a card is flipped
                     document.dispatchEvent(new CustomEvent('cardFlipped', {
                         detail: {
                             category: this.getAttribute('card-category'),
@@ -309,4 +315,5 @@ class SuperAssessmentCard extends HTMLElement {
     }
 }
 
+// Define the custom element
 customElements.define('super-assessment-card', SuperAssessmentCard);
