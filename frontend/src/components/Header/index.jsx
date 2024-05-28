@@ -36,7 +36,6 @@ if (isAuth){
                     <>
                     <Link  to="/cards" className="link nav-button" onClick={closeMenu}>Cards</Link >
                     <Link  to="/users" className="link nav-button" onClick={closeMenu}>Users</Link >
-                    <Link  to="/fileupload" className="link nav-button" onClick={closeMenu}>Upload</Link >
                     </>
                     ) : (<></>)}
                     <Link  to="/account" className="link nav-button" onClick={closeMenu}>Account</Link>
