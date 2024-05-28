@@ -143,7 +143,7 @@ const MakePDF = ({schemaId}) => {
 
   return (
     <>
-      <span onClick={() => data && generatePDF(data)} className="generate-pdf-button bookmark-icon">
+      <span onClick={() => data && generatePDF(data)} className="pdf-button bookmark-icon">
         <i className="fa-solid fa-file-pdf"/>
       </span>
     </>
